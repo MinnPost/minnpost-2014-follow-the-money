@@ -1,0 +1,98 @@
+{
+  "name": "minnpost-2014-follow-the-money",
+  "version": "0.0.0",
+  "main": "index.html",
+  "homepage": "https://github.com/minnpost/minnpost-2014-follow-the-money",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minnpost/minnpost-2014-follow-the-money"
+  },
+  "bugs": "https://github.com/minnpost/minnpost-2014-follow-the-money/issues",
+  "license": "MIT",
+  "author": {
+    "name": "MinnPost",
+    "email": "data@minnpost.com"
+  },
+  "dependencies": {
+    "ractive": "~0.5.6",
+    "ractive-events-tap": "~0.1.1",
+    "requirejs": "~2.1.15",
+    "almond": "~0.3.0",
+    "text": "~2.0.12",
+    "underscore": "~1.7.0",
+    "jquery": "~1.11.1",
+    "minnpost-styles": "master"
+  },
+  "dependencyMap": {
+  "requirejs": {
+    "rname": "requirejs",
+    "js": [
+      "requirejs/require"
+    ]
+  },
+  "almond": {
+    "rname": "almond",
+    "js": [
+      "almond/almond"
+    ]
+  },
+  "text": {
+    "rname": "text",
+    "js": [
+      "text/text"
+    ]
+  },
+  "jquery": {
+    "rname": "jquery",
+    "js": [
+      "jquery/dist/jquery"
+    ],
+    "returns": "$"
+  },
+  "underscore": {
+    "rname": "underscore",
+    "js": [
+      "underscore/underscore"
+    ],
+    "returns": "_"
+  },
+  "ractive": {
+    "rname": "ractive",
+    "js": [
+      "ractive/ractive-legacy"
+    ],
+    "returns": "Ractive"
+  },
+  "ractive-events-tap": {
+    "rname": "ractive-events-tap",
+    "js": [
+      "ractive-events-tap/ractive-events-tap"
+    ],
+    "returns": "RactiveEventsTap"
+  },
+  "minnpost-styles": {
+    "rname": "mpStyles",
+    "css": [
+      "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css",
+      "minnpost-styles/dist/minnpost-styles"
+    ],
+    "sass": [
+      "minnpost-styles/styles/main"
+    ]
+  },
+  "mpConfig": {
+    "rname": "mpConfig",
+    "js": [
+      "minnpost-styles/dist/minnpost-styles.config"
+    ],
+    "returns": "mpConfig"
+  },
+  "mpFormatters": {
+    "rname": "mpFormatters",
+    "js": [
+      "minnpost-styles/dist/minnpost-styles.formatters"
+    ],
+    "returns": "mpFormatters"
+  }
+}
+}
