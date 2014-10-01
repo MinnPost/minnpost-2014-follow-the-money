@@ -13,23 +13,26 @@ require.config({
     }
   },
   shim: {
-    
-    
-    
+    'lazyload': {
+      exports: 'LazyLoad'
+    }
+
+
   },
   baseUrl: 'js',
   paths: {
-    
+
     'requirejs': '../bower_components/requirejs/require',
     'almond': '../bower_components/almond/almond',
     'text': '../bower_components/text/text',
     'jquery': '../bower_components/jquery/dist/jquery',
     'underscore': '../bower_components/underscore/underscore',
+    'backbone': '../bower_components/backbone/backbone',
+    'lazyload': '../bower_components/rgrove-lazyload/lazyload',
     'ractive': '../bower_components/ractive/ractive-legacy',
     'ractive-events-tap': '../bower_components/ractive-events-tap/ractive-events-tap',
     'mpConfig': '../bower_components/minnpost-styles/dist/minnpost-styles.config',
     'mpFormatters': '../bower_components/minnpost-styles/dist/minnpost-styles.formatters',
-    'jquery-noconflict': 'build/jquery-noconflict',
-    'minnpost-2014-follow-the-money': 'app'
+    'jquery-noconflict': 'build/jquery-noconflict'
   }
 });

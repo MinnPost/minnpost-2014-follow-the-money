@@ -38,12 +38,12 @@ define('helpers', ['jquery', 'underscore'],
    * Wrapper for a JSONP request, the first set of options are for
    * the AJAX request, while the other are from the application.
    */
-  helpers.jsonpRequest = function(requestOptions, appOptions) {
+  helpers.jsonpRequest = function(options, appOptions) {
     options.dataType = 'jsonp';
     options.jsonpCallback = 'mpServerSideCachingHelper' +
       _.hash(options.url);
 
-    if (appOptions.remoteProxy) {
+    if (appOptions.remoteProxy && options.url.indexOf('callback=') === -1) {
       options.url = options.url + '&callback=mpServerSideCachingHelper';
       options.url = appOptions.remoteProxy + encodeURIComponent(options.url);
       options.cache = true;
@@ -62,7 +62,7 @@ define('helpers', ['jquery', 'underscore'],
    *
    * Returns jQuery's defferred object.
    */
-  helpers.getLocalData = function(name, options) {
+  helpers.dataRequest = function(name, options) {
     var useJSONP = false;
     var defers = [];
     name = (_.isArray(name)) ? name : [ name ];
