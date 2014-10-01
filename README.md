@@ -22,8 +22,6 @@ All commands are assumed to be on the [command line](http://en.wikipedia.org/wik
     * On a Mac, do: `brew install node`
 1. Install [Grunt](http://gruntjs.com/): `npm install -g grunt-cli`
 1. Install [Bower](http://bower.io/): `npm install -g bower`
-
-
 1. Install [Sass](http://sass-lang.com/): `gem install sass`
     * On a Mac do: `sudo gem install sass`
 1. Install [Compass](http://compass-style.org/): `gem install compass`
@@ -37,8 +35,6 @@ Get the code for this project and install the necessary dependency libraries and
 1. Go into the template directory: `cd minnpost-2014-follow-the-money`
 1. Install NodeJS packages: `npm install`
 1. Install Bower components: `bower install`
-
-
 
 ### Data processing
 
@@ -89,7 +85,9 @@ Adding libraries is not difficult, but there are a few steps.
 
 ### Testing
 
-Unfortunately there are no tests at the moment.
+There are basic QUnit tests in the `tests` folder.  Ensure that `grunt server` is running, and then do the following:
+
+1. `grunt test`
 
 ### Build
 
