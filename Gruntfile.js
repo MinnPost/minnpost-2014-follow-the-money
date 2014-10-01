@@ -331,13 +331,20 @@ module.exports = function(grunt) {
       tasks: 'watcher'
     },
 
-    // Testing
+    // Testing with Qunit, connect is used for standalone testing
     qunit: {
       main: {
         options: {
           urls: [
-            'http://localhost:8840/tests/index.html'
+            'http://localhost:<%= connect.server.options.port %>/tests/index.html'
           ]
+        }
+      }
+    },
+    connect: {
+      server: {
+        options: {
+          port: 8999
         }
       }
     }
@@ -353,6 +360,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-s3');
@@ -370,7 +378,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'compass:dist', 'clean', 'copy', 'requirejs', 'concat', 'cssmin', 'uglify']);
 
   // Testing
-  grunt.registerTask('test', ['qunit']);
+  grunt.registerTask('test', ['connect', 'qunit']);
 
   // Watch tasks
   grunt.registerTask('watcher', ['jshint', 'compass:dev']);

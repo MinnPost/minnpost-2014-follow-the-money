@@ -2,6 +2,9 @@
  * Main tests
  */
 
+// Rquier and QUnit don't play well together
+QUnit.config.autostart = false;
+
 // Ensure require is pointed correctly
 require.config({
   baseUrl: '../js'
@@ -10,6 +13,7 @@ require.config({
 // Base class
 require(['base'], function(Base) {
   'use strict';
+  QUnit.start();
 
   // Create new class for app
   var appName = 'minnpost-test';

@@ -85,9 +85,9 @@ Adding libraries is not difficult, but there are a few steps.
 
 ### Testing
 
-There are basic QUnit tests in the `tests` folder.  Ensure that `grunt server` is running, and then do the following:
+There are basic QUnit tests in the `tests` folder.
 
-1. `grunt test`
+1. Run with: `grunt test`
 
 ### Build
 
