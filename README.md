@@ -6,6 +6,8 @@ You can see this project in action at *[published story link goes here]()*.
 
 *Unless otherwise noted, MinnPost projects on [Github](https://github.com/minnpost) are story-driven and meant for transparency sake and not focused on re-use.  For a list of our more reusable projects, go to [code.minnpost.com](http://code.minnpost.com).*
 
+[![Build Status](https://travis-ci.org/MinnPost/minnpost-2014-follow-the-money.svg?branch=master)](https://travis-ci.org/MinnPost/minnpost-2014-follow-the-money)
+
 ## Data
 
 *Describe the data sources here.  Use links and URLs to show where the data came from.  Put small sized originals or modified data sources in the ```data/original``` folder and ensure to update the `.gitignore` file*
