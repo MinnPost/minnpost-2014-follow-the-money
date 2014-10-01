@@ -57,10 +57,10 @@ module.exports = function(grunt) {
         // For document.write in deployment.js
         evil: true
       },
-      files: ['Gruntfile.js', 'js/**/*.js', 'data-processing/**/*.js']
+      files: ['Gruntfile.js', 'js/**/*.js', 'tests/**/*.js', 'data-processing/**/*.js']
     },
 
-    
+
     // Compass is an extended SASS.  Set it up so that it generates to .tmp/
     compass: {
       options: {
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    
+
 
     // Copy relevant files over to distribution
     copy: {
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
       // CSS
       css: {
         src: [
-          
+
           '<%= compass.dist.options.cssDir %>/main.css'
         ],
         dest: 'dist/<%= pkg.name %>.<%= pkg.version %>.css'
@@ -329,6 +329,17 @@ module.exports = function(grunt) {
     watch: {
       files: ['<%= jshint.files %>', 'styles/*.scss'],
       tasks: 'watcher'
+    },
+
+    // Testing
+    qunit: {
+      main: {
+        options: {
+          urls: [
+            'http://localhost:8840/tests/index.html'
+          ]
+        }
+      }
     }
   });
 
@@ -342,6 +353,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-s3');
 
@@ -357,11 +369,12 @@ module.exports = function(grunt) {
   // Default build task
   grunt.registerTask('default', ['jshint', 'compass:dist', 'clean', 'copy', 'requirejs', 'concat', 'cssmin', 'uglify']);
 
+  // Testing
+  grunt.registerTask('test', ['qunit']);
+
   // Watch tasks
-  
   grunt.registerTask('watcher', ['jshint', 'compass:dev']);
   grunt.registerTask('server', ['jshint', 'compass:dev', 'browserSync', 'watch']);
-  
 
   // Deploy tasks
   grunt.registerTask('deploy', ['s3', 'inline_embed:minnpost-2014-follow-the-money']);

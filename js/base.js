@@ -128,7 +128,11 @@ define(['jquery', 'underscore', 'backbone', 'lazyload', 'helpers', 'text!../bowe
 
     // Make path
     makePath: function(path) {
-      return path.replace('[[[PROJECT_NAME]]]', this.name, 'g');
+      path = path.replace('[[[PROJECT_NAME]]]', this.name, 'g');
+      if (this.options.basePath && !path.match(/^(http|\/\/)/)) {
+        path = this.options.basePath + path;
+      }
+      return path;
     },
 
     // Empty initializer

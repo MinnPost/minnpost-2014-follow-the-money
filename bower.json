@@ -60,12 +60,16 @@
     },
     "backbone": {
       "rname": "backbone",
-      "js": ["backbone/backbone"],
+      "js": [
+        "backbone/backbone"
+      ],
       "returns": "Backbone"
     },
     "rgrove-lazyload": {
       "rname": "lazyload",
-      "js": ["rgrove-lazyload/lazyload"],
+      "js": [
+        "rgrove-lazyload/lazyload"
+      ],
       "returns": "Lazyload"
     },
     "ractive": {
@@ -106,5 +110,8 @@
       ],
       "returns": "mpFormatters"
     }
+  },
+  "devDependencies": {
+    "qunit": "~1.15.0"
   }
 }

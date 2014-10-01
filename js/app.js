@@ -21,7 +21,7 @@ require([
   var App = Base.BaseApp.extend({
 
     initialize: function() {
-      
+
       // Create main application view
       this.mainView = new Ractive({
         el: this.$el,
@@ -39,5 +39,6 @@ require([
     }
   });
 
-  var app = new App();
+  // Instantiate
+  return new App({});
 });
