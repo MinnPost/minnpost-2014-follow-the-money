@@ -13,7 +13,7 @@
     "email": "data@minnpost.com"
   },
   "scripts": {
-    "test": "grunt test --verbose --debug"
+    "test": "grunt test"
   },
   "dependencies": {},
   "devDependencies": {
