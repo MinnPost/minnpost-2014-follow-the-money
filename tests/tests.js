@@ -54,4 +54,27 @@ require(['base'], function(Base) {
       QUnit.start();
     });
   });
+
+  // Data requests
+  QUnit.asyncTest('Base JSONP requests', function(assert) {
+    expect(1);
+    var app = new App({});
+    var testEndpoint = 'https://s3.amazonaws.com/data.minnpost/projects/' +
+      'minnpost-green-line-demographics/data/census-tracts-ids.json';
+
+    // "timeout"
+    var t = setTimeout(function() {
+      assert.ok(false, 'Timeout reached for Base JSONP requests.');
+      QUnit.start();
+    }, 9000);
+
+    app.jsonpRequest({
+      url: testEndpoint
+    })
+    .done('cssLoaded', function(data) {
+      assert.ok((data.length > 5), 'Base JSONP request made.');
+      clearTimeout(t);
+      QUnit.start();
+    });
+  });
 });

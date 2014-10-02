@@ -116,7 +116,7 @@ There are to main ways to include the necessary HTML in a page in order to run t
 
 ## About Us
 
-MinnData, the MinnPost data team, is Alan, Tom, and Kaeti and all the awesome contributors to open source projects we utilize.  See our work at [minnpost.com/data](http://minnpost.com/data).
+MinnData, the MinnPost data team, is Alan and Tom aided by MinnPost reports and editors and all the awesome contributors to open source projects we utilize.  See our work at [minnpost.com/data](http://minnpost.com/data).
 
 ```
 

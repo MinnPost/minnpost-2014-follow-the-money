@@ -8,11 +8,11 @@
 // Create main application
 require([
   'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'mpConfig', 'mpFormatters',
-  'helpers', 'base',
+  'base',
   'text!templates/application.mustache'
 ], function(
   $, _, Ractive, RactiveEventsTap, mpConfig, mpFormatters,
-  helpers, Base,
+  Base,
   tApplication
   ) {
   'use strict';
