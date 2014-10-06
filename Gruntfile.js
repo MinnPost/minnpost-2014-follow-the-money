@@ -125,7 +125,7 @@ module.exports = function(grunt) {
     requirejs: {
       app: {
         options: {
-          name: '<%= pkg.name %>',
+          name: 'app',
           // Exclude libraries
           exclude: _.compact(_.flatten(_.pluck(_.filter(components, function(c) { return (c.js !== undefined); }), 'rname'))),
           baseUrl: 'js',
@@ -151,7 +151,7 @@ module.exports = function(grunt) {
       },
       embed: {
         options: {
-          name: '<%= pkg.name %>',
+          name: 'app',
           include: ['almond'],
           exclude: ['requirejs'],
           baseUrl: 'js',

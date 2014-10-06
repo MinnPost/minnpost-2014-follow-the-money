@@ -129,7 +129,7 @@ define(['jquery', 'underscore', 'backbone', 'lazyload', 'mpFormatters', 'text!..
 
     // Make path
     makePath: function(path) {
-      path = path.replace('[[[PROJECT_NAME]]]', this.name, 'g');
+      path = path.split('[[[PROJECT_NAME]]]').join(this.name);
       if (this.options.basePath && !path.match(/^(http|\/\/)/)) {
         path = this.options.basePath + path;
       }
