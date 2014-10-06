@@ -1,0 +1,66 @@
+[
+  {
+    "spent": 1033052,
+    "raised": 1144740,
+    "cash": 113142,
+    "spent-to": {
+      "to": "pro-jobs",
+      "amount": 10000
+    },
+    "name": "Freedom Club",
+    "id": "freedom"
+  },
+  {
+    "spent": 112337,
+    "raised": 799794,
+    "cash": 672445,
+    "spent-to": {
+      "to": "housing",
+      "amount": 10000
+    },
+    "name": "Pro Jobs Majority",
+    "id": "pro-jobs"
+  },
+  {
+    "spent": 187543,
+    "raised": 651213,
+    "cash": 466779,
+    "name": "Housing First",
+    "id": "housing"
+  },
+  {
+    "spent": 203974,
+    "raised": 349701,
+    "cash": 177654,
+    "name": "Minn Business Partnership",
+    "id": "mn-business"
+  },
+  {
+    "spent": 154454,
+    "raised": 291425,
+    "cash": 149957,
+    "name": "Minn Chamber of Commerce Leadership Fund",
+    "id": "mn-chamber"
+  },
+  {
+    "spent": 162857,
+    "raised": 258814,
+    "cash": 17617,
+    "name": "Minn Jobs Coalition Legislative Fund",
+    "id": "mn-jobs"
+  },
+  {
+    "spent": 20160,
+    "raised": 227300,
+    "cash": 140321,
+    "name": "Coalition of MN Businesses",
+    "id": "coalition-business"
+  },
+  {
+    "spent": 177883,
+    "raised": 166000,
+    "cash": 1152,
+    "name": "Minnesota’s Future",
+    "id": "mn-future"
+  }
+]

@@ -10,16 +10,18 @@ require([
   'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'd3',
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
-  'text!../data/dfl-top.json'
+  'text!../data/dfl-top.json',
+  'text!../data/top-gop.json'
 ], function(
   $, _, Ractive, RactiveEventsTap, d3, mpConfig, mpFormatters, Base,
   tApplication,
-  dDFLTop
+  dDFLTop, dGOPTop
   ) {
   'use strict';
 
   // Parse JSON data
   dDFLTop = JSON.parse(dDFLTop);
+  dGOPTop = JSON.parse(dGOPTop);
 
   // Create new class for app
   var App = Base.BaseApp.extend({
@@ -36,6 +38,7 @@ require([
 
       // Create charts
       this.chartDFL3();
+      this.chartGOPTop();
     },
 
     // The big 3
@@ -96,7 +99,7 @@ require([
           return line([positions[d.name], [w / 2, h / 1.9], positions.abm]);
         })
         .style('stroke-width', function(d) {
-          return scale(d.amount / 100);
+          return scale(d.amount / 200);
         });
 
       // Draw each group
@@ -114,7 +117,6 @@ require([
         }).enter()
         .append('rect')
         .attr('class', function(d) { return 'raised ' + d.name; })
-        .attr('title', function(d) { return d.name; })
         .attr('x', positionAmount('x'))
         .attr('y', positionAmount('y'))
         .attr('width', edgeAmount)
@@ -127,11 +129,89 @@ require([
         }).enter()
         .append('rect')
         .attr('class', function(d) { return 'spent ' + d.name; })
-        .attr('title', function(d) { return d.name; })
         .attr('x', positionAmount('x'))
         .attr('y', positionAmount('y'))
         .attr('width', edgeAmount)
         .attr('height', edgeAmount);
+    },
+
+    // Top GOP
+    chartGOPTop: function() {
+      var canvas, groups, raised, spent, cash, lines;
+      var $container = this.$('.chart-network-gop');
+      var w = $container.width();
+      var h = 400;
+      var margin = 10;
+      var cW = ((w - margin * 5) / 4);
+      var cH = (h / 2) - margin;
+      var maxEdge = Math.min(cW, cH);
+      var scale = d3.scale.linear()
+        .range([0, maxEdge * maxEdge])
+        .domain([0, d3.max(dGOPTop, function(d) {
+          return d.raised;
+        })]);
+      var line = d3.svg.line().interpolate('basis');
+
+      // Draw canvas
+      $container.html('');
+      canvas = d3.select($container[0]).append('svg')
+        .attr('width', w).attr('height', h);
+
+      // Draw each group
+      groups = canvas.selectAll('.group')
+        .data(dGOPTop).enter()
+        .append('g').attr('class', 'group')
+        .attr('transform', function(d, di) {
+          // Translate to center bottom of cell, rotate, then shift
+          return 'translate(' +
+            (((cW + margin) * (di % 4)) + (cW / 2) + margin) +
+            ', ' +
+            (((cH + margin) * (Math.floor(di / 4) + 1))) + ') ' +
+            'rotate(-180) ' +
+            'translate(' + ((Math.sqrt(scale(d.raised)) / 2) * -1) + ', 0)';
+        });
+
+      // Raised
+      raised = groups.selectAll('.raised')
+        .data(function(d) { return [d]; }).enter()
+        .append('rect')
+        .attr('class', function(d) { return 'raised'; })
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', function(d) {
+          return Math.sqrt(scale(d.raised));
+        })
+        .attr('height', function(d) {
+          return Math.sqrt(scale(d.raised));
+        });
+
+      // Spent
+      raised = groups.selectAll('.spent')
+        .data(function(d) { return [d]; }).enter()
+        .append('rect')
+        .attr('class', function(d) { return 'spent'; })
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', function(d) {
+          return Math.sqrt(scale(d.spent));
+        })
+        .attr('height', function(d) {
+          return Math.sqrt(scale(d.spent));
+        });
+
+      // Spent
+      cash = groups.selectAll('.cash')
+        .data(function(d) { return [d]; }).enter()
+        .append('rect')
+        .attr('class', function(d) { return 'cash'; })
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', function(d) {
+          return Math.sqrt(scale(d.cash));
+        })
+        .attr('height', function(d) {
+          return Math.sqrt(scale(d.cash));
+        });
     },
 
     defaults: {

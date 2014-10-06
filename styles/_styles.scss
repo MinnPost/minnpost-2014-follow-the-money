@@ -41,6 +41,24 @@ body .node-unpublished {
     stroke-linecap: butt;
   }
 
+  .chart-network-gop .raised {
+    fill: #1D8C47;
+    stroke: #FFFFFF;
+    stroke-width: 1;
+  }
+
+  .chart-network-gop .spent {
+    fill: #FBD341;
+    stroke-width: 0;
+    opacity: 0.85;
+  }
+
+  .chart-network-gop .cash {
+    fill: darken(#FBD341, 20);
+    stroke-width: 0;
+    opacity: 0.85;
+  }
+
   // Custom breakpoints
   @media screen and (max-width: 768px) {
   }
