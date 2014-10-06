@@ -23,7 +23,8 @@
     "jquery": "~1.11.1",
     "minnpost-styles": "master",
     "rgrove-lazyload": "*",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "d3": "~3.4.11"
   },
   "dependencyMap": {
     "requirejs": {
@@ -85,6 +86,12 @@
         "ractive-events-tap/ractive-events-tap"
       ],
       "returns": "RactiveEventsTap"
+    },
+    "d3": {
+      "js": [
+        "d3/d3"
+      ],
+      "returns": "d3"
     },
     "minnpost-styles": {
       "rname": "mpStyles",
