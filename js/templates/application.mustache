@@ -25,7 +25,14 @@
     <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>
 
     <div class="custom-chart chart-top-20">
-      <div class="loading-block"></div>
+      {{#top20}}
+        <div class="cf">
+          <div class="chart-label">{{ name }}</div>
+          <div class="chart-value">
+            <span style="width: {{ receipts / top20Max * 100 }}%;"></span>
+          </div>
+        </div>
+      {{/top20}}
     </div>
 
 

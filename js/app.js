@@ -11,17 +11,19 @@ require([
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
   'text!../data/dfl-top.json',
-  'text!../data/top-gop.json'
+  'text!../data/top-gop.json',
+  'text!../data/top-20-all.json'
 ], function(
   $, _, Ractive, RactiveEventsTap, d3, mpConfig, mpFormatters, Base,
   tApplication,
-  dDFLTop, dGOPTop
+  dDFLTop, dGOPTop, dTop20
   ) {
   'use strict';
 
   // Parse JSON data
   dDFLTop = JSON.parse(dDFLTop);
   dGOPTop = JSON.parse(dGOPTop);
+  dTop20 = JSON.parse(dTop20);
 
   // Create new class for app
   var App = Base.BaseApp.extend({
@@ -33,6 +35,8 @@ require([
         el: this.$el,
         template: tApplication,
         data: {
+          top20: _.sortBy(dTop20, 'receipts').reverse(),
+          top20Max: d3.max(dTop20, function(d) { return d.receipts; })
         }
       });
 

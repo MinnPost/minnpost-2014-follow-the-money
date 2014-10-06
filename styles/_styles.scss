@@ -18,8 +18,12 @@ body .node-unpublished {
     padding-top: 1em;
   }
 
-  .custom-chart {
+  .caption {
     margin-bottom: 2em;
+  }
+
+  .custom-chart {
+    margin-bottom: 5em;
   }
 
   .chart-big-dfl .raised {
@@ -57,6 +61,28 @@ body .node-unpublished {
     fill: darken(#FBD341, 20);
     stroke-width: 0;
     opacity: 0.85;
+  }
+
+  .chart-top-20 {
+
+    .chart-label {
+      width: 40%;
+      float: left;
+      text-align: right;
+      padding-right: 1em;
+      margin-bottom: .5em;
+    }
+
+    .chart-value {
+      width: 60%;
+      float: left;
+
+      span {
+        height: 1.25em;
+        background-color: #1D8C47;
+        display: inline-block;
+      }
+    }
   }
 
   // Custom breakpoints
