@@ -1,0 +1,16 @@
+[
+  {
+    "id": "dfl",
+    "name": "DFL",
+    "raised": 8628201,
+    "spent": 7014539,
+    "cash": 832683
+  },
+  {
+    "id": "gop",
+    "name": "GOP",
+    "raised": 3888987,
+    "spent": 2052260,
+    "cash": 1739067
+  }
+]

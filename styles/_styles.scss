@@ -5,6 +5,11 @@
 // Variables
 $space: 1em;
 
+$raised: #32955D;
+$spent: #955D32;
+$cash: #958F32;
+$flow: #7A7A7A;
+
 
 // This makes the unpublished background not as annoying
 body .node-unpublished {
@@ -26,42 +31,56 @@ body .node-unpublished {
     margin-bottom: 5em;
   }
 
-  .chart-big-dfl .raised {
-    fill: #32955D;
-    stroke: #FFFFFF;
-    stroke-width: 2;
+
+  .chart-big-dfl {
+
+    .raised {
+      fill: $raised;
+      stroke: #FFFFFF;
+      stroke-width: 2;
+    }
+
+    .spent {
+      fill: $spent;
+      stroke: #FFFFFF;
+      stroke-width: 2;
+    }
+
+    .group-link {
+      fill: none;
+      stroke: $flow;
+      stroke-width: 2;
+      stroke-linecap: butt;
+    }
   }
 
-  .chart-big-dfl .spent {
-    fill: #FBD341;
-    stroke: #FFFFFF;
-    stroke-width: 2;
+
+  .chart-network-gop {
+
+    .raised {
+      fill: $raised;
+      stroke-width: 0;
+    }
+
+    .spent {
+      fill: $spent;
+      stroke-width: 0;
+    }
+
+    .cash {
+      fill: $cash;
+      stroke-width: 0;
+      display: none;
+    }
+
+    .group-link {
+      fill: none;
+      stroke: $flow;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
   }
 
-  .chart-big-dfl .group-link {
-    fill: none;
-    stroke: #7A7A7A;
-    stroke-width: 2;
-    stroke-linecap: butt;
-  }
-
-  .chart-network-gop .raised {
-    fill: #1D8C47;
-    stroke: #FFFFFF;
-    stroke-width: 1;
-  }
-
-  .chart-network-gop .spent {
-    fill: #FBD341;
-    stroke-width: 0;
-    opacity: 0.85;
-  }
-
-  .chart-network-gop .cash {
-    fill: darken(#FBD341, 20);
-    stroke-width: 0;
-    opacity: 0.85;
-  }
 
   .chart-top-20 {
 
@@ -76,11 +95,28 @@ body .node-unpublished {
     .chart-value {
       width: 60%;
       float: left;
+      position: relative;
+      padding-top: 10px;
 
       span {
-        height: 1.25em;
-        background-color: #1D8C47;
-        display: inline-block;
+        height: 1.5em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.raised {
+          background-color: $raised;
+        }
+
+        &.spent {
+          background-color: $spent;
+        }
+
+        &.cash {
+          display: none;
+          background-color: $cash;
+        }
       }
     }
   }

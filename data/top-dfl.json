@@ -9,6 +9,7 @@
       { "name": "other", "amount": 100000 }
     ],
     "spent":[
+      { "name": "staff", "amount": 22370 }
     ]
   },
   {
@@ -27,8 +28,8 @@
     "id": "abm",
     "name": "Alliance for a Better Minnesota",
     "raised": [
-      { "name": "2014-fund", "amount": 574300 },
-      { "name": "win-mn", "amount": 375000 },
+      { "name": "2014-fund", "amount": 1335000 },
+      { "name": "win-mn", "amount": 733100 },
       { "name": "other", "amount": 10000 }
     ],
     "spent":[

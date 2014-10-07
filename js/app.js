@@ -10,26 +10,33 @@ require([
   'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'd3',
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
-  'text!../data/dfl-top.json',
+  'text!../data/top-dfl.json',
   'text!../data/top-gop.json',
-  'text!../data/top-20-all.json'
+  'text!../data/top-20.json',
+  'text!../data/combined-parties.json'
 ], function(
   $, _, Ractive, RactiveEventsTap, d3, mpConfig, mpFormatters, Base,
   tApplication,
-  dDFLTop, dGOPTop, dTop20
+  dTopDFL, dTopGOP, dTop20, dParties
   ) {
   'use strict';
 
   // Parse JSON data
-  dDFLTop = JSON.parse(dDFLTop);
-  dGOPTop = JSON.parse(dGOPTop);
+  dTopDFL = JSON.parse(dTopDFL);
+  dTopGOP = JSON.parse(dTopGOP);
   dTop20 = JSON.parse(dTop20);
+  dParties = JSON.parse(dParties);
 
   // Create new class for app
   var App = Base.BaseApp.extend({
 
-    initialize: function() {
+    defaults: {
+      name: 'minnpost-2014-follow-the-money',
+      el: '.minnpost-2014-follow-the-money-container'
+    },
 
+    // Start app
+    initialize: function() {
       // Create main application view
       this.mainView = new Ractive({
         el: this.$el,
@@ -43,6 +50,7 @@ require([
       // Create charts
       this.chartDFL3();
       this.chartGOPTop();
+      this.chartSpending();
     },
 
     // The big 3
@@ -59,7 +67,7 @@ require([
       var maxEdge = (h * 0.31);
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
-        .domain([0, d3.max(dDFLTop, function(d) {
+        .domain([0, d3.max(dTopDFL, function(d) {
           return Math.max(
             d3.max(d.raised, function(d) { return d.amount; }) || 0,
             d3.max(d.spent, function(d) { return d.amount; }) || 0
@@ -92,7 +100,7 @@ require([
         .attr('width', w).attr('height', h);
 
       // Lines
-      lines = _.filter(dDFLTop[2].raised, function(d, di) {
+      lines = _.filter(dTopDFL[2].raised, function(d, di) {
         return d.name !== 'other';
       });
       lines = canvas.selectAll('.group-link')
@@ -103,12 +111,12 @@ require([
           return line([positions[d.name], [w / 2, h / 1.9], positions.abm]);
         })
         .style('stroke-width', function(d) {
-          return scale(d.amount / 200);
+          return scale(d.amount / 225);
         });
 
       // Draw each group
       groups = canvas.selectAll('.group')
-        .data(dDFLTop).enter()
+        .data(dTopDFL).enter()
         .append('g').attr('class', 'group')
         .attr('transform', function(d) {
           return 'translate(' + positions[d.id][0] + ', ' + positions[d.id][1] + ')';
@@ -151,28 +159,104 @@ require([
       var maxEdge = Math.min(cW, cH);
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
-        .domain([0, d3.max(dGOPTop, function(d) {
+        .domain([0, d3.max(dTopGOP, function(d) {
           return d.raised;
         })]);
-      var line = d3.svg.line().interpolate('basis');
+      var line = d3.svg.line().interpolate('basis').tension(0.1);
+
+      // Draw spent
+      function drawSpent(moreThanCash) {
+        groups.selectAll('.spent')
+          .data(function(d) {
+            if (moreThanCash === true) {
+              return (d.spent >= d.cash) ? [d] : [];
+            }
+            else {
+              return (d.spent < d.cash) ? [d] : [];
+            }
+          }).enter()
+          .append('rect')
+          .attr('class', function(d) { return 'spent'; })
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', function(d) {
+            return Math.sqrt(scale(d.spent));
+          })
+          .attr('height', function(d) {
+            return Math.sqrt(scale(d.spent));
+          });
+      }
+
+      // Draw cash
+      function drawCash(moreThanSpent) {
+        groups.selectAll('.cash')
+          .data(function(d){
+            if (moreThanSpent === true) {
+              return (d.cash >= d.spent) ? [d] : [];
+            }
+            else {
+              return (d.cash < d.spent) ? [d] : [];
+            }
+          }).enter()
+          .append('rect')
+          .attr('class', function(d) { return 'cash'; })
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', function(d) {
+            return Math.sqrt(scale(d.cash));
+          })
+          .attr('height', function(d) {
+            return Math.sqrt(scale(d.cash));
+          });
+      }
+
+      // Calculate some draw data
+      dTopGOP = _.map(dTopGOP, function(d, di) {
+        d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
+        d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
+        d.cellEdge = Math.sqrt(scale(d.raised));
+        d.subPoint = (d.id === 'mn-business') ? [w / 1.25, h / 1.3] :
+          (d.id === 'pro-jobs') ? [w / 2.5, h / 1.7] : [w / 2, h / 2];
+        return d;
+      });
 
       // Draw canvas
       $container.html('');
       canvas = d3.select($container[0]).append('svg')
         .attr('width', w).attr('height', h);
 
+      // Draw lines
+      lines = _.filter(dTopGOP, function(d, di) {
+        return _.isObject(d['spent-to']);
+      });
+      lines = _.map(lines, function(d, di) {
+        d['spent-to'].toObject = _.findWhere(dTopGOP, { id: d['spent-to'].to });
+        return d;
+      });
+
+      lines = canvas.selectAll('.group-link')
+        .data(lines).enter()
+        .append('path')
+        .attr('class', 'group-link')
+        .attr('d', function(d) {
+          return line([
+            [d.x, d.y - 2], d.subPoint,
+            [d['spent-to'].toObject.x, d['spent-to'].toObject.y]
+          ]);
+        })
+        .style('stroke-width', function(d) {
+          return scale(d['spent-to'].amount / 225);
+        });
+
       // Draw each group
       groups = canvas.selectAll('.group')
-        .data(dGOPTop).enter()
+        .data(dTopGOP).enter()
         .append('g').attr('class', 'group')
         .attr('transform', function(d, di) {
           // Translate to center bottom of cell, rotate, then shift
-          return 'translate(' +
-            (((cW + margin) * (di % 4)) + (cW / 2) + margin) +
-            ', ' +
-            (((cH + margin) * (Math.floor(di / 4) + 1))) + ') ' +
+          return 'translate(' + d.x + ', ' + d.y + ') ' +
             'rotate(-180) ' +
-            'translate(' + ((Math.sqrt(scale(d.raised)) / 2) * -1) + ', 0)';
+            'translate(' + ((d.cellEdge / 2) * -1) + ', 0)';
         });
 
       // Raised
@@ -183,44 +267,22 @@ require([
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', function(d) {
-          return Math.sqrt(scale(d.raised));
+          return d.cellEdge;
         })
         .attr('height', function(d) {
-          return Math.sqrt(scale(d.raised));
+          return d.cellEdge;
         });
 
-      // Spent
-      raised = groups.selectAll('.spent')
-        .data(function(d) { return [d]; }).enter()
-        .append('rect')
-        .attr('class', function(d) { return 'spent'; })
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', function(d) {
-          return Math.sqrt(scale(d.spent));
-        })
-        .attr('height', function(d) {
-          return Math.sqrt(scale(d.spent));
-        });
-
-      // Spent
-      cash = groups.selectAll('.cash')
-        .data(function(d) { return [d]; }).enter()
-        .append('rect')
-        .attr('class', function(d) { return 'cash'; })
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', function(d) {
-          return Math.sqrt(scale(d.cash));
-        })
-        .attr('height', function(d) {
-          return Math.sqrt(scale(d.cash));
-        });
+      // Z-index doesn't work in SVG
+      drawSpent(true);
+      drawCash(false);
+      drawCash(true);
+      drawSpent(false);
     },
 
-    defaults: {
-      name: 'minnpost-2014-follow-the-money',
-      el: '.minnpost-2014-follow-the-money-container'
+    // Spending on races
+    chartSpending: function() {
+
     }
   });
 

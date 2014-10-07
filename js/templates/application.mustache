@@ -29,7 +29,9 @@
         <div class="cf">
           <div class="chart-label">{{ name }}</div>
           <div class="chart-value">
-            <span style="width: {{ receipts / top20Max * 100 }}%;"></span>
+            <span class="raised" style="width: {{ receipts / top20Max * 100 }}%;"></span>
+            <span class="spent" style="width: {{ expenditures / top20Max * 100 }}%; z-index: {{ (expenditures < cash) ? 10 : 1 }};"></span>
+            <span class="cash" style="width: {{ cash / top20Max * 100 }}%; z-index: {{ (expenditures >= cash) ? 10 : 1 }};"></span>
           </div>
         </div>
       {{/top20}}
