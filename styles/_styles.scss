@@ -121,6 +121,44 @@ body .node-unpublished {
     }
   }
 
+  .chart-gop-v-dfl {
+
+    .chart-label {
+      width: 100%;
+      text-align: left;
+      margin-bottom: .5em;
+      font-size: 1.5em;
+    }
+
+    .chart-value {
+      width: 100%;
+      position: relative;
+      margin-bottom: 3em;
+      height: 2.5em;
+
+      span {
+        height: 3em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.raised {
+          background-color: $raised;
+        }
+
+        &.spent {
+          background-color: $spent;
+        }
+
+        &.cash {
+          display: none;
+          background-color: $cash;
+        }
+      }
+    }
+  }
+
   // Custom breakpoints
   @media screen and (max-width: 768px) {
   }

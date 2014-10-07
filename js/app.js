@@ -43,9 +43,25 @@ require([
         template: tApplication,
         data: {
           top20: _.sortBy(dTop20, 'receipts').reverse(),
-          top20Max: d3.max(dTop20, function(d) { return d.receipts; })
+          top20Max: d3.max(dTop20, function(d) { return d.receipts; }),
+          combined: _.sortBy(dParties, 'raised').reverse(),
+          combinedMax: d3.max(dParties, function(d) { return d.raised; })
         }
       });
+
+      // Determine a max to use with ranges across visualizations
+      this.max = Math.max(
+        d3.max(dTopDFL, function(d) {
+          return Math.max(
+            d3.max(d.raised, function(d) { return d.amount; }) || 0,
+            d3.max(d.spent, function(d) { return d.amount; }) || 0
+          );
+        }),
+        d3.max(dTopGOP, function(d) {
+          return d.raised;
+        })
+      );
+      this.flowScale = 250;
 
       // Create charts
       this.chartDFL3();
@@ -55,6 +71,7 @@ require([
 
     // The big 3
     chartDFL3: function() {
+      var thisApp = this;
       var canvas, groups, raised, spent, lines;
       var $container = this.$('.chart-big-dfl');
       var w = $container.width();
@@ -67,12 +84,7 @@ require([
       var maxEdge = (h * 0.31);
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
-        .domain([0, d3.max(dTopDFL, function(d) {
-          return Math.max(
-            d3.max(d.raised, function(d) { return d.amount; }) || 0,
-            d3.max(d.spent, function(d) { return d.amount; }) || 0
-          );
-        })]);
+        .domain([0, this.max]);
       var line = d3.svg.line().interpolate('basis');
 
       // Edge amount
@@ -111,7 +123,7 @@ require([
           return line([positions[d.name], [w / 2, h / 1.9], positions.abm]);
         })
         .style('stroke-width', function(d) {
-          return scale(d.amount / 225);
+          return scale(d.amount / thisApp.flowScale);
         });
 
       // Draw each group
@@ -149,6 +161,7 @@ require([
 
     // Top GOP
     chartGOPTop: function() {
+      var thisApp = this;
       var canvas, groups, raised, spent, cash, lines;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
@@ -159,9 +172,7 @@ require([
       var maxEdge = Math.min(cW, cH);
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
-        .domain([0, d3.max(dTopGOP, function(d) {
-          return d.raised;
-        })]);
+        .domain([0, this.max]);
       var line = d3.svg.line().interpolate('basis').tension(0.1);
 
       // Draw spent
@@ -245,7 +256,7 @@ require([
           ]);
         })
         .style('stroke-width', function(d) {
-          return scale(d['spent-to'].amount / 225);
+          return Math.max(2, scale(d['spent-to'].amount / thisApp.flowScale));
         });
 
       // Draw each group

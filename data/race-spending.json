@@ -1,21 +1,156 @@
-DFL Outside Spending
-
-Alliance for a Better Minnesota -- Governor ($1,818,313)
-Education Minnesota -- House ($361,700), Governor ($14,263), DFL Party ($455,425)
-AFSCME -- House ($200,000), DFL Party ($300,000)
-SEIU Minn State Council Political Fund -- House ($252,226), Governor ($13,738), DFL Party ($498,305)
-Minn AFL-CIO -- House ($60,000), DFL Party ($28,150)
-Laborers District -- House ($108,746), Governor ($3,500), DFL Party ($181,000)
-MAPE -- House ($28,900)
-
-
-GOP Outside Spending
-
-Freedom Club of Minnesota -- House and Governor (tv ad targets both: $882,777), RPM ($100,000)
-Pro Jobs Majority -- House ($47,329), Governor ($22,758)
-Minn Business Partnership -- House ($48,250)
-Minn Chamber of Commerce Leadership Fund -- House ($21,450)
-Minnesota Jobs Coalition -- House ($41,040) Governor ($39,001)
-Minnesota's Future -- Governor ($51,000)
-Coalition of MN Businesses -- House ($2,850)
-Housing First -- House ($82,500), Governor ($62,030) 
+{
+  "pacs": [
+    {
+      "party": "dfl",
+      "id": "abm",
+      "name": "Alliance for a Better Minnesota",
+      "races": [
+        { "name": "governor", "amount": 1818313 }
+      ]
+    },
+    {
+      "party": "dfl",
+      "id": "edu-mn",
+      "name": "Education Minnesota",
+      "races": [
+        { "name": "governor", "amount": 14263 },
+        { "name": "house", "amount": 361700 },
+        { "name": "party", "amount": 455425 }
+      ]
+    },
+    {
+      "party": "dfl",
+      "id": "afscme",
+      "name": "AFSCME",
+      "races": [
+        { "name": "house", "amount": 200000 },
+        { "name": "party", "amount": 300000 }
+      ]
+    },
+    {
+      "party": "dfl",
+      "id": "seiu",
+      "name": "SEIU Minn State Council Political Fund",
+      "races": [
+        { "name": "governor", "amount": 13738 },
+        { "name": "house", "amount": 252226 },
+        { "name": "party", "amount": 498305 }
+      ]
+    },
+    {
+      "party": "dfl",
+      "id": "mn-afl-cio",
+      "name": "Minn AFL-CIO",
+      "races": [
+        { "name": "house", "amount": 60000 },
+        { "name": "party", "amount": 28150 }
+      ]
+    },
+    {
+      "party": "dfl",
+      "id": "laborers",
+      "name": "Laborers District",
+      "races": [
+        { "name": "governor", "amount": 3500 },
+        { "name": "house", "amount": 108746 },
+        { "name": "party", "amount": 181000 }
+      ]
+    },
+    {
+      "party": "dfl",
+      "id": "mape",
+      "name": "MAPE",
+      "races": [
+        { "name": "house", "amount": 28900 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "freedom",
+      "name": "Freedom Club of Minnesota",
+      "races": [
+        { "name": "house", "amount": 882777 },
+        { "name": "party", "amount": 100000 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "pro-jobs",
+      "name": "Pro Jobs Majority",
+      "races": [
+        { "name": "house", "amount": 47329 },
+        { "name": "governor", "amount": 22758 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-business",
+      "name": "Minn Business Partnership",
+      "races": [
+        { "name": "house", "amount": 48250 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-chamber",
+      "name": "Minn Chamber of Commerce Leadership Fund",
+      "races": [
+        { "name": "house", "amount": 21450 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-jobs",
+      "name": "Minnesota Jobs Coalition",
+      "races": [
+        { "name": "house", "amount": 41040 },
+        { "name": "governor", "amount": 39001 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-future",
+      "name": "Minnesota's Future",
+      "races": [
+        { "name": "governor", "amount": 51000 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "coalition-business",
+      "name": "Coalition of MN Businesses",
+      "races": [
+        { "name": "governor", "amount": 2850 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "housing",
+      "name": "Housing First",
+      "races": [
+        { "name": "house", "amount": 82500 },
+        { "name": "governor", "amount": 62030 }
+      ]
+    }
+  ],
+  "races": [
+    {
+      "id": "house",
+      "name": "House",
+      "dfl-candidate": "DFL Candidates",
+      "gop-candidate": "GOP Candidates"
+    },
+    {
+      "id": "governor",
+      "name": "Governor",
+      "dfl-candidate": "Mark Dayton",
+      "gop-candidate": "Johnson"
+    },
+    {
+      "id": "party",
+      "name": "Political Parties",
+      "dfl-candidate": "DFL Party",
+      "gop-candidate": "GOP Party"
+    }
+  ]
+}
