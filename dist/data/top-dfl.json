@@ -1,0 +1,41 @@
+[
+  {
+    "id": "2014-fund",
+    "name": "2014 Fund",
+    "raised": [
+      { "name": "individuals", "amount": 175600 },
+      { "name": "unions", "amount": 885833 },
+      { "name": "national sources", "amount": 125000 },
+      { "name": "other sources", "amount": 100000 }
+    ],
+    "spent":[
+      { "name": "staffing", "amount": 22370 }
+    ]
+  },
+  {
+    "id": "win-mn",
+    "name": "Win Minnesota",
+    "raised":[
+      { "name": "individuals", "amount": 574300 },
+      { "name": "unions", "amount": 375000 },
+      { "name": "national sources", "amount": 123000 },
+      { "name": "other sources", "amount": 0 }
+    ],
+    "spent": [
+    ]
+  },
+  {
+    "id": "abm",
+    "name": "Alliance for a Better Minnesota",
+    "raised": [
+      { "name": "2014-fund", "amount": 1335000 },
+      { "name": "win-mn", "amount": 733100 },
+      { "name": "other sources", "amount": 10000 }
+    ],
+    "spent":[
+      { "name": "staffing", "amount": 74553 },
+      { "name": "polling", "amount": 267769 },
+      { "name": "online and television ads", "amount": 1839373 }
+    ]
+  }
+]

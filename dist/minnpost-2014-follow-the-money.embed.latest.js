@@ -39126,16 +39126,25 @@ define('base',['jquery', 'underscore', 'backbone', 'lazyload', 'mpFormatters', '
 });
 
 
-define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="component-label">DFL, the Big 3</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-big-dfl">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n    <div class="component-label">GOP, the Network</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-network-gop">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n    <div class="component-label">Top 20</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-top-20">\n      {{#top20}}\n        <div class="cf">\n          <div class="chart-label">{{ name }}</div>\n          <div class="chart-value">\n            <span style="width: {{ receipts / top20Max * 100 }}%;"></span>\n          </div>\n        </div>\n      {{/top20}}\n    </div>\n\n\n\n    <div class="component-label">Spending on races</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-money-to-races">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n    <div class="component-label">GOP vs DFL</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-gop-v-dfl">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n\n\n\n\n\n\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-2014-follow-the-money" target="_blank">Github</a>.</p>\n\n    </div>\n  </div>\n</div>\n';});
+define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="component-label">DFL, the Big 3</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-big-dfl">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n    <div class="component-label">GOP, the Network</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-network-gop">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n    <div class="component-label">Top 20</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-top-20">\n      {{#top20}}\n        <div class="cf">\n          <div class="chart-label">{{ name }}</div>\n          <div class="chart-value">\n            <span class="raised" style="width: {{ receipts / top20Max * 100 }}%;"></span>\n            <span class="spent" style="width: {{ expenditures / top20Max * 100 }}%; z-index: {{ (expenditures < cash) ? 10 : 1 }};"></span>\n            <span class="cash" style="width: {{ cash / top20Max * 100 }}%; z-index: {{ (expenditures >= cash) ? 10 : 1 }};"></span>\n          </div>\n        </div>\n      {{/top20}}\n    </div>\n\n\n\n    <div class="component-label">Spending on races</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-money-to-races">\n      <div class="loading-block"></div>\n    </div>\n\n\n\n    <div class="component-label">GOP vs DFL</div>\n    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>\n\n    <div class="custom-chart chart-gop-v-dfl">\n      {{#combined}}\n        <div class="cf">\n          <div class="chart-label">{{ name }}</div>\n          <div class="chart-value">\n            <span class="raised" style="width: {{ raised / combinedMax * 100 }}%;"></span>\n            <span class="spent" style="width: {{ spent / combinedMax * 100 }}%; z-index: {{ (spent < cash) ? 10 : 1 }};"></span>\n            <span class="cash" style="width: {{ cash / combinedMax * 100 }}%; z-index: {{ (spent >= cash) ? 10 : 1 }};"></span>\n          </div>\n        </div>\n      {{/combined}}\n    </div>\n\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-2014-follow-the-money" target="_blank">Github</a>.</p>\n\n    </div>\n  </div>\n</div>\n';});
 
 
-define('text!../data/dfl-top.json',[],function () { return '[\n  {\n    "id": "2014-fund",\n    "name": "2014 Fund",\n    "raised": [\n      { "name": "ind", "amount": 175600 },\n      { "name": "union", "amount": 885833 },\n      { "name": "nation", "amount": 125000 },\n      { "name": "other", "amount": 100000 }\n    ],\n    "spent":[\n    ]\n  },\n  {\n    "id": "win-mn",\n    "name": "Win Minnesota",\n    "raised":[\n      { "name": "ind", "amount": 574300 },\n      { "name": "union", "amount": 375000 },\n      { "name": "nation", "amount": 123000 },\n      { "name": "other", "amount": 0 }\n    ],\n    "spent": [\n    ]\n  },\n  {\n    "id": "abm",\n    "name": "Alliance for a Better Minnesota",\n    "raised": [\n      { "name": "2014-fund", "amount": 574300 },\n      { "name": "win-mn", "amount": 375000 },\n      { "name": "other", "amount": 10000 }\n    ],\n    "spent":[\n      { "name": "staff", "amount": 74553 },\n      { "name": "polling", "amount": 267769 },\n      { "name": "online_tv", "amount": 1839373 }\n    ]\n  }\n]\n';});
+define('text!templates/tooltip.underscore',[],function () { return '<% if (type === \'topDFL\') { %>\n  <div>\n    <strong><%= d.name %></strong>\n  </div>\n<% } %>\n';});
 
 
-define('text!../data/top-gop.json',[],function () { return '[\n  {\n    "spent": 1033052,\n    "raised": 1144740,\n    "cash": 113142,\n    "spent-to": {\n      "to": "pro-jobs",\n      "amount": 10000\n    },\n    "name": "Freedom Club",\n    "id": "freedom"\n  },\n  {\n    "spent": 112337,\n    "raised": 799794,\n    "cash": 672445,\n    "spent-to": {\n      "to": "housing",\n      "amount": 10000\n    },\n    "name": "Pro Jobs Majority",\n    "id": "pro-jobs"\n  },\n  {\n    "spent": 187543,\n    "raised": 651213,\n    "cash": 466779,\n    "name": "Housing First",\n    "id": "housing"\n  },\n  {\n    "spent": 203974,\n    "raised": 349701,\n    "cash": 177654,\n    "name": "Minn Business Partnership",\n    "id": "mn-business"\n  },\n  {\n    "spent": 154454,\n    "raised": 291425,\n    "cash": 149957,\n    "name": "Minn Chamber of Commerce Leadership Fund",\n    "id": "mn-chamber"\n  },\n  {\n    "spent": 162857,\n    "raised": 258814,\n    "cash": 17617,\n    "name": "Minn Jobs Coalition Legislative Fund",\n    "id": "mn-jobs"\n  },\n  {\n    "spent": 20160,\n    "raised": 227300,\n    "cash": 140321,\n    "name": "Coalition of MN Businesses",\n    "id": "coalition-business"\n  },\n  {\n    "spent": 177883,\n    "raised": 166000,\n    "cash": 1152,\n    "name": "Minnesota’s Future",\n    "id": "mn-future"\n  }\n]\n';});
+define('text!../data/top-dfl.json',[],function () { return '[\n  {\n    "id": "2014-fund",\n    "name": "2014 Fund",\n    "raised": [\n      { "name": "individuals", "amount": 175600 },\n      { "name": "unions", "amount": 885833 },\n      { "name": "national sources", "amount": 125000 },\n      { "name": "other sources", "amount": 100000 }\n    ],\n    "spent":[\n      { "name": "staffing", "amount": 22370 }\n    ]\n  },\n  {\n    "id": "win-mn",\n    "name": "Win Minnesota",\n    "raised":[\n      { "name": "individuals", "amount": 574300 },\n      { "name": "unions", "amount": 375000 },\n      { "name": "national sources", "amount": 123000 },\n      { "name": "other sources", "amount": 0 }\n    ],\n    "spent": [\n    ]\n  },\n  {\n    "id": "abm",\n    "name": "Alliance for a Better Minnesota",\n    "raised": [\n      { "name": "2014-fund", "amount": 1335000 },\n      { "name": "win-mn", "amount": 733100 },\n      { "name": "other sources", "amount": 10000 }\n    ],\n    "spent":[\n      { "name": "staffing", "amount": 74553 },\n      { "name": "polling", "amount": 267769 },\n      { "name": "online and television ads", "amount": 1839373 }\n    ]\n  }\n]\n';});
 
 
-define('text!../data/top-20-all.json',[],function () { return '[\n  {\n    "receipts": 2610187,\n    "expenditures": 2666119,\n    "cash": 98831,\n    "name": "Education Minnesota"\n  },\n  {\n    "receipts": 2303030,\n    "expenditures": 2166770,\n    "cash": 102588,\n    "name": "Alliance for a Better Minnesota"\n  },\n  {\n    "receipts": 1346438,\n    "expenditures": 1335000,\n    "cash": 11438,\n    "name": "2014 Fund"\n  },\n  {\n    "receipts": 1144740,\n    "expenditures": 1033052,\n    "cash": 113142,\n    "name": "Freedom Club"\n  },\n  {\n    "receipts": 1114740,\n    "expenditures": 733100,\n    "cash": 339278,\n    "name": "Win Minnesota"\n  },\n  {\n    "receipts": 929234,\n    "expenditures": 929234,\n    "cash": 0,\n    "name": "AFSCME"\n  },\n  {\n    "receipts": 799794,\n    "expenditures": 112337,\n    "cash": 672445,\n    "name": "Pro Jobs Majority"\n  },\n  {\n    "receipts": 795026,\n    "expenditures": 147431,\n    "cash": 46473,\n    "name": "SEIU Minn State Political Council"\n  },\n  {\n    "receipts": 651213,\n    "expenditures": 566000,\n    "cash": 150424,\n    "name": "Laborers District"\n  },\n  {\n    "receipts": 651213,\n    "expenditures": 187543,\n    "cash": 466779,\n    "name": "Housing First"\n  },\n  {\n    "receipts": 508411,\n    "expenditures": 96631,\n    "cash": 0,\n    "name": "MAPE"\n  },\n  {\n    "receipts": 404808,\n    "expenditures": 349600,\n    "cash": 72851,\n    "name": "Shakopee Mdewakanton Sioux"\n  },\n  {\n    "receipts": 349701,\n    "expenditures": 203974,\n    "cash": 177654,\n    "name": "Minn Business Partnership"\n  },\n  {\n    "receipts": 315102,\n    "expenditures": 281329,\n    "cash": 82976,\n    "name": "Minn AFL-CIO"\n  },\n  {\n    "receipts": 291425,\n    "expenditures": 154454,\n    "cash": 149957,\n    "name": "Minn Chamber of Commerce Leadership Fund"\n  },\n  {\n    "receipts": 258814,\n    "expenditures": 162857,\n    "cash": 17617,\n    "name": "Minn Jobs Coalition Legislative Fund"\n  },\n  {\n    "receipts": 227300,\n    "expenditures": 20160,\n    "cash": 140321,\n    "name": "Coalition of MN Businesses"\n  },\n  {\n    "receipts": 166000,\n    "expenditures": 177883,\n    "cash": 1152,\n    "name": "Minnesota’s Future"\n  },\n  {\n    "receipts": 161000,\n    "expenditures": 161025,\n    "cash": 675,\n    "name": "DLCC for Minnesota"\n  }\n]\n';});
+define('text!../data/top-gop.json',[],function () { return '[\n  {\n    "spent": 112337,\n    "raised": 799794,\n    "cash": 672445,\n    "spent-to": {\n      "to": "mn-jobs",\n      "amount": 15000\n    },\n    "name": "Pro Jobs Majority",\n    "id": "pro-jobs"\n  },\n  {\n    "spent": 203974,\n    "raised": 349701,\n    "cash": 177654,\n    "spent-to": {\n      "to": "coalition-business",\n      "amount": 100000\n    },\n    "name": "Minn Business Partnership",\n    "id": "mn-business"\n  },\n  {\n    "spent": 154454,\n    "raised": 291425,\n    "cash": 149957,\n    "spent-to": {\n      "to": "coalition-business",\n      "amount": 15000\n    },\n    "name": "Minn Chamber of Commerce Leadership Fund",\n    "id": "mn-chamber"\n  },\n  {\n    "spent": 1033052,\n    "raised": 1144740,\n    "cash": 113142,\n    "name": "Freedom Club",\n    "id": "freedom"\n  },\n  {\n    "spent": 162857,\n    "raised": 258814,\n    "cash": 17617,\n    "name": "Minn Jobs Coalition Legislative Fund",\n    "id": "mn-jobs"\n  },\n  {\n    "spent": 20160,\n    "raised": 227300,\n    "cash": 140321,\n    "name": "Coalition of MN Businesses",\n    "id": "coalition-business"\n  },\n  {\n    "spent": 177883,\n    "raised": 166000,\n    "cash": 1152,\n    "name": "Minnesota\'s Future",\n    "id": "mn-future"\n  },\n  {\n    "spent": 187543,\n    "raised": 651213,\n    "cash": 466779,\n    "name": "Housing First",\n    "id": "housing"\n  }\n]\n';});
+
+
+define('text!../data/top-20.json',[],function () { return '[\n  {\n    "receipts": 2610187,\n    "expenditures": 2666119,\n    "cash": 98831,\n    "name": "Education Minnesota"\n  },\n  {\n    "receipts": 2303030,\n    "expenditures": 2166770,\n    "cash": 102588,\n    "name": "Alliance for a Better Minnesota"\n  },\n  {\n    "receipts": 1346438,\n    "expenditures": 1335000,\n    "cash": 11438,\n    "name": "2014 Fund"\n  },\n  {\n    "receipts": 1144740,\n    "expenditures": 1033052,\n    "cash": 113142,\n    "name": "Freedom Club"\n  },\n  {\n    "receipts": 1114740,\n    "expenditures": 733100,\n    "cash": 339278,\n    "name": "Win Minnesota"\n  },\n  {\n    "receipts": 929234,\n    "expenditures": 929234,\n    "cash": 0,\n    "name": "AFSCME"\n  },\n  {\n    "receipts": 799794,\n    "expenditures": 112337,\n    "cash": 672445,\n    "name": "Pro Jobs Majority"\n  },\n  {\n    "receipts": 795026,\n    "expenditures": 147431,\n    "cash": 46473,\n    "name": "SEIU Minn State Political Council"\n  },\n  {\n    "receipts": 651213,\n    "expenditures": 566000,\n    "cash": 150424,\n    "name": "Laborers District"\n  },\n  {\n    "receipts": 651213,\n    "expenditures": 187543,\n    "cash": 466779,\n    "name": "Housing First"\n  },\n  {\n    "receipts": 508411,\n    "expenditures": 96631,\n    "cash": 0,\n    "name": "MAPE"\n  },\n  {\n    "receipts": 404808,\n    "expenditures": 349600,\n    "cash": 72851,\n    "name": "Shakopee Mdewakanton Sioux"\n  },\n  {\n    "receipts": 349701,\n    "expenditures": 203974,\n    "cash": 177654,\n    "name": "Minn Business Partnership"\n  },\n  {\n    "receipts": 315102,\n    "expenditures": 281329,\n    "cash": 82976,\n    "name": "Minn AFL-CIO"\n  },\n  {\n    "receipts": 291425,\n    "expenditures": 154454,\n    "cash": 149957,\n    "name": "Minn Chamber of Commerce Leadership Fund"\n  },\n  {\n    "receipts": 258814,\n    "expenditures": 162857,\n    "cash": 17617,\n    "name": "Minn Jobs Coalition Legislative Fund"\n  },\n  {\n    "receipts": 227300,\n    "expenditures": 20160,\n    "cash": 140321,\n    "name": "Coalition of MN Businesses"\n  },\n  {\n    "receipts": 166000,\n    "expenditures": 177883,\n    "cash": 1152,\n    "name": "Minnesota’s Future"\n  },\n  {\n    "receipts": 161000,\n    "expenditures": 161025,\n    "cash": 675,\n    "name": "DLCC for Minnesota"\n  }\n]\n';});
+
+
+define('text!../data/race-spending.json',[],function () { return '{\n  "pacs": [\n    {\n      "party": "dfl",\n      "id": "abm",\n      "name": "Alliance for a Better Minnesota",\n      "races": [\n        { "name": "governor", "amount": 1818313 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "edu-mn",\n      "name": "Education Minnesota",\n      "races": [\n        { "name": "governor", "amount": 14263 },\n        { "name": "house", "amount": 361700 },\n        { "name": "party", "amount": 455425 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "afscme",\n      "name": "AFSCME",\n      "races": [\n        { "name": "house", "amount": 200000 },\n        { "name": "party", "amount": 300000 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "seiu",\n      "name": "SEIU Minn State Council Political Fund",\n      "races": [\n        { "name": "governor", "amount": 13738 },\n        { "name": "house", "amount": 252226 },\n        { "name": "party", "amount": 498305 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "mn-afl-cio",\n      "name": "Minn AFL-CIO",\n      "races": [\n        { "name": "house", "amount": 60000 },\n        { "name": "party", "amount": 28150 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "laborers",\n      "name": "Laborers District",\n      "races": [\n        { "name": "governor", "amount": 3500 },\n        { "name": "house", "amount": 108746 },\n        { "name": "party", "amount": 181000 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "mape",\n      "name": "MAPE",\n      "races": [\n        { "name": "house", "amount": 28900 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "freedom",\n      "name": "Freedom Club of Minnesota",\n      "races": [\n        { "name": "house", "amount": 882777 },\n        { "name": "party", "amount": 100000 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "pro-jobs",\n      "name": "Pro Jobs Majority",\n      "races": [\n        { "name": "house", "amount": 47329 },\n        { "name": "governor", "amount": 22758 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-business",\n      "name": "Minn Business Partnership",\n      "races": [\n        { "name": "house", "amount": 48250 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-chamber",\n      "name": "Minn Chamber of Commerce Leadership Fund",\n      "races": [\n        { "name": "house", "amount": 21450 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-jobs",\n      "name": "Minnesota Jobs Coalition",\n      "races": [\n        { "name": "house", "amount": 41040 },\n        { "name": "governor", "amount": 39001 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-future",\n      "name": "Minnesota\'s Future",\n      "races": [\n        { "name": "governor", "amount": 51000 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "coalition-business",\n      "name": "Coalition of MN Businesses",\n      "races": [\n        { "name": "governor", "amount": 2850 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "housing",\n      "name": "Housing First",\n      "races": [\n        { "name": "house", "amount": 82500 },\n        { "name": "governor", "amount": 62030 }\n      ]\n    }\n  ],\n  "races": [\n    {\n      "id": "house",\n      "name": "House",\n      "dfl-candidate": "DFL Candidates",\n      "gop-candidate": "GOP Candidates"\n    },\n    {\n      "id": "governor",\n      "name": "Governor",\n      "dfl-candidate": "Mark Dayton",\n      "gop-candidate": "Johnson"\n    },\n    {\n      "id": "party",\n      "name": "Political Parties",\n      "dfl-candidate": "DFL Party",\n      "gop-candidate": "GOP Party"\n    }\n  ]\n}\n';});
+
+
+define('text!../data/combined-parties.json',[],function () { return '[\n  {\n    "id": "dfl",\n    "name": "DFL",\n    "raised": 8628201,\n    "spent": 7014539,\n    "cash": 832683\n  },\n  {\n    "id": "gop",\n    "name": "GOP",\n    "raised": 3888987,\n    "spent": 2052260,\n    "cash": 1739067\n  }\n]\n';});
 
 /**
  * Main application file for: minnpost-2014-follow-the-money
@@ -39149,44 +39158,79 @@ require([
   'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'd3',
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
-  'text!../data/dfl-top.json',
+  'text!templates/tooltip.underscore',
+  'text!../data/top-dfl.json',
   'text!../data/top-gop.json',
-  'text!../data/top-20-all.json'
+  'text!../data/top-20.json',
+  'text!../data/race-spending.json',
+  'text!../data/combined-parties.json'
 ], function(
   $, _, Ractive, RactiveEventsTap, d3, mpConfig, mpFormatters, Base,
-  tApplication,
-  dDFLTop, dGOPTop, dTop20
+  tApplication, tTooltip,
+  dTopDFL, dTopGOP, dTop20, dSpending, dParties
   ) {
   
 
   // Parse JSON data
-  dDFLTop = JSON.parse(dDFLTop);
-  dGOPTop = JSON.parse(dGOPTop);
+  dTopDFL = JSON.parse(dTopDFL);
+  dTopGOP = JSON.parse(dTopGOP);
   dTop20 = JSON.parse(dTop20);
+  dSpending = JSON.parse(dSpending);
+  dParties = JSON.parse(dParties);
+
+  // Create template functions
+  tTooltip = _.template(tTooltip);
 
   // Create new class for app
   var App = Base.BaseApp.extend({
 
-    initialize: function() {
+    defaults: {
+      name: 'minnpost-2014-follow-the-money',
+      el: '.minnpost-2014-follow-the-money-container'
+    },
 
+    // Start app
+    initialize: function() {
       // Create main application view
       this.mainView = new Ractive({
         el: this.$el,
         template: tApplication,
         data: {
           top20: _.sortBy(dTop20, 'receipts').reverse(),
-          top20Max: d3.max(dTop20, function(d) { return d.receipts; })
+          top20Max: d3.max(dTop20, function(d) { return d.receipts; }),
+          combined: _.sortBy(dParties, 'raised').reverse(),
+          combinedMax: d3.max(dParties, function(d) { return d.raised; })
         }
       });
+
+      // Determine a max to use with ranges across visualizations
+      this.max = Math.max(
+        d3.max(dTopDFL, function(d) {
+          return Math.max(
+            d3.max(d.raised, function(d) { return d.amount; }) || 0,
+            d3.max(d.spent, function(d) { return d.amount; }) || 0
+          );
+        }),
+        d3.max(dTopGOP, function(d) {
+          return d.raised;
+        })
+      );
+      this.flowScale = 250;
+
+      // Tooltip
+      this.$tooltip = $('<div class="tooltip mp">');
+      this.$tooltip.appendTo('body');
 
       // Create charts
       this.chartDFL3();
       this.chartGOPTop();
+      this.chartSpending();
     },
 
     // The big 3
     chartDFL3: function() {
-      var canvas, groups, raised, spent, lines;
+      var thisApp = this;
+      var canvas, groups, raised, spent, lines, names;
       var $container = this.$('.chart-big-dfl');
       var w = $container.width();
       var h = 400;
@@ -39198,12 +39242,7 @@ require([
       var maxEdge = (h * 0.31);
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
-        .domain([0, d3.max(dDFLTop, function(d) {
-          return Math.max(
-            d3.max(d.raised, function(d) { return d.amount; }) || 0,
-            d3.max(d.spent, function(d) { return d.amount; }) || 0
-          );
-        })]);
+        .domain([0, this.max]);
       var line = d3.svg.line().interpolate('basis');
 
       // Edge amount
@@ -39216,23 +39255,40 @@ require([
         return function(d, di) {
           if ((xy === 'x' && (di === 0 || di === 2)) ||
             (xy === 'y' &&  (di === 0 || di === 1))) {
-            return edgeAmount(d) * -1;
+            return (edgeAmount(d) * -1) - 1;
           }
           else if ((xy === 'x' && (di === 1 || di === 3)) ||
             (xy === 'y' &&  (di === 2 || di === 3))) {
-            return 0;
+            return 0 + 1;
           }
         };
+      }
+
+      // Add tooltip
+      function addTooltips(elements) {
+        elements.on('mouseover', function(d) {
+          var $this = $(this);
+          d3.select(this).classed('active', true);
+          thisApp.$tooltip.html($this.attr('data-tooltip'))
+            .addClass('active');
+          thisApp.$tooltip
+            .css('left', ($this.offset().left - 30) + 'px')
+            .css('top', ($this.offset().top - thisApp.$tooltip.outerHeight() - 5) + 'px');
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('active', false);
+          thisApp.$tooltip.removeClass('active');
+        });
       }
 
       // Draw canvas
       $container.html('');
       canvas = d3.select($container[0]).append('svg')
-        .attr('width', w).attr('height', h);
+        .attr('width', w).attr('height', h + 30);
 
       // Lines
-      lines = _.filter(dDFLTop[2].raised, function(d, di) {
-        return d.name !== 'other';
+      lines = _.filter(dTopDFL[2].raised, function(d, di) {
+        return d.name !== 'other sources';
       });
       lines = canvas.selectAll('.group-link')
         .data(lines).enter()
@@ -39242,12 +39298,17 @@ require([
           return line([positions[d.name], [w / 2, h / 1.9], positions.abm]);
         })
         .style('stroke-width', function(d) {
-          return scale(d.amount / 200);
+          return scale(d.amount / thisApp.flowScale);
+        })
+        .attr('data-tooltip', function(d) {
+          var name = (d.name === '2014-fund') ? '2014 Fund' : 'Win Minnesota';
+          return mpFormatters.currency(d.amount, 0) + ' transfered from ' + name + ' to ABM.';
         });
+      addTooltips(lines);
 
       // Draw each group
       groups = canvas.selectAll('.group')
-        .data(dDFLTop).enter()
+        .data(dTopDFL).enter()
         .append('g').attr('class', 'group')
         .attr('transform', function(d) {
           return 'translate(' + positions[d.id][0] + ', ' + positions[d.id][1] + ')';
@@ -39259,27 +39320,47 @@ require([
           return (d.id !== 'abm') ? d.raised : [];
         }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'raised ' + d.name; })
+        .attr('class', function(d) { return 'raised ' + mpFormatters.identifier(d.name); })
         .attr('x', positionAmount('x'))
         .attr('y', positionAmount('y'))
         .attr('width', edgeAmount)
-        .attr('height', edgeAmount);
+        .attr('height', edgeAmount)
+        .attr('data-tooltip', function(d) {
+          return 'Raised ' + mpFormatters.currency(d.amount, 0) + ' from ' + d.name + '.';
+        });
+      addTooltips(raised);
 
       // Spent
       spent = groups.selectAll('.spent')
-        .data(function(d) {
-          return d.spent;
-        }).enter()
+        .data(function(d) { return d.spent; }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'spent ' + d.name; })
+        .attr('class', function(d) { return 'spent ' + mpFormatters.identifier(d.name); })
         .attr('x', positionAmount('x'))
         .attr('y', positionAmount('y'))
         .attr('width', edgeAmount)
-        .attr('height', edgeAmount);
+        .attr('height', edgeAmount)
+        .attr('data-tooltip', function(d) {
+          return 'Spent ' + mpFormatters.currency(d.amount, 0) + ' on ' + d.name + '.';
+        });
+      addTooltips(spent);
+
+      // Names
+      names = groups.selectAll('.name')
+        .data(function(d) { return [d]; }).enter()
+        .append('text').attr('class', 'name')
+        .attr('x', function(d) { return 0; })
+        .attr('y', function(d) {
+          return (d.id === '2014-fund') ? h / 7.2 :
+            (d.id === 'win-mn') ? h / 6.9 :
+            (d.id === 'abm') ? h / 2.7 : 0;
+        })
+        .attr('text-anchor', 'middle')
+        .text(function(d) { return d.name; });
     },
 
     // Top GOP
     chartGOPTop: function() {
+      var thisApp = this;
       var canvas, groups, raised, spent, cash, lines;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
@@ -39290,28 +39371,102 @@ require([
       var maxEdge = Math.min(cW, cH);
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
-        .domain([0, d3.max(dGOPTop, function(d) {
-          return d.raised;
-        })]);
+        .domain([0, this.max]);
       var line = d3.svg.line().interpolate('basis');
+
+      // Draw spent
+      function drawSpent(moreThanCash) {
+        groups.selectAll('.spent')
+          .data(function(d) {
+            if (moreThanCash === true) {
+              return (d.spent >= d.cash) ? [d] : [];
+            }
+            else {
+              return (d.spent < d.cash) ? [d] : [];
+            }
+          }).enter()
+          .append('rect')
+          .attr('class', function(d) { return 'spent'; })
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', function(d) {
+            return Math.sqrt(scale(d.spent));
+          })
+          .attr('height', function(d) {
+            return Math.sqrt(scale(d.spent));
+          });
+      }
+
+      // Draw cash
+      function drawCash(moreThanSpent) {
+        groups.selectAll('.cash')
+          .data(function(d){
+            if (moreThanSpent === true) {
+              return (d.cash >= d.spent) ? [d] : [];
+            }
+            else {
+              return (d.cash < d.spent) ? [d] : [];
+            }
+          }).enter()
+          .append('rect')
+          .attr('class', function(d) { return 'cash'; })
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', function(d) {
+            return Math.sqrt(scale(d.cash));
+          })
+          .attr('height', function(d) {
+            return Math.sqrt(scale(d.cash));
+          });
+      }
+
+      // Calculate some draw data
+      dTopGOP = _.map(dTopGOP, function(d, di) {
+        d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
+        d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
+        d.cellEdge = Math.sqrt(scale(d.raised));
+        d.subPoint = (d.id === 'mn-business') ? [w / 1.25, h / 1.3] :
+          (d.id === 'pro-jobs') ? [w / 2.5, h / 1.7] : [w / 2, h / 2];
+        return d;
+      });
 
       // Draw canvas
       $container.html('');
       canvas = d3.select($container[0]).append('svg')
         .attr('width', w).attr('height', h);
 
+      // Draw lines
+      lines = _.filter(dTopGOP, function(d, di) {
+        return _.isObject(d['spent-to']);
+      });
+      lines = _.map(lines, function(d, di) {
+        d['spent-to'].toObject = _.findWhere(dTopGOP, { id: d['spent-to'].to });
+        return d;
+      });
+
+      lines = canvas.selectAll('.group-link')
+        .data(lines).enter()
+        .append('path')
+        .attr('class', 'group-link')
+        .attr('d', function(d) {
+          return line([
+            [d.x, d.y - 2],
+            [d['spent-to'].toObject.x, d['spent-to'].toObject.y]
+          ]);
+        })
+        .style('stroke-width', function(d) {
+          return Math.max(2, scale(d['spent-to'].amount / thisApp.flowScale));
+        });
+
       // Draw each group
       groups = canvas.selectAll('.group')
-        .data(dGOPTop).enter()
+        .data(dTopGOP).enter()
         .append('g').attr('class', 'group')
         .attr('transform', function(d, di) {
           // Translate to center bottom of cell, rotate, then shift
-          return 'translate(' +
-            (((cW + margin) * (di % 4)) + (cW / 2) + margin) +
-            ', ' +
-            (((cH + margin) * (Math.floor(di / 4) + 1))) + ') ' +
+          return 'translate(' + d.x + ', ' + d.y + ') ' +
             'rotate(-180) ' +
-            'translate(' + ((Math.sqrt(scale(d.raised)) / 2) * -1) + ', 0)';
+            'translate(' + ((d.cellEdge / 2) * -1) + ', 0)';
         });
 
       // Raised
@@ -39322,44 +39477,45 @@ require([
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', function(d) {
-          return Math.sqrt(scale(d.raised));
+          return d.cellEdge;
         })
         .attr('height', function(d) {
-          return Math.sqrt(scale(d.raised));
+          return d.cellEdge;
         });
 
-      // Spent
-      raised = groups.selectAll('.spent')
-        .data(function(d) { return [d]; }).enter()
-        .append('rect')
-        .attr('class', function(d) { return 'spent'; })
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', function(d) {
-          return Math.sqrt(scale(d.spent));
-        })
-        .attr('height', function(d) {
-          return Math.sqrt(scale(d.spent));
-        });
-
-      // Spent
-      cash = groups.selectAll('.cash')
-        .data(function(d) { return [d]; }).enter()
-        .append('rect')
-        .attr('class', function(d) { return 'cash'; })
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', function(d) {
-          return Math.sqrt(scale(d.cash));
-        })
-        .attr('height', function(d) {
-          return Math.sqrt(scale(d.cash));
-        });
+      // Z-index doesn't work in SVG
+      drawSpent(true);
+      drawCash(false);
+      drawCash(true);
+      drawSpent(false);
     },
 
-    defaults: {
-      name: 'minnpost-2014-follow-the-money',
-      el: '.minnpost-2014-follow-the-money-container'
+    // Spending on races
+    chartSpending: function() {
+      var thisApp = this;
+      var pacs, canvas, groups, raised, spent, cash, lines;
+      var $container = this.$('.chart-money-to-races');
+      var w = $container.width();
+      var h = 500;
+      var margin = 10;
+      var pacW = ((w - margin * 7) / 8);
+      var pacH = (h / 3) - (margin * 2);
+      var maxPaxEdge = Math.min(pacW, pacH);
+      var scale = d3.scale.linear()
+        .range([0, maxPaxEdge * maxPaxEdge])
+        .domain([0, this.max]);
+      var line = d3.svg.line().interpolate('basis');
+
+      // Calculate some draw data
+      pacs = _.map(dSpending.pacs, function(d, di) {
+        return d;
+      });
+
+      // Draw canvas
+      $container.html('');
+      canvas = d3.select($container[0]).append('svg')
+        .attr('width', w).attr('height', h);
+
     }
   });
 
