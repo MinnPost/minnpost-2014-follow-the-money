@@ -44,7 +44,7 @@ body .tooltip {
   }
 
   .custom-chart {
-    margin-bottom: 5em;
+    margin-bottom: 4em;
   }
 
 
@@ -58,11 +58,6 @@ body .tooltip {
       &.active {
         stroke: $tooltip;
       }
-
-      &.individuals { fill: lighten($raised, 5); }
-      &.unions { fill: $raised; }
-      &.national-sources { fill: darken($raised, 5); }
-      &.other-sources { fill: darken($raised, 10); }
     }
 
     .spent {
@@ -73,11 +68,6 @@ body .tooltip {
       &.active {
         stroke: $tooltip;
       }
-
-      &.staffing { fill: lighten($spent, 5); }
-      &.polling { fill: $spent; }
-      &.online-and-television-ads { fill: darken($spent, 5); }
-      &.other-sources { fill: darken($spent, 10); }
     }
 
     .group-link {
@@ -120,7 +110,7 @@ body .tooltip {
       fill: none;
       stroke: $flow;
       stroke-width: 2;
-      stroke-linecap: round;
+      stroke-linecap: butt;
     }
   }
 

@@ -3,6 +3,23 @@
 
   <div class="content-container">
 
+  <div class="component-label">GOP vs DFL</div>
+  <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>
+
+  <div class="custom-chart chart-gop-v-dfl">
+    {{#combined}}
+      <div class="cf">
+        <div class="chart-label">{{ name }}</div>
+        <div class="chart-value">
+          <span class="raised" style="width: {{ raised / combinedMax * 100 }}%;"></span>
+          <span class="spent" style="width: {{ spent / combinedMax * 100 }}%; z-index: {{ (spent < cash) ? 10 : 1 }};"></span>
+          <span class="cash" style="width: {{ cash / combinedMax * 100 }}%; z-index: {{ (spent >= cash) ? 10 : 1 }};"></span>
+        </div>
+      </div>
+    {{/combined}}
+  </div>
+
+
     <div class="component-label">DFL, the Big 3</div>
     <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>
 
@@ -44,24 +61,6 @@
 
     <div class="custom-chart chart-money-to-races">
       <div class="loading-block"></div>
-    </div>
-
-
-
-    <div class="component-label">GOP vs DFL</div>
-    <p class="caption">The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  The Big 3 do stuff here.  </p>
-
-    <div class="custom-chart chart-gop-v-dfl">
-      {{#combined}}
-        <div class="cf">
-          <div class="chart-label">{{ name }}</div>
-          <div class="chart-value">
-            <span class="raised" style="width: {{ raised / combinedMax * 100 }}%;"></span>
-            <span class="spent" style="width: {{ spent / combinedMax * 100 }}%; z-index: {{ (spent < cash) ? 10 : 1 }};"></span>
-            <span class="cash" style="width: {{ cash / combinedMax * 100 }}%; z-index: {{ (spent >= cash) ? 10 : 1 }};"></span>
-          </div>
-        </div>
-      {{/combined}}
     </div>
 
   </div>

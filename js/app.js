@@ -58,16 +58,15 @@ require([
       // Determine a max to use with ranges across visualizations
       this.max = Math.max(
         d3.max(dTopDFL, function(d) {
-          return Math.max(
-            d3.max(d.raised, function(d) { return d.amount; }) || 0,
-            d3.max(d.spent, function(d) { return d.amount; }) || 0
-          );
+          return Math.max(d.raised, d.spent);
         }),
         d3.max(dTopGOP, function(d) {
-          return d.raised;
+          return Math.max(d.raised, d.spent);
         })
       );
-      this.flowScale = 250;
+      this.pacBoxH = this.pacBoxW = (this.$el.width() / 4) - 20;
+      this.paxBoxMargin = 20;
+      this.flowScale = 275;
 
       // Tooltip
       this.$tooltip = $('<div class="tooltip mp">');
@@ -85,36 +84,11 @@ require([
       var canvas, groups, raised, spent, lines, names;
       var $container = this.$('.chart-big-dfl');
       var w = $container.width();
-      var h = 400;
-      var positions = {
-        '2014-fund': [w * 0.25, h * 0.3333],
-        'win-mn': [w * 0.75, h * 0.3333],
-        'abm': [w * 0.5, h * 0.66666]
-      };
-      var maxEdge = (h * 0.31);
+      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
       var scale = d3.scale.linear()
-        .range([0, maxEdge * maxEdge])
+        .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
-      var line = d3.svg.line().interpolate('basis');
-
-      // Edge amount
-      function edgeAmount(d) {
-        return Math.sqrt(scale(d.amount));
-      }
-
-      // Amount positions
-      function positionAmount(xy) {
-        return function(d, di) {
-          if ((xy === 'x' && (di === 0 || di === 2)) ||
-            (xy === 'y' &&  (di === 0 || di === 1))) {
-            return (edgeAmount(d) * -1) - 1;
-          }
-          else if ((xy === 'x' && (di === 1 || di === 3)) ||
-            (xy === 'y' &&  (di === 2 || di === 3))) {
-            return 0 + 1;
-          }
-        };
-      }
+      var line = d3.svg.line();
 
       // Add tooltip
       function addTooltips(elements) {
@@ -133,28 +107,54 @@ require([
         });
       }
 
+      // Add some draw info to data
+      dTopDFL = _.map(dTopDFL, function(d, di) {
+        d.x = w / 6;
+        d.y = h / 2 - thisApp.paxBoxMargin;
+        if (d.id === 'win-mn') {
+          d.x = d.x * 5;
+        }
+        if (d.id === 'abm') {
+          d.x = w / 2;
+          d.y = h - thisApp.paxBoxMargin;
+        }
+        d.cellEdge = Math.sqrt(scale(d.raised));
+        return d;
+      });
+
       // Draw canvas
       $container.html('');
       canvas = d3.select($container[0]).append('svg')
-        .attr('width', w).attr('height', h + 30);
+        .attr('width', w).attr('height', h);
 
       // Lines
-      lines = _.filter(dTopDFL[2].raised, function(d, di) {
-        return d.name !== 'other sources';
+      lines = _.filter(dTopDFL, function(d, di) {
+        return _.isObject(d['spent-to']);
+      });
+      lines = _.map(lines, function(d, di) {
+        d['spent-to'].toObject = _.findWhere(dTopDFL, { id: d['spent-to'].to });
+        return d;
       });
       lines = canvas.selectAll('.group-link')
         .data(lines).enter()
         .append('path')
         .attr('class', 'group-link')
         .attr('d', function(d) {
-          return line([positions[d.name], [w / 2, h / 1.9], positions.abm]);
+          return line([
+            [d.x, d.y - (d.cellEdge / 2)],
+            [
+              d['spent-to'].toObject.x,
+              d['spent-to'].toObject.y - (d['spent-to'].toObject.cellEdge / 2)
+            ]
+          ]);
         })
         .style('stroke-width', function(d) {
-          return scale(d.amount / thisApp.flowScale);
+          return Math.max(2, scale(d['spent-to'].amount / thisApp.flowScale));
         })
         .attr('data-tooltip', function(d) {
           var name = (d.name === '2014-fund') ? '2014 Fund' : 'Win Minnesota';
-          return mpFormatters.currency(d.amount, 0) + ' transfered from ' + name + ' to ABM.';
+          return mpFormatters.currency(d['spent-to'].amount, 0) +
+            ' transfered from ' + d.name + ' to ABM.';
         });
       addTooltips(lines);
 
@@ -162,49 +162,52 @@ require([
       groups = canvas.selectAll('.group')
         .data(dTopDFL).enter()
         .append('g').attr('class', 'group')
-        .attr('transform', function(d) {
-          return 'translate(' + positions[d.id][0] + ', ' + positions[d.id][1] + ')';
+        .attr('transform', function(d, di) {
+          // Translate to center bottom of cell, rotate, then shift
+          return 'translate(' + d.x + ', ' + d.y + ') ' +
+            'rotate(-180) ' +
+            'translate(' + ((d.cellEdge / 2) * -1) + ', 0)';
         });
 
       // Raised
       raised = groups.selectAll('.raised')
-        .data(function(d) {
-          return (d.id !== 'abm') ? d.raised : [];
-        }).enter()
+        .data(function(d) { return [d]; }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'raised ' + mpFormatters.identifier(d.name); })
-        .attr('x', positionAmount('x'))
-        .attr('y', positionAmount('y'))
-        .attr('width', edgeAmount)
-        .attr('height', edgeAmount)
-        .attr('data-tooltip', function(d) {
-          return 'Raised ' + mpFormatters.currency(d.amount, 0) + ' from ' + d.name + '.';
+        .attr('class', function(d) { return 'raised'; })
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', function(d) {
+          return d.cellEdge;
+        })
+        .attr('height', function(d) {
+          return d.cellEdge;
         });
       addTooltips(raised);
 
       // Spent
       spent = groups.selectAll('.spent')
-        .data(function(d) { return d.spent; }).enter()
+        .data(function(d) { return [d]; }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'spent ' + mpFormatters.identifier(d.name); })
-        .attr('x', positionAmount('x'))
-        .attr('y', positionAmount('y'))
-        .attr('width', edgeAmount)
-        .attr('height', edgeAmount)
-        .attr('data-tooltip', function(d) {
-          return 'Spent ' + mpFormatters.currency(d.amount, 0) + ' on ' + d.name + '.';
+        .attr('class', function(d) { return 'spent'; })
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', function(d) {
+          return Math.sqrt(scale(d.spent));
+        })
+        .attr('height', function(d) {
+          return Math.sqrt(scale(d.spent));
         });
       addTooltips(spent);
 
       // Names
-      names = groups.selectAll('.name')
-        .data(function(d) { return [d]; }).enter()
+      names = canvas.selectAll('.name')
+        .data(dTopDFL).enter()
         .append('text').attr('class', 'name')
-        .attr('x', function(d) { return 0; })
+        .attr('x', function(d) { return d.x; })
         .attr('y', function(d) {
-          return (d.id === '2014-fund') ? h / 7.2 :
-            (d.id === 'win-mn') ? h / 6.9 :
-            (d.id === 'abm') ? h / 2.7 : 0;
+          return (d.id === '2014-fund') ? d.y - d.cellEdge - 10 :
+            (d.id === 'win-mn') ? d.y - d.cellEdge - 10 :
+            (d.id === 'abm') ? d.y + 20 : 0;
         })
         .attr('text-anchor', 'middle')
         .text(function(d) { return d.name; });
@@ -213,16 +216,15 @@ require([
     // Top GOP
     chartGOPTop: function() {
       var thisApp = this;
-      var canvas, groups, raised, spent, cash, lines;
+      var canvas, groups, raised, spent, cash, lines, names;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
-      var h = 400;
+      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
       var margin = 10;
-      var cW = ((w - margin * 5) / 4);
-      var cH = (h / 2) - margin;
-      var maxEdge = Math.min(cW, cH);
+      var cW = this.pacBoxH;
+      var cH = this.pacBoxH;
       var scale = d3.scale.linear()
-        .range([0, maxEdge * maxEdge])
+        .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
       var line = d3.svg.line().interpolate('basis');
 
@@ -277,8 +279,6 @@ require([
         d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
         d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
         d.cellEdge = Math.sqrt(scale(d.raised));
-        d.subPoint = (d.id === 'mn-business') ? [w / 1.25, h / 1.3] :
-          (d.id === 'pro-jobs') ? [w / 2.5, h / 1.7] : [w / 2, h / 2];
         return d;
       });
 
@@ -340,6 +340,15 @@ require([
       drawCash(false);
       drawCash(true);
       drawSpent(false);
+
+      // Names
+      names = canvas.selectAll('.name')
+        .data(dTopGOP).enter()
+        .append('text').attr('class', 'name')
+        .attr('x', function(d) { return d.x; })
+        .attr('y', function(d) { return d.y + 20; })
+        .attr('text-anchor', 'middle')
+        .text(function(d) { return d.name; });
     },
 
     // Spending on races
