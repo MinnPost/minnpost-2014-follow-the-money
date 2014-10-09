@@ -6,7 +6,7 @@
 $space: 1em;
 
 $raised: #32955D;
-$spent: #955D32;
+$spent: #BBB33E;
 $cash: #958F32;
 $flow: #7A7A7A;
 
@@ -111,6 +111,8 @@ body .node-unpublished {
 
         &.spent {
           background-color: $spent;
+          height: 1.25em;
+          top: .25em;
         }
 
         &.cash {
@@ -149,6 +151,8 @@ body .node-unpublished {
 
         &.spent {
           background-color: $spent;
+          height: 2.5em;
+          top: .5em;
         }
 
         &.cash {
