@@ -10,14 +10,16 @@ require([
   'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'd3',
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
+  'text!templates/tooltip.underscore',
   'text!../data/top-dfl.json',
   'text!../data/top-gop.json',
   'text!../data/top-20.json',
+  'text!../data/race-spending.json',
   'text!../data/combined-parties.json'
 ], function(
   $, _, Ractive, RactiveEventsTap, d3, mpConfig, mpFormatters, Base,
-  tApplication,
-  dTopDFL, dTopGOP, dTop20, dParties
+  tApplication, tTooltip,
+  dTopDFL, dTopGOP, dTop20, dSpending, dParties
   ) {
   'use strict';
 
@@ -25,7 +27,11 @@ require([
   dTopDFL = JSON.parse(dTopDFL);
   dTopGOP = JSON.parse(dTopGOP);
   dTop20 = JSON.parse(dTop20);
+  dSpending = JSON.parse(dSpending);
   dParties = JSON.parse(dParties);
+
+  // Create template functions
+  tTooltip = _.template(tTooltip);
 
   // Create new class for app
   var App = Base.BaseApp.extend({
@@ -63,6 +69,10 @@ require([
       );
       this.flowScale = 250;
 
+      // Tooltip
+      this.$tooltip = $('<div class="tooltip mp">');
+      this.$tooltip.appendTo('body');
+
       // Create charts
       this.chartDFL3();
       this.chartGOPTop();
@@ -72,7 +82,7 @@ require([
     // The big 3
     chartDFL3: function() {
       var thisApp = this;
-      var canvas, groups, raised, spent, lines;
+      var canvas, groups, raised, spent, lines, names;
       var $container = this.$('.chart-big-dfl');
       var w = $container.width();
       var h = 400;
@@ -97,23 +107,40 @@ require([
         return function(d, di) {
           if ((xy === 'x' && (di === 0 || di === 2)) ||
             (xy === 'y' &&  (di === 0 || di === 1))) {
-            return edgeAmount(d) * -1;
+            return (edgeAmount(d) * -1) - 1;
           }
           else if ((xy === 'x' && (di === 1 || di === 3)) ||
             (xy === 'y' &&  (di === 2 || di === 3))) {
-            return 0;
+            return 0 + 1;
           }
         };
+      }
+
+      // Add tooltip
+      function addTooltips(elements) {
+        elements.on('mouseover', function(d) {
+          var $this = $(this);
+          d3.select(this).classed('active', true);
+          thisApp.$tooltip.html($this.attr('data-tooltip'))
+            .addClass('active');
+          thisApp.$tooltip
+            .css('left', ($this.offset().left - 30) + 'px')
+            .css('top', ($this.offset().top - thisApp.$tooltip.outerHeight() - 5) + 'px');
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('active', false);
+          thisApp.$tooltip.removeClass('active');
+        });
       }
 
       // Draw canvas
       $container.html('');
       canvas = d3.select($container[0]).append('svg')
-        .attr('width', w).attr('height', h);
+        .attr('width', w).attr('height', h + 30);
 
       // Lines
       lines = _.filter(dTopDFL[2].raised, function(d, di) {
-        return d.name !== 'other';
+        return d.name !== 'other sources';
       });
       lines = canvas.selectAll('.group-link')
         .data(lines).enter()
@@ -124,7 +151,12 @@ require([
         })
         .style('stroke-width', function(d) {
           return scale(d.amount / thisApp.flowScale);
+        })
+        .attr('data-tooltip', function(d) {
+          var name = (d.name === '2014-fund') ? '2014 Fund' : 'Win Minnesota';
+          return mpFormatters.currency(d.amount, 0) + ' transfered from ' + name + ' to ABM.';
         });
+      addTooltips(lines);
 
       // Draw each group
       groups = canvas.selectAll('.group')
@@ -140,23 +172,42 @@ require([
           return (d.id !== 'abm') ? d.raised : [];
         }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'raised ' + d.name; })
+        .attr('class', function(d) { return 'raised ' + mpFormatters.identifier(d.name); })
         .attr('x', positionAmount('x'))
         .attr('y', positionAmount('y'))
         .attr('width', edgeAmount)
-        .attr('height', edgeAmount);
+        .attr('height', edgeAmount)
+        .attr('data-tooltip', function(d) {
+          return 'Raised ' + mpFormatters.currency(d.amount, 0) + ' from ' + d.name + '.';
+        });
+      addTooltips(raised);
 
       // Spent
       spent = groups.selectAll('.spent')
-        .data(function(d) {
-          return d.spent;
-        }).enter()
+        .data(function(d) { return d.spent; }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'spent ' + d.name; })
+        .attr('class', function(d) { return 'spent ' + mpFormatters.identifier(d.name); })
         .attr('x', positionAmount('x'))
         .attr('y', positionAmount('y'))
         .attr('width', edgeAmount)
-        .attr('height', edgeAmount);
+        .attr('height', edgeAmount)
+        .attr('data-tooltip', function(d) {
+          return 'Spent ' + mpFormatters.currency(d.amount, 0) + ' on ' + d.name + '.';
+        });
+      addTooltips(spent);
+
+      // Names
+      names = groups.selectAll('.name')
+        .data(function(d) { return [d]; }).enter()
+        .append('text').attr('class', 'name')
+        .attr('x', function(d) { return 0; })
+        .attr('y', function(d) {
+          return (d.id === '2014-fund') ? h / 7.2 :
+            (d.id === 'win-mn') ? h / 6.9 :
+            (d.id === 'abm') ? h / 2.7 : 0;
+        })
+        .attr('text-anchor', 'middle')
+        .text(function(d) { return d.name; });
     },
 
     // Top GOP
@@ -173,7 +224,7 @@ require([
       var scale = d3.scale.linear()
         .range([0, maxEdge * maxEdge])
         .domain([0, this.max]);
-      var line = d3.svg.line().interpolate('basis').tension(0.1);
+      var line = d3.svg.line().interpolate('basis');
 
       // Draw spent
       function drawSpent(moreThanCash) {
@@ -251,7 +302,7 @@ require([
         .attr('class', 'group-link')
         .attr('d', function(d) {
           return line([
-            [d.x, d.y - 2], d.subPoint,
+            [d.x, d.y - 2],
             [d['spent-to'].toObject.x, d['spent-to'].toObject.y]
           ]);
         })
@@ -293,6 +344,29 @@ require([
 
     // Spending on races
     chartSpending: function() {
+      var thisApp = this;
+      var pacs, canvas, groups, raised, spent, cash, lines;
+      var $container = this.$('.chart-money-to-races');
+      var w = $container.width();
+      var h = 500;
+      var margin = 10;
+      var pacW = ((w - margin * 7) / 8);
+      var pacH = (h / 3) - (margin * 2);
+      var maxPaxEdge = Math.min(pacW, pacH);
+      var scale = d3.scale.linear()
+        .range([0, maxPaxEdge * maxPaxEdge])
+        .domain([0, this.max]);
+      var line = d3.svg.line().interpolate('basis');
+
+      // Calculate some draw data
+      pacs = _.map(dSpending.pacs, function(d, di) {
+        return d;
+      });
+
+      // Draw canvas
+      $container.html('');
+      canvas = d3.select($container[0]).append('svg')
+        .attr('width', w).attr('height', h);
 
     }
   });

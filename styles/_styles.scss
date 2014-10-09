@@ -9,11 +9,27 @@ $raised: #32955D;
 $spent: #BBB33E;
 $cash: #958F32;
 $flow: #7A7A7A;
+$tooltip: #222222;
 
 
 // This makes the unpublished background not as annoying
 body .node-unpublished {
   background-repeat: no-repeat;
+}
+
+// Tooltip
+body .tooltip {
+  display: none;
+  border: 1px solid $tooltip;
+  background-color: #FFFFFF;
+  padding: 0.5em 1em;
+  position: absolute;
+  @include border-radius(3px);
+  max-width: 250px;
+
+  &.active {
+    display: block;
+  }
 }
 
 // Wrap everything for specificity
@@ -37,13 +53,31 @@ body .node-unpublished {
     .raised {
       fill: $raised;
       stroke: #FFFFFF;
-      stroke-width: 2;
+      stroke-width: 1;
+
+      &.active {
+        stroke: $tooltip;
+      }
+
+      &.individuals { fill: lighten($raised, 5); }
+      &.unions { fill: $raised; }
+      &.national-sources { fill: darken($raised, 5); }
+      &.other-sources { fill: darken($raised, 10); }
     }
 
     .spent {
       fill: $spent;
       stroke: #FFFFFF;
-      stroke-width: 2;
+      stroke-width: 1;
+
+      &.active {
+        stroke: $tooltip;
+      }
+
+      &.staffing { fill: lighten($spent, 5); }
+      &.polling { fill: $spent; }
+      &.online-and-television-ads { fill: darken($spent, 5); }
+      &.other-sources { fill: darken($spent, 10); }
     }
 
     .group-link {
@@ -51,6 +85,15 @@ body .node-unpublished {
       stroke: $flow;
       stroke-width: 2;
       stroke-linecap: butt;
+
+      &.active {
+        stroke: lighten($flow, 10);
+      }
+    }
+
+    .name {
+      color: #404040;
+      font-size: 1em;
     }
   }
 
