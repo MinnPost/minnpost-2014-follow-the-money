@@ -18,18 +18,10 @@ body .node-unpublished {
 }
 
 // Tooltip
-body .tooltip {
-  display: none;
-  border: 1px solid $tooltip;
-  background-color: #FFFFFF;
-  padding: 0.5em 1em;
-  position: absolute;
-  @include border-radius(3px);
-  max-width: 250px;
-
-  &.active {
-    display: block;
-  }
+body .mp.inner-tooltip {
+  text-align: left;
+  font-size: 1em;
+  padding: 0.25em 0.5em;
 }
 
 // Wrap everything for specificity
@@ -81,11 +73,6 @@ body .tooltip {
         stroke: lighten($flow, 10);
       }
     }
-
-    .name {
-      color: #404040;
-      font-size: 1em;
-    }
   }
 
 
@@ -112,6 +99,17 @@ body .tooltip {
       stroke: $flow;
       stroke-width: 2;
       stroke-linecap: butt;
+    }
+
+    .name, .name div, .name body {
+      color: #404040;
+      background-color: transparent;
+      text-align: center;
+    }
+
+    .name div {
+      font-size: 0.85em;
+      background-color: rgba(230, 230, 230, 0.4);
     }
   }
 

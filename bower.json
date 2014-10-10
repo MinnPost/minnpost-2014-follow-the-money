@@ -24,7 +24,8 @@
     "minnpost-styles": "master",
     "rgrove-lazyload": "*",
     "backbone": "~1.1.2",
-    "d3": "~3.4.11"
+    "d3": "~3.4.11",
+    "qtip2": "~2.2.1"
   },
   "dependencyMap": {
     "requirejs": {
@@ -92,6 +93,15 @@
         "d3/d3"
       ],
       "returns": "d3"
+    },
+    "bower-qtip2": {
+      "js": [
+        "qtip2/jquery.qtip"
+      ],
+      "css": [
+        "qtip2/jquery.qtip"
+      ],
+      "returns": "qtip"
     },
     "minnpost-styles": {
       "rname": "mpStyles",

@@ -7,7 +7,7 @@
 
 // Create main application
 require([
-  'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'd3',
+  'jquery', 'underscore', 'ractive', 'ractive-events-tap', 'd3', 'qtip',
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
   'text!templates/tooltip.underscore',
@@ -17,7 +17,7 @@ require([
   'text!../data/race-spending.json',
   'text!../data/combined-parties.json'
 ], function(
-  $, _, Ractive, RactiveEventsTap, d3, mpConfig, mpFormatters, Base,
+  $, _, Ractive, RactiveEventsTap, d3, qtip, mpConfig, mpFormatters, Base,
   tApplication, tTooltip,
   dTopDFL, dTopGOP, dTop20, dSpending, dParties
   ) {
@@ -48,12 +48,22 @@ require([
         el: this.$el,
         template: tApplication,
         data: {
-          top20: _.sortBy(dTop20, 'receipts').reverse(),
-          top20Max: d3.max(dTop20, function(d) { return d.receipts; }),
-          combined: _.sortBy(dParties, 'raised').reverse(),
+          top20: _.map(_.sortBy(dTop20, 'raised').reverse(), function(d, di) {
+            d.tooltip = tTooltip({ d: d, f: mpFormatters });
+            return d;
+          }),
+          top20Max: d3.max(dTop20, function(d) { return d.raised; }),
+          combined: _.map(_.sortBy(dParties, 'raised').reverse(), function(d, di) {
+            d.tooltip = tTooltip({ d: d, f: mpFormatters });
+            return d;
+          }),
           combinedMax: d3.max(dParties, function(d) { return d.raised; })
         }
       });
+
+      // Tooltips
+      this.addTooltips('.chart-top-20 .chart-value');
+      this.addTooltips('.chart-gop-v-dfl .chart-value');
 
       // Determine a max to use with ranges across visualizations
       this.max = Math.max(
@@ -66,7 +76,12 @@ require([
       );
       this.pacBoxH = this.pacBoxW = (this.$el.width() / 4) - 20;
       this.paxBoxMargin = 20;
-      this.flowScale = 275;
+      this.scale = d3.scale.linear()
+        .range([0, this.pacBoxH])
+        .domain([0, this.max]);
+      this.areaScale = d3.scale.linear()
+        .range([0, this.pacBoxH * this.pacBoxH])
+        .domain([0, this.max]);
 
       // Tooltip
       this.$tooltip = $('<div class="tooltip mp">');
@@ -78,49 +93,26 @@ require([
       this.chartSpending();
     },
 
-    // The big 3
-    chartDFL3: function() {
+    // Add tooltips
+    addTooltips: function(selector, options) {
+      options = options || {};
+      $(selector).qtip($.extend(true, {}, {
+        position: {
+          my: 'bottom center',
+          at: 'top center',
+          target: 'mouse'
+        },
+        style: {
+          classes: 'qtip-light'
+        }
+      }, options));
+    },
+
+    // Draw network chart
+    chartNetwork: function($container, data, w, h) {
       var thisApp = this;
       var canvas, groups, raised, spent, lines, names;
-      var $container = this.$('.chart-big-dfl');
-      var w = $container.width();
-      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
-      var scale = d3.scale.linear()
-        .range([0, this.pacBoxH * this.pacBoxH])
-        .domain([0, this.max]);
       var line = d3.svg.line();
-
-      // Add tooltip
-      function addTooltips(elements) {
-        elements.on('mouseover', function(d) {
-          var $this = $(this);
-          d3.select(this).classed('active', true);
-          thisApp.$tooltip.html($this.attr('data-tooltip'))
-            .addClass('active');
-          thisApp.$tooltip
-            .css('left', ($this.offset().left - 30) + 'px')
-            .css('top', ($this.offset().top - thisApp.$tooltip.outerHeight() - 5) + 'px');
-        })
-        .on('mouseout', function(d) {
-          d3.select(this).classed('active', false);
-          thisApp.$tooltip.removeClass('active');
-        });
-      }
-
-      // Add some draw info to data
-      dTopDFL = _.map(dTopDFL, function(d, di) {
-        d.x = w / 6;
-        d.y = h / 2 - thisApp.paxBoxMargin;
-        if (d.id === 'win-mn') {
-          d.x = d.x * 5;
-        }
-        if (d.id === 'abm') {
-          d.x = w / 2;
-          d.y = h - thisApp.paxBoxMargin;
-        }
-        d.cellEdge = Math.sqrt(scale(d.raised));
-        return d;
-      });
 
       // Draw canvas
       $container.html('');
@@ -128,12 +120,8 @@ require([
         .attr('width', w).attr('height', h);
 
       // Lines
-      lines = _.filter(dTopDFL, function(d, di) {
+      lines = _.filter(data, function(d, di) {
         return _.isObject(d['spent-to']);
-      });
-      lines = _.map(lines, function(d, di) {
-        d['spent-to'].toObject = _.findWhere(dTopDFL, { id: d['spent-to'].to });
-        return d;
       });
       lines = canvas.selectAll('.group-link')
         .data(lines).enter()
@@ -149,24 +137,21 @@ require([
           ]);
         })
         .style('stroke-width', function(d) {
-          return Math.max(2, scale(d['spent-to'].amount / thisApp.flowScale));
-        })
-        .attr('data-tooltip', function(d) {
-          var name = (d.name === '2014-fund') ? '2014 Fund' : 'Win Minnesota';
-          return mpFormatters.currency(d['spent-to'].amount, 0) +
-            ' transfered from ' + d.name + ' to ABM.';
+          return Math.max(2, thisApp.scale(d['spent-to'].amount) / 1.5);
         });
-      addTooltips(lines);
 
-      // Draw each group
+      // Draw each group for each square for each pac
       groups = canvas.selectAll('.group')
-        .data(dTopDFL).enter()
+        .data(data).enter()
         .append('g').attr('class', 'group')
         .attr('transform', function(d, di) {
           // Translate to center bottom of cell, rotate, then shift
           return 'translate(' + d.x + ', ' + d.y + ') ' +
             'rotate(-180) ' +
             'translate(' + ((d.cellEdge / 2) * -1) + ', 0)';
+        })
+        .attr('title', function(d) {
+          return tTooltip({ d: d, f: mpFormatters });
         });
 
       // Raised
@@ -182,7 +167,6 @@ require([
         .attr('height', function(d) {
           return d.cellEdge;
         });
-      addTooltips(raised);
 
       // Spent
       spent = groups.selectAll('.spent')
@@ -192,163 +176,98 @@ require([
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', function(d) {
-          return Math.sqrt(scale(d.spent));
+          return Math.sqrt(thisApp.areaScale(d.spent));
         })
         .attr('height', function(d) {
-          return Math.sqrt(scale(d.spent));
+          return Math.sqrt(thisApp.areaScale(d.spent));
         });
-      addTooltips(spent);
 
       // Names
       names = canvas.selectAll('.name')
-        .data(dTopDFL).enter()
-        .append('text').attr('class', 'name')
-        .attr('x', function(d) { return d.x; })
-        .attr('y', function(d) {
-          return (d.id === '2014-fund') ? d.y - d.cellEdge - 10 :
-            (d.id === 'win-mn') ? d.y - d.cellEdge - 10 :
-            (d.id === 'abm') ? d.y + 20 : 0;
-        })
-        .attr('text-anchor', 'middle')
-        .text(function(d) { return d.name; });
+        .data(data).enter()
+        .append('foreignObject')
+          .attr('class', function(d) { return 'name'; })
+          .attr('x', function(d) { return d.nameX || d.x || 0; })
+          .attr('y', function(d) { return d.nameY || d.y || 0; })
+          .attr('width', (this.pacBoxH - this.paxBoxMargin))
+          .attr('height', 100)
+          .append('xhtml:body')
+            .attr('class', 'mp')
+          .append('xhtml:div')
+          .style({})
+          .html(function(d) { return d.name; });
+
+
+      // Add tooltips
+      this.addTooltips($container.find('[title]'));
+    },
+
+    // The big 3
+    chartDFL3: function() {
+      var thisApp = this;
+      var $container = this.$('.chart-big-dfl');
+      var w = $container.width();
+      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
+
+      // Add some draw and other info to data
+      var networkData = _.map(dTopDFL, function(d, di) {
+        d.x = w / 6;
+        d.y = h / 2 - thisApp.paxBoxMargin;
+        if (d.id === 'win-mn') {
+          d.x = d.x * 5;
+        }
+        if (d.id === 'abm') {
+          d.x = w / 2;
+          d.y = h - thisApp.paxBoxMargin;
+        }
+
+        d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
+
+        d.nameX = d.x - (thisApp.pacBoxH / 2);
+        d.nameY = (d.id === '2014-fund') ? d.y - d.cellEdge - 10 :
+          (d.id === 'win-mn') ? d.y - d.cellEdge - 10 :
+          (d.id === 'abm') ? d.y + 20 : 0;
+        return d;
+      });
+      networkData = _.map(networkData, function(d) {
+        if (d['spent-to']) {
+          d['spent-to'].toObject = _.findWhere(networkData, { id: d['spent-to'].to });
+        }
+        return d;
+      });
+
+      // Network
+      this.chartNetwork($container, networkData, w, h);
     },
 
     // Top GOP
     chartGOPTop: function() {
       var thisApp = this;
-      var canvas, groups, raised, spent, cash, lines, names;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
       var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
       var margin = 10;
       var cW = this.pacBoxH;
       var cH = this.pacBoxH;
-      var scale = d3.scale.linear()
-        .range([0, this.pacBoxH * this.pacBoxH])
-        .domain([0, this.max]);
-      var line = d3.svg.line().interpolate('basis');
-
-      // Draw spent
-      function drawSpent(moreThanCash) {
-        groups.selectAll('.spent')
-          .data(function(d) {
-            if (moreThanCash === true) {
-              return (d.spent >= d.cash) ? [d] : [];
-            }
-            else {
-              return (d.spent < d.cash) ? [d] : [];
-            }
-          }).enter()
-          .append('rect')
-          .attr('class', function(d) { return 'spent'; })
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('width', function(d) {
-            return Math.sqrt(scale(d.spent));
-          })
-          .attr('height', function(d) {
-            return Math.sqrt(scale(d.spent));
-          });
-      }
-
-      // Draw cash
-      function drawCash(moreThanSpent) {
-        groups.selectAll('.cash')
-          .data(function(d){
-            if (moreThanSpent === true) {
-              return (d.cash >= d.spent) ? [d] : [];
-            }
-            else {
-              return (d.cash < d.spent) ? [d] : [];
-            }
-          }).enter()
-          .append('rect')
-          .attr('class', function(d) { return 'cash'; })
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('width', function(d) {
-            return Math.sqrt(scale(d.cash));
-          })
-          .attr('height', function(d) {
-            return Math.sqrt(scale(d.cash));
-          });
-      }
 
       // Calculate some draw data
-      dTopGOP = _.map(dTopGOP, function(d, di) {
+      var networkData = _.map(dTopGOP, function(d, di) {
         d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
         d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
-        d.cellEdge = Math.sqrt(scale(d.raised));
+        d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
+        d.nameX = d.x - (thisApp.pacBoxH / 2);
+        d.nameY = d.y + 5;
+        return d;
+      });
+      networkData = _.map(networkData, function(d) {
+        if (d['spent-to']) {
+          d['spent-to'].toObject = _.findWhere(networkData, { id: d['spent-to'].to });
+        }
         return d;
       });
 
-      // Draw canvas
-      $container.html('');
-      canvas = d3.select($container[0]).append('svg')
-        .attr('width', w).attr('height', h);
-
-      // Draw lines
-      lines = _.filter(dTopGOP, function(d, di) {
-        return _.isObject(d['spent-to']);
-      });
-      lines = _.map(lines, function(d, di) {
-        d['spent-to'].toObject = _.findWhere(dTopGOP, { id: d['spent-to'].to });
-        return d;
-      });
-
-      lines = canvas.selectAll('.group-link')
-        .data(lines).enter()
-        .append('path')
-        .attr('class', 'group-link')
-        .attr('d', function(d) {
-          return line([
-            [d.x, d.y - 2],
-            [d['spent-to'].toObject.x, d['spent-to'].toObject.y]
-          ]);
-        })
-        .style('stroke-width', function(d) {
-          return Math.max(2, scale(d['spent-to'].amount / thisApp.flowScale));
-        });
-
-      // Draw each group
-      groups = canvas.selectAll('.group')
-        .data(dTopGOP).enter()
-        .append('g').attr('class', 'group')
-        .attr('transform', function(d, di) {
-          // Translate to center bottom of cell, rotate, then shift
-          return 'translate(' + d.x + ', ' + d.y + ') ' +
-            'rotate(-180) ' +
-            'translate(' + ((d.cellEdge / 2) * -1) + ', 0)';
-        });
-
-      // Raised
-      raised = groups.selectAll('.raised')
-        .data(function(d) { return [d]; }).enter()
-        .append('rect')
-        .attr('class', function(d) { return 'raised'; })
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', function(d) {
-          return d.cellEdge;
-        })
-        .attr('height', function(d) {
-          return d.cellEdge;
-        });
-
-      // Z-index doesn't work in SVG
-      drawSpent(true);
-      drawCash(false);
-      drawCash(true);
-      drawSpent(false);
-
-      // Names
-      names = canvas.selectAll('.name')
-        .data(dTopGOP).enter()
-        .append('text').attr('class', 'name')
-        .attr('x', function(d) { return d.x; })
-        .attr('y', function(d) { return d.y + 20; })
-        .attr('text-anchor', 'middle')
-        .text(function(d) { return d.name; });
+      // Network
+      this.chartNetwork($container, networkData, w, h);
     },
 
     // Spending on races

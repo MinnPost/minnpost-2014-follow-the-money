@@ -1,5 +1,16 @@
-<% if (type === 'topDFL') { %>
-  <div>
-    <strong><%= d.name %></strong>
-  </div>
-<% } %>
+
+<div class="inner-tooltip mp">
+  <% if (typeof type != 'undefined' && type === 'pac') { %>
+
+  <% } else { %>
+    <div class="strong"><%= d.name %></div>
+    <div>
+      Raised: <%= f.currency(d.raised) %><br>
+      Spent: <%= f.currency(d.spent) %><br>
+      Cash: <%= f.currency(d.cash) %><br>
+      <% if (d['spent-to']) { %>
+        Gave <%= f.currency(d['spent-to'].amount) %> to <%= d['spent-to'].toObject.name %>.<br>
+      <% } %>
+    </div>
+  <% } %>
+</div>

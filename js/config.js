@@ -29,6 +29,7 @@ require.config({
     'ractive': '../bower_components/ractive/ractive-legacy',
     'ractive-events-tap': '../bower_components/ractive-events-tap/ractive-events-tap',
     'd3': '../bower_components/d3/d3',
+    'qtip': '../bower_components/qtip2/jquery.qtip',
     'mpConfig': '../bower_components/minnpost-styles/dist/minnpost-styles.config',
     'mpFormatters': '../bower_components/minnpost-styles/dist/minnpost-styles.formatters',
     'jquery-noconflict': 'build/jquery-noconflict'

@@ -22,10 +22,9 @@
       {{#top20}}
         <div class="cf">
           <div class="chart-label">{{ name }}</div>
-          <div class="chart-value">
-            <span class="raised" style="width: {{ receipts / top20Max * 100 }}%;"></span>
-            <span class="spent" style="width: {{ expenditures / top20Max * 100 }}%; z-index: {{ (expenditures < cash) ? 10 : 1 }};"></span>
-            <span class="cash" style="width: {{ cash / top20Max * 100 }}%; z-index: {{ (expenditures >= cash) ? 10 : 1 }};"></span>
+          <div class="chart-value" title="{{ tooltip }}">
+            <span class="raised" style="width: {{ raised / top20Max * 100 }}%;"></span>
+            <span class="spent" style="width: {{ spent / top20Max * 100 }}%;"></span>
           </div>
         </div>
       {{/top20}}
@@ -64,7 +63,7 @@
       {{#combined}}
         <div class="cf">
           <div class="chart-label">{{ name }}</div>
-          <div class="chart-value">
+          <div class="chart-value" title="{{ tooltip }}">
             <span class="raised" style="width: {{ raised / combinedMax * 100 }}%;"></span>
             <span class="spent" style="width: {{ spent / combinedMax * 100 }}%; z-index: {{ (spent < cash) ? 10 : 1 }};"></span>
             <span class="cash" style="width: {{ cash / combinedMax * 100 }}%; z-index: {{ (spent >= cash) ? 10 : 1 }};"></span>
