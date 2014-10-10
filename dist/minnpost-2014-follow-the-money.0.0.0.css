@@ -29,13 +29,14 @@ body .tooltip.active {
 }
 
 .mp .minnpost-2014-follow-the-money-container .application-container {
-  padding-top: 1em;
+  padding-top: 3em;
 }
 .mp .minnpost-2014-follow-the-money-container .caption {
   margin-bottom: 2em;
 }
 .mp .minnpost-2014-follow-the-money-container .custom-chart {
-  margin-bottom: 5em;
+  padding-top: 3em;
+  margin-bottom: 3em;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised {
   fill: #32955d;
@@ -45,18 +46,6 @@ body .tooltip.active {
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised.active {
   stroke: #222222;
 }
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised.individuals {
-  fill: #38a869;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised.unions {
-  fill: #32955d;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised.national-sources {
-  fill: #2c8251;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised.other-sources {
-  fill: #256f45;
-}
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .spent {
   fill: #bbb33e;
   stroke: #FFFFFF;
@@ -64,18 +53,6 @@ body .tooltip.active {
 }
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .spent.active {
   stroke: #222222;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .spent.staffing {
-  fill: #c4bd4e;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .spent.polling {
-  fill: #bbb33e;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .spent.online-and-television-ads {
-  fill: #a8a138;
-}
-.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .spent.other-sources {
-  fill: #958e31;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .group-link {
   fill: none;
@@ -107,7 +84,7 @@ body .tooltip.active {
   fill: none;
   stroke: #7a7a7a;
   stroke-width: 2;
-  stroke-linecap: round;
+  stroke-linecap: butt;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-top-20 .chart-label {
   width: 40%;
