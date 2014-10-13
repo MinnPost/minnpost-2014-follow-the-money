@@ -110,12 +110,14 @@ require([
     },
 
     // Draw network chart
-    chartNetwork: function($container, data, w, h) {
+    chartNetwork: function($container, data, w, h, scale, areaScale) {
       var thisApp = this;
       var flowScale = 1.5;
       var legendMargin = 10;
-      var canvas, groups, raised, spent, lines, names, legend;
+      var canvas, groups, raised, spent, lines, names, legend, legendEdge;
       var line = d3.svg.line();
+      scale = scale || this.scale;
+      areaScale = areaScale || this.areaScale;
 
       // Draw canvas
       $container.html('');
@@ -140,7 +142,7 @@ require([
           ]);
         })
         .style('stroke-width', function(d) {
-          return Math.max(2, thisApp.scale(d['spent-to'].amount) / flowScale);
+          return Math.max(2, scale(d['spent-to'].amount) / flowScale);
         });
 
       // Draw each group for each square for each pac
@@ -179,20 +181,22 @@ require([
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', function(d) {
-          return Math.sqrt(thisApp.areaScale(d.spent));
+          return Math.sqrt(areaScale(d.spent));
         })
         .attr('height', function(d) {
-          return Math.sqrt(thisApp.areaScale(d.spent));
+          return Math.sqrt(areaScale(d.spent));
         });
 
       // Names
       names = canvas.selectAll('.name')
         .data(data).enter()
         .append('foreignObject')
-          .attr('class', function(d) { return 'name'; })
+          .attr('class', function(d) { return ((d.party) ? d.party : '') + ' name'; })
           .attr('x', function(d) { return d.nameX || d.x || 0; })
           .attr('y', function(d) { return d.nameY || d.y || 0; })
-          .attr('width', (this.pacBoxH - this.paxBoxMargin))
+          .attr('width', function(d) {
+            return (d.nameW) ? d.nameW : (thisApp.pacBoxH - thisApp.paxBoxMargin);
+          })
           .attr('height', 100)
           .append('xhtml:body')
             .attr('class', 'mp')
@@ -205,22 +209,23 @@ require([
       this.addTooltips($container.find('[title]'));
 
       // Make legend
+      legendEdge = Math.sqrt(areaScale(100000));
       legend = d3.select($container[0]).append('svg')
         .attr('class', 'legend-container')
         .attr('width', w)
-        .attr('height', 100);
+        .attr('height', 80);
 
       legend.append('rect')
         .attr('class', 'raised')
         .attr('x', legendMargin)
         .attr('y', legendMargin * 2)
-        .attr('width', Math.sqrt(this.areaScale(100000)))
-        .attr('height', Math.sqrt(this.areaScale(100000)));
+        .attr('width', legendEdge)
+        .attr('height', legendEdge);
 
       legend.append('foreignObject')
         .attr('class', 'legend-name')
-        .attr('x', Math.sqrt(this.areaScale(100000)) + legendMargin * 2)
-        .attr('y', legendMargin * 2 + 10)
+        .attr('x', legendEdge + legendMargin * 2)
+        .attr('y', legendMargin * 2 + (legendEdge / 10))
         .attr('width', w / 5)
         .attr('height', 100)
         .append('xhtml:body')
@@ -233,13 +238,13 @@ require([
         .attr('class', 'spent')
         .attr('x', (w / 3) + legendMargin)
         .attr('y', legendMargin * 2)
-        .attr('width', Math.sqrt(this.areaScale(100000)))
-        .attr('height', Math.sqrt(this.areaScale(100000)));
+        .attr('width', legendEdge)
+        .attr('height', legendEdge);
 
       legend.append('foreignObject')
         .attr('class', 'legend-name')
-        .attr('x', ((w / 3) + legendMargin) + (Math.sqrt(this.areaScale(100000)) + legendMargin))
-        .attr('y', legendMargin * 2 + 10)
+        .attr('x', ((w / 3) + legendMargin) + (legendEdge + legendMargin))
+        .attr('y', legendMargin * 2 + (legendEdge / 10))
         .attr('width', w / 5)
         .attr('height', 100)
         .append('xhtml:body')
@@ -251,14 +256,14 @@ require([
       legend.append('rect')
         .attr('class', 'group-link-legend')
         .attr('x', (w * (2 / 3)) + legendMargin)
-        .attr('y', legendMargin * 2 + 15)
-        .attr('width', this.scale(100000) / flowScale)
+        .attr('y', legendMargin * 2 + 5)
+        .attr('width', scale(100000) / flowScale)
         .attr('height', 25);
 
       legend.append('foreignObject')
         .attr('class', 'legend-name')
-        .attr('x', ((w * (2 / 3)) + legendMargin) + (this.scale(100000) / flowScale + legendMargin * 2))
-        .attr('y', legendMargin * 2 + 10)
+        .attr('x', ((w * (2 / 3)) + legendMargin) + (scale(100000) / flowScale + legendMargin * 2))
+        .attr('y', legendMargin * 2 + (legendEdge / 10))
         .attr('width', w / 4)
         .attr('height', 100)
         .append('xhtml:body')
@@ -293,6 +298,8 @@ require([
         d.nameY = (d.id === '2014-fund' || d.id === 'win-mn') ?
           d.y - d.cellEdge - 30 :
           (d.id === 'abm') ? d.y + 5 : 0;
+
+        d.party = 'dfl';
         return d;
       });
       networkData = _.map(networkData, function(d) {
@@ -323,6 +330,7 @@ require([
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
         d.nameX = d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2);
         d.nameY = d.y + 5;
+        d.party = 'gop';
         return d;
       });
       networkData = _.map(networkData, function(d) {
@@ -339,28 +347,51 @@ require([
     // Spending on races
     chartSpending: function() {
       var thisApp = this;
-      var pacs, canvas, groups, raised, spent, cash, lines;
       var $container = this.$('.chart-money-to-races');
       var w = $container.width();
-      var h = 500;
       var margin = 10;
-      var pacW = ((w - margin * 7) / 8);
-      var pacH = (h / 3) - (margin * 2);
-      var maxPaxEdge = Math.min(pacW, pacH);
-      var scale = d3.scale.linear()
-        .range([0, maxPaxEdge * maxPaxEdge])
-        .domain([0, this.max]);
-      var line = d3.svg.line().interpolate('basis');
+      var cW = w / 8 - margin;
+      var cH = cW;
+      var h = cH * 5 + 50;
+      var scale, areaScale;
 
-      // Calculate some draw data
-      pacs = _.map(dSpending.pacs, function(d, di) {
+      // Combine with top 10 data
+      var networkData = _.map(dSpending.pacs, function(d, di) {
+        d = _.extend({}, _.findWhere(dTop20, { id: d.id }), d);
         return d;
       });
 
-      // Draw canvas
-      $container.html('');
-      canvas = d3.select($container[0]).append('svg')
-        .attr('width', w).attr('height', h);
+      // Sort
+      networkData = _.sortBy(networkData, function(d) { return d.raised * -1; });
+      networkData = _.sortBy(networkData, 'party');
+
+      // Make scales
+      scale = d3.scale.linear()
+        .range([0, cW])
+        .domain([0, d3.max(networkData, function(d) { return d.raised; })]);
+      areaScale = d3.scale.linear()
+        .range([0, cW * cW])
+        .domain([0, d3.max(networkData, function(d) { return d.raised; })]);
+
+      // Calculate some draw data
+      networkData = _.map(networkData, function(d, di) {
+        d.x = (di % 8) * (cW + margin) + (cW / 2) + margin;
+        d.y = (d.party === 'dfl') ? cH + margin : (cH + margin) * 4;
+        d.cellEdge = Math.sqrt(areaScale(d.raised));
+        d.nameX = d.x - (cW / 2);
+        d.nameY = d.y + 5;
+        d.nameW = cW;
+        return d;
+      });
+      networkData = _.map(networkData, function(d) {
+        if (d['spent-to']) {
+          d['spent-to'].toObject = _.findWhere(networkData, { id: d['spent-to'].to });
+        }
+        return d;
+      });
+
+      // Network
+      this.chartNetwork($container, networkData, w, h, scale, areaScale);
 
     }
   });

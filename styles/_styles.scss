@@ -42,7 +42,8 @@ body .mp.inner-tooltip {
 
 
   .chart-network-gop,
-  .chart-big-dfl {
+  .chart-big-dfl,
+  .chart-money-to-races {
 
     .raised {
       fill: $raised;
@@ -73,6 +74,14 @@ body .mp.inner-tooltip {
       color: #404040;
       background-color: transparent;
       text-align: center;
+    }
+
+    .dfl.name body {
+      border-top: 3px solid #0793AB;
+    }
+
+    .gop.name body {
+      border-top: 3px solid #A1000F;
     }
 
     .name div {
