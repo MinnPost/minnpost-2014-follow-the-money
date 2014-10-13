@@ -10,21 +10,20 @@
     },
     {
       "party": "dfl",
+      "id": "mape",
+      "name": "MAPE",
+      "races": [
+        { "name": "house", "amount": 28900 }
+      ]
+    },
+    {
+      "party": "dfl",
       "id": "edu-mn",
       "name": "Education Minnesota",
       "races": [
         { "name": "governor", "amount": 14263 },
         { "name": "house", "amount": 361700 },
         { "name": "party", "amount": 455425 }
-      ]
-    },
-    {
-      "party": "dfl",
-      "id": "afscme",
-      "name": "AFSCME",
-      "races": [
-        { "name": "house", "amount": 200000 },
-        { "name": "party", "amount": 300000 }
       ]
     },
     {
@@ -39,15 +38,6 @@
     },
     {
       "party": "dfl",
-      "id": "mn-afl-cio",
-      "name": "Minn AFL-CIO",
-      "races": [
-        { "name": "house", "amount": 60000 },
-        { "name": "party", "amount": 28150 }
-      ]
-    },
-    {
-      "party": "dfl",
       "id": "laborers",
       "name": "Laborers District",
       "races": [
@@ -58,53 +48,20 @@
     },
     {
       "party": "dfl",
-      "id": "mape",
-      "name": "MAPE",
+      "id": "afscme",
+      "name": "AFSCME",
       "races": [
-        { "name": "house", "amount": 28900 }
+        { "name": "house", "amount": 200000 },
+        { "name": "party", "amount": 300000 }
       ]
     },
     {
-      "party": "gop",
-      "id": "freedom",
-      "name": "Freedom Club of Minnesota",
+      "party": "dfl",
+      "id": "mn-afl-cio",
+      "name": "Minn AFL-CIO",
       "races": [
-        { "name": "house", "amount": 882777 },
-        { "name": "party", "amount": 100000 }
-      ]
-    },
-    {
-      "party": "gop",
-      "id": "pro-jobs",
-      "name": "Pro Jobs Majority",
-      "races": [
-        { "name": "house", "amount": 47329 },
-        { "name": "governor", "amount": 22758 }
-      ]
-    },
-    {
-      "party": "gop",
-      "id": "mn-business",
-      "name": "Minn Business Partnership",
-      "races": [
-        { "name": "house", "amount": 48250 }
-      ]
-    },
-    {
-      "party": "gop",
-      "id": "mn-chamber",
-      "name": "Minn Chamber of Commerce Leadership Fund",
-      "races": [
-        { "name": "house", "amount": 21450 }
-      ]
-    },
-    {
-      "party": "gop",
-      "id": "mn-jobs",
-      "name": "Minnesota Jobs Coalition",
-      "races": [
-        { "name": "house", "amount": 41040 },
-        { "name": "governor", "amount": 39001 }
+        { "name": "house", "amount": 60000 },
+        { "name": "party", "amount": 28150 }
       ]
     },
     {
@@ -125,32 +82,75 @@
     },
     {
       "party": "gop",
+      "id": "pro-jobs",
+      "name": "Pro Jobs Majority",
+      "races": [
+        { "name": "house", "amount": 47329 },
+        { "name": "governor", "amount": 22758 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-jobs",
+      "name": "Minnesota Jobs Coalition",
+      "races": [
+        { "name": "house", "amount": 41040 },
+        { "name": "governor", "amount": 39001 }
+      ]
+    },
+    {
+      "party": "gop",
       "id": "housing",
       "name": "Housing First",
       "races": [
         { "name": "house", "amount": 82500 },
         { "name": "governor", "amount": 62030 }
       ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-business",
+      "name": "Minn Business Partnership",
+      "races": [
+        { "name": "house", "amount": 48250 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "mn-chamber",
+      "name": "Minn Chamber of Commerce Leadership Fund",
+      "races": [
+        { "name": "house", "amount": 21450 }
+      ]
+    },
+    {
+      "party": "gop",
+      "id": "freedom",
+      "name": "Freedom Club of Minnesota",
+      "races": [
+        { "name": "house", "amount": 882777 },
+        { "name": "party", "amount": 100000 }
+      ]
     }
   ],
   "races": [
     {
-      "id": "house",
-      "name": "House",
-      "dfl-candidate": "DFL Candidates",
-      "gop-candidate": "GOP Candidates"
+      "id": "governor",
+      "name": "Governor race",
+      "dfl-candidate": "Mark Dayton",
+      "gop-candidate": "Jeff Johnson"
     },
     {
-      "id": "governor",
-      "name": "Governor",
-      "dfl-candidate": "Mark Dayton",
-      "gop-candidate": "Johnson"
+      "id": "house",
+      "name": "House races",
+      "dfl-candidate": "DFL candidates",
+      "gop-candidate": "GOP candidates"
     },
     {
       "id": "party",
-      "name": "Political Parties",
-      "dfl-candidate": "DFL Party",
-      "gop-candidate": "GOP Party"
+      "name": "Political parties",
+      "dfl-candidate": "DFL party",
+      "gop-candidate": "GOP party"
     }
   ]
 }
