@@ -6,7 +6,7 @@
 $space: 1em;
 
 $raised: #129643;
-$spent: #CF7819;
+$spent: #85C417;
 $cash: #958F32;
 $flow: #7A7A7A;
 $tooltip: #222222;
@@ -79,11 +79,6 @@ body .mp.inner-tooltip {
       font-size: 0.85em;
       background-color: rgba(230, 230, 230, 0.4);
     }
-
-    .legend-container {
-      margin-top: 3em;
-
-    }
   }
 
 
@@ -103,7 +98,7 @@ body .mp.inner-tooltip {
       position: relative;
       padding-top: 10px;
 
-      span {
+      .bar {
         height: 1.5em;
         display: block;
         position: absolute;
@@ -118,11 +113,14 @@ body .mp.inner-tooltip {
           background-color: $spent;
           height: 1.25em;
           top: .25em;
-        }
+          text-align: right;
+          line-height: 1em;
 
-        &.cash {
-          display: none;
-          background-color: $cash;
+          span {
+            padding: 0 0.5em;
+            color: #404040;
+            font-size: 0.75em;
+          }
         }
       }
     }
@@ -143,7 +141,7 @@ body .mp.inner-tooltip {
       margin-bottom: 3em;
       height: 2.5em;
 
-      span {
+      .bar {
         height: 3em;
         display: block;
         position: absolute;
@@ -152,6 +150,14 @@ body .mp.inner-tooltip {
 
         &.raised {
           background-color: $raised;
+          text-align: right;
+          line-height: 3em;
+
+          span {
+            padding: 0 1em;
+            color: #404040;
+            font-size: 0.85em;
+          }
         }
 
         &.spent {
@@ -159,11 +165,46 @@ body .mp.inner-tooltip {
           height: 2.5em;
           top: .5em;
         }
+      }
+    }
+  }
 
-        &.cash {
-          display: none;
-          background-color: $cash;
-        }
+  .legend-container {
+    margin-top: 3em;
+
+    &.centered {
+      width: 66.6666%;
+      margin: 2em auto;
+    }
+
+    .legend-name body div {
+      font-size: 0.85em;
+    }
+
+    div.raised {
+      background-color: $raised;
+      width: 2em;
+      height: 2em;
+    }
+
+    div.spent {
+      background-color: $spent;
+      width: 2em;
+      height: 2em;
+    }
+
+    .legend-item {
+      float: left;
+      width: 50%;
+
+      div {
+        float: left;
+      }
+
+      .legend-text {
+        margin-top: 0.25em;
+        margin-left: 0.85em;
+        font-size: 0.85em;
       }
     }
   }

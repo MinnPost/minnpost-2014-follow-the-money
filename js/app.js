@@ -57,7 +57,8 @@ require([
             d.tooltip = tTooltip({ d: d, f: mpFormatters });
             return d;
           }),
-          combinedMax: d3.max(dParties, function(d) { return d.raised; })
+          combinedMax: d3.max(dParties, function(d) { return d.raised; }),
+          f: mpFormatters
         }
       });
 

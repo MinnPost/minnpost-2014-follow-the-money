@@ -19,15 +19,29 @@
 
 
     <div class="custom-chart chart-top-20">
-      {{#top20}}
+      {{#top20:di}}
         <div class="cf">
           <div class="chart-label">{{ name }}</div>
           <div class="chart-value" title="{{ tooltip }}">
-            <span class="raised" style="width: {{ raised / top20Max * 100 }}%;"></span>
-            <span class="spent" style="width: {{ spent / top20Max * 100 }}%;"></span>
+            <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">
+            </span>
+            <span class="bar spent" style="width: {{ spent / top20Max * 100 }}%;">
+              {{#(di === 0)}}<span>spent {{ f.currency(spent) }}</span>{{/()}}
+            </span>
           </div>
         </div>
       {{/top20}}
+
+      <div class="legend-container cf centered">
+        <div class="legend-item cf">
+          <div class="raised"></div>
+          <div class="legend-text">Amount raised</div>
+        </div>
+        <div class="legend-item cf">
+          <div class="spent"></div>
+          <div class="legend-text">Amount spent</div>
+        </div>
+      </div>
     </div>
 
 
@@ -64,12 +78,24 @@
         <div class="cf">
           <div class="chart-label">{{ name }}</div>
           <div class="chart-value" title="{{ tooltip }}">
-            <span class="raised" style="width: {{ raised / combinedMax * 100 }}%;"></span>
-            <span class="spent" style="width: {{ spent / combinedMax * 100 }}%; z-index: {{ (spent < cash) ? 10 : 1 }};"></span>
-            <span class="cash" style="width: {{ cash / combinedMax * 100 }}%; z-index: {{ (spent >= cash) ? 10 : 1 }};"></span>
+            <span class="raised bar" style="width: {{ raised / combinedMax * 100 }}%;">
+              <span>raised {{ f.currency(raised) }}</span>
+            </span>
+            <span class="spent bar" style="width: {{ spent / combinedMax * 100 }}%;"></span>
           </div>
         </div>
       {{/combined}}
+
+      <div class="legend-container cf centered">
+        <div class="legend-item cf">
+          <div class="raised"></div>
+          <div class="legend-text">Amount raised</div>
+        </div>
+        <div class="legend-item cf">
+          <div class="spent"></div>
+          <div class="legend-text">Amount spent</div>
+        </div>
+      </div>
     </div>
 
 
