@@ -5,8 +5,8 @@
 // Variables
 $space: 1em;
 
-$raised: #32955D;
-$spent: #BBB33E;
+$raised: #129643;
+$spent: #CF7819;
 $cash: #958F32;
 $flow: #7A7A7A;
 $tooltip: #222222;
@@ -63,6 +63,12 @@ body .mp.inner-tooltip {
       stroke-linecap: butt;
     }
 
+    .group-link-legend {
+      fill: $flow;
+      stroke: #FFFFFF;
+      stroke-width: 0;
+    }
+
     .name, .name div, .name body {
       color: #404040;
       background-color: transparent;
@@ -72,6 +78,11 @@ body .mp.inner-tooltip {
     .name div {
       font-size: 0.85em;
       background-color: rgba(230, 230, 230, 0.4);
+    }
+
+    .legend-container {
+      margin-top: 3em;
+
     }
   }
 

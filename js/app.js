@@ -111,7 +111,9 @@ require([
     // Draw network chart
     chartNetwork: function($container, data, w, h) {
       var thisApp = this;
-      var canvas, groups, raised, spent, lines, names;
+      var flowScale = 1.5;
+      var legendMargin = 10;
+      var canvas, groups, raised, spent, lines, names, legend;
       var line = d3.svg.line();
 
       // Draw canvas
@@ -137,7 +139,7 @@ require([
           ]);
         })
         .style('stroke-width', function(d) {
-          return Math.max(2, thisApp.scale(d['spent-to'].amount) / 1.5);
+          return Math.max(2, thisApp.scale(d['spent-to'].amount) / flowScale);
         });
 
       // Draw each group for each square for each pac
@@ -200,6 +202,69 @@ require([
 
       // Add tooltips
       this.addTooltips($container.find('[title]'));
+
+      // Make legend
+      legend = d3.select($container[0]).append('svg')
+        .attr('class', 'legend-container')
+        .attr('width', w)
+        .attr('height', 100);
+
+      legend.append('rect')
+        .attr('class', 'raised')
+        .attr('x', legendMargin)
+        .attr('y', legendMargin * 2)
+        .attr('width', Math.sqrt(this.areaScale(100000)))
+        .attr('height', Math.sqrt(this.areaScale(100000)));
+
+      legend.append('foreignObject')
+        .attr('class', 'legend-name')
+        .attr('x', Math.sqrt(this.areaScale(100000)) + legendMargin * 2)
+        .attr('y', legendMargin * 2 + 10)
+        .attr('width', w / 5)
+        .attr('height', 100)
+        .append('xhtml:body')
+          .attr('class', 'mp')
+        .append('xhtml:div')
+        .style({})
+        .html('$100,000 raised');
+
+      legend.append('rect')
+        .attr('class', 'spent')
+        .attr('x', (w / 3) + legendMargin)
+        .attr('y', legendMargin * 2)
+        .attr('width', Math.sqrt(this.areaScale(100000)))
+        .attr('height', Math.sqrt(this.areaScale(100000)));
+
+      legend.append('foreignObject')
+        .attr('class', 'legend-name')
+        .attr('x', ((w / 3) + legendMargin) + (Math.sqrt(this.areaScale(100000)) + legendMargin))
+        .attr('y', legendMargin * 2 + 10)
+        .attr('width', w / 5)
+        .attr('height', 100)
+        .append('xhtml:body')
+          .attr('class', 'mp')
+        .append('xhtml:div')
+        .style({})
+        .html('$100,000 spent');
+
+      legend.append('rect')
+        .attr('class', 'group-link-legend')
+        .attr('x', (w * (2 / 3)) + legendMargin)
+        .attr('y', legendMargin * 2 + 15)
+        .attr('width', this.scale(100000) / flowScale)
+        .attr('height', 25);
+
+      legend.append('foreignObject')
+        .attr('class', 'legend-name')
+        .attr('x', ((w * (2 / 3)) + legendMargin) + (this.scale(100000) / flowScale + legendMargin * 2))
+        .attr('y', legendMargin * 2 + 10)
+        .attr('width', w / 4)
+        .attr('height', 100)
+        .append('xhtml:body')
+          .attr('class', 'mp')
+        .append('xhtml:div')
+        .style({})
+        .html('$100,000 given to another group');
     },
 
     // The big 3
