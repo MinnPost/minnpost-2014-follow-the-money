@@ -41,57 +41,19 @@ body .mp.inner-tooltip {
   }
 
 
+  .chart-network-gop,
   .chart-big-dfl {
 
     .raised {
       fill: $raised;
       stroke: #FFFFFF;
-      stroke-width: 1;
-
-      &.active {
-        stroke: $tooltip;
-      }
+      stroke-width: 0;
     }
 
     .spent {
       fill: $spent;
       stroke: #FFFFFF;
-      stroke-width: 1;
-
-      &.active {
-        stroke: $tooltip;
-      }
-    }
-
-    .group-link {
-      fill: none;
-      stroke: $flow;
-      stroke-width: 2;
-      stroke-linecap: butt;
-
-      &.active {
-        stroke: lighten($flow, 10);
-      }
-    }
-  }
-
-
-  .chart-network-gop {
-
-    .raised {
-      fill: $raised;
       stroke-width: 0;
-    }
-
-    .spent {
-      fill: $spent;
-      stroke-width: 0;
-    }
-
-    .cash {
-      fill: $cash;
-      stroke-width: 0;
-      display: none;
     }
 
     .group-link {

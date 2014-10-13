@@ -218,15 +218,15 @@ require([
         }
         if (d.id === 'abm') {
           d.x = w / 2;
-          d.y = h - thisApp.paxBoxMargin;
+          d.y = h - thisApp.paxBoxMargin - 30;
         }
 
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
 
-        d.nameX = d.x - (thisApp.pacBoxH / 2);
-        d.nameY = (d.id === '2014-fund') ? d.y - d.cellEdge - 10 :
-          (d.id === 'win-mn') ? d.y - d.cellEdge - 10 :
-          (d.id === 'abm') ? d.y + 20 : 0;
+        d.nameX = d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2);
+        d.nameY = (d.id === '2014-fund' || d.id === 'win-mn') ?
+          d.y - d.cellEdge - 30 :
+          (d.id === 'abm') ? d.y + 5 : 0;
         return d;
       });
       networkData = _.map(networkData, function(d) {
@@ -246,7 +246,7 @@ require([
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
       var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
-      var margin = 10;
+      var margin = this.paxBoxMargin;
       var cW = this.pacBoxH;
       var cH = this.pacBoxH;
 
@@ -255,7 +255,7 @@ require([
         d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
         d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
-        d.nameX = d.x - (thisApp.pacBoxH / 2);
+        d.nameX = d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2);
         d.nameY = d.y + 5;
         return d;
       });
