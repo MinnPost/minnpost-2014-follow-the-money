@@ -11,6 +11,7 @@ require([
   'mpConfig', 'mpFormatters', 'base',
   'text!templates/application.mustache',
   'text!templates/tooltip.underscore',
+  'text!templates/race-group.underscore',
   'text!../data/top-dfl.json',
   'text!../data/top-gop.json',
   'text!../data/top-20.json',
@@ -18,7 +19,7 @@ require([
   'text!../data/combined-parties.json'
 ], function(
   $, _, Ractive, RactiveEventsTap, d3, qtip, mpConfig, mpFormatters, Base,
-  tApplication, tTooltip,
+  tApplication, tTooltip, tRaceGroup,
   dTopDFL, dTopGOP, dTop20, dSpending, dParties
   ) {
   'use strict';
@@ -32,6 +33,7 @@ require([
 
   // Create template functions
   tTooltip = _.template(tTooltip);
+  tRaceGroup = _.template(tRaceGroup);
 
   // Create new class for app
   var App = Base.BaseApp.extend({
@@ -110,19 +112,21 @@ require([
     },
 
     // Draw network chart
-    chartNetwork: function($container, data, w, h, scale, areaScale) {
+    chartNetwork: function($container, data, w, h, scale, areaScale, canvas) {
       var thisApp = this;
       var flowScale = 1.5;
       var legendMargin = 10;
-      var canvas, groups, raised, spent, lines, names, legend, legendEdge;
+      var groups, raised, spent, lines, names, legend, legendEdge;
       var line = d3.svg.line();
       scale = scale || this.scale;
       areaScale = areaScale || this.areaScale;
 
       // Draw canvas
-      $container.html('');
-      canvas = d3.select($container[0]).append('svg')
-        .attr('width', w).attr('height', h);
+      if (!canvas) {
+        $container.html('');
+        canvas = d3.select($container[0]).append('svg')
+          .attr('width', w).attr('height', h);
+      }
 
       // Lines
       lines = _.filter(data, function(d, di) {
@@ -132,6 +136,8 @@ require([
         .data(lines).enter()
         .append('path')
         .attr('class', 'group-link')
+        .attr('data-from', function(d) { return d.id; })
+        .attr('data-to', function(d) { return d['spent-to'].toObject.id; })
         .attr('d', function(d) {
           return line([
             [d.x, d.y - (d.cellEdge / 2)],
@@ -148,7 +154,9 @@ require([
       // Draw each group for each square for each pac
       groups = canvas.selectAll('.group')
         .data(data).enter()
-        .append('g').attr('class', 'group')
+        .append('g')
+        .attr('class', 'group')
+        .attr('data-id', function(d) { return d.id; })
         .attr('transform', function(d, di) {
           // Translate to center bottom of cell, rotate, then shift
           return 'translate(' + d.x + ', ' + d.y + ') ' +
@@ -163,7 +171,8 @@ require([
       raised = groups.selectAll('.raised')
         .data(function(d) { return [d]; }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'raised'; })
+        .attr('class', 'raised')
+        .attr('data-id', function(d) { return d.id; })
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', function(d) {
@@ -177,7 +186,8 @@ require([
       spent = groups.selectAll('.spent')
         .data(function(d) { return [d]; }).enter()
         .append('rect')
-        .attr('class', function(d) { return 'spent'; })
+        .attr('class', 'spent')
+        .attr('data-id', function(d) { return d.id; })
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', function(d) {
@@ -192,6 +202,7 @@ require([
         .data(data).enter()
         .append('foreignObject')
           .attr('class', function(d) { return ((d.party) ? d.party : '') + ' name'; })
+          .attr('data-id', function(d) { return d.id; })
           .attr('x', function(d) { return d.nameX || d.x || 0; })
           .attr('y', function(d) { return d.nameY || d.y || 0; })
           .attr('width', function(d) {
@@ -207,6 +218,17 @@ require([
 
       // Add tooltips
       this.addTooltips($container.find('[title]'));
+
+      // Mouseover for highlighting
+      groups
+        .on('mouseover', function(d, di) {
+          canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', true);
+        })
+        .on('mouseout', function(d, di) {
+          canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', false);
+        });
 
       // Make legend
       legendEdge = Math.sqrt(areaScale(100000));
@@ -271,6 +293,8 @@ require([
         .append('xhtml:div')
         .style({})
         .html('$100,000 given to another group');
+
+      return canvas;
     },
 
     // The big 3
@@ -289,14 +313,14 @@ require([
         }
         if (d.id === 'abm') {
           d.x = w / 2;
-          d.y = h - thisApp.paxBoxMargin - 30;
+          d.y = h - thisApp.paxBoxMargin - 40;
         }
 
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
 
         d.nameX = d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2);
         d.nameY = (d.id === '2014-fund' || d.id === 'win-mn') ?
-          d.y - d.cellEdge - 30 :
+          d.y - d.cellEdge - 40 :
           (d.id === 'abm') ? d.y + 5 : 0;
 
         d.party = 'dfl';
@@ -318,7 +342,7 @@ require([
       var thisApp = this;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
-      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 50;
+      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 80;
       var margin = this.paxBoxMargin;
       var cW = this.pacBoxH;
       var cH = this.pacBoxH;
@@ -352,8 +376,9 @@ require([
       var margin = 10;
       var cW = w / 8 - margin;
       var cH = cW;
-      var h = cH * 5 + 50;
-      var scale, areaScale;
+      var rW = (w - margin * 10) / 3 - margin;
+      var h = cH * 5 + 100;
+      var canvas, scale, areaScale, raceData, line, lines;
 
       // Combine with top 10 data
       var networkData = _.map(dSpending.pacs, function(d, di) {
@@ -362,8 +387,7 @@ require([
       });
 
       // Sort
-      networkData = _.sortBy(networkData, function(d) { return d.raised * -1; });
-      networkData = _.sortBy(networkData, 'party');
+      //networkData = _.sortBy(networkData, 'party');
 
       // Make scales
       scale = d3.scale.linear()
@@ -375,8 +399,9 @@ require([
 
       // Calculate some draw data
       networkData = _.map(networkData, function(d, di) {
-        d.x = (di % 8) * (cW + margin) + (cW / 2) + margin;
-        d.y = (d.party === 'dfl') ? cH + margin : (cH + margin) * 4;
+        var part = (d.party === 'dfl') ? (di % 7) : ((di - 7) % 8);
+        d.x = part * (cW + margin) + (cW / 2) + margin;
+        d.y = (d.party === 'dfl') ? cH + margin : (cH + margin) * 4 + 50;
         d.cellEdge = Math.sqrt(areaScale(d.raised));
         d.nameX = d.x - (cW / 2);
         d.nameY = d.y + 5;
@@ -390,8 +415,86 @@ require([
         return d;
       });
 
+      // Create race draw data
+      raceData = _.map(dSpending.races, function(d, di) {
+        d.x = (di % 3) * (rW + margin) + (margin * 6);
+        d.y = cH * 2 + margin * 5;
+        d.w = rW;
+        d.h = cH - margin;
+        d.cX = d.x + (d.w / 2);
+        d.cY = d.y + (d.h / 2);
+        return d;
+      });
+
+      // Create canvas
+      $container.html('');
+      canvas = d3.select($container[0]).append('svg')
+        .attr('width', w).attr('height', h);
+
+      // Create link data
+      networkData = _.map(networkData, function(d) {
+        if (d.races) {
+          d.races = _.map(d.races, function(r, ri) {
+            d.races[ri].toObject = _.findWhere(raceData, { id: r.name });
+            return r;
+          });
+        }
+        return d;
+      });
+
+      // Lines
+      line = d3.svg.line();
+      lines = _.filter(networkData, function(d, di) {
+        return _.isArray(d.races);
+      });
+      lines = canvas.selectAll('.g-group-link')
+        .data(lines).enter()
+        .append('g')
+        .each(function(g, gi) {
+          // Add each race
+          d3.select(this).selectAll('.group-link')
+            .data(g.races).enter()
+            .append('path')
+            .attr('class', 'group-link')
+            .attr('data-from', g.id)
+            .attr('data-to', function(d) { return d.toObject.id; })
+            .attr('d', function(d) {
+              return line([
+                [g.x, (g.party === 'dfl') ? g.y - (g.cellEdge / 4) :  g.y - (g.cellEdge / 1.5)],
+                [d.toObject.cX, d.toObject.cY]
+              ]);
+            })
+            .style('stroke-width', function(d) {
+              return Math.max(2, scale(d.amount) / 1.5);
+            });
+        });
+
       // Network
-      this.chartNetwork($container, networkData, w, h, scale, areaScale);
+      canvas = this.chartNetwork($container, networkData, w, h, scale, areaScale, canvas);
+
+      // Draw race group boxes
+      canvas.selectAll('.race')
+        .data(raceData).enter()
+        .append('rect')
+        .attr('class', 'race')
+        .attr('x', function(d) { return d.x; })
+        .attr('y', function(d) { return d.y; })
+        .attr('width', function(d) { return d.w; })
+        .attr('height', function(d) { return d.h; });
+
+      canvas.selectAll('.race-title')
+        .data(raceData).enter()
+        .append('foreignObject')
+        .attr('class', 'race-title')
+        .attr('x', function(d) { return d.x; })
+        .attr('y', function(d) { return d.y; })
+        .attr('width', function(d) { return d.w; })
+        .attr('height', function(d) { return d.h; })
+        .append('xhtml:body')
+          .attr('class', 'mp')
+          .append('xhtml:div')
+            .style({})
+            .html(function(d) { return tRaceGroup({ d: d, f: mpFormatters}); });
 
     }
   });

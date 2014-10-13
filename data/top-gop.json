@@ -18,7 +18,7 @@
       "to": "coalition-business",
       "amount": 100000
     },
-    "name": "Minn Business Partnership",
+    "name": "MN Business Partnership",
     "id": "mn-business"
   },
   {
@@ -29,7 +29,7 @@
       "to": "coalition-business",
       "amount": 15000
     },
-    "name": "Minn Chamber of Commerce Leadership Fund",
+    "name": "MN Chamber of Commerce Leadership Fund",
     "id": "mn-chamber"
   },
   {
@@ -43,7 +43,7 @@
     "spent": 162857,
     "raised": 258814,
     "cash": 17617,
-    "name": "Minn Jobs Coalition Legislative Fund",
+    "name": "MN Jobs Coalition Legislative Fund",
     "id": "mn-jobs"
   },
   {

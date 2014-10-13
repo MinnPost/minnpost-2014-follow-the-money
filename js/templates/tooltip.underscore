@@ -8,8 +8,17 @@
       Raised: <%= f.currency(d.raised) %><br>
       Spent: <%= f.currency(d.spent) %><br>
       Cash: <%= f.currency(d.cash) %><br>
+      
       <% if (d['spent-to']) { %>
+        <br>
         Gave <%= f.currency(d['spent-to'].amount) %> to <%= d['spent-to'].toObject.name %>.<br>
+      <% } %>
+
+      <% if (d.races) { %>
+        <br>
+        <% _.each(d.races, function(r, ri) { %>
+          Gave <%= f.currency(r.amount) %> to <%= r.toObject.name %>.<br>
+        <% }) %>
       <% } %>
     </div>
   <% } %>

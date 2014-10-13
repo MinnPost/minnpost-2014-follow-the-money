@@ -1,0 +1,10 @@
+<div class="race-group">
+  <div class="strong"><%= d.name %></div>
+
+  <div>
+    <span class="party-box dfl"></span> <%= d['dfl-candidate'] %>
+  </div>
+  <div>
+    <span class="party-box gop"></span> <%= d['gop-candidate'] %>
+  </div>
+</div>

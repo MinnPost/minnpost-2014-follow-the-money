@@ -41,6 +41,23 @@ body .mp.inner-tooltip {
   }
 
 
+  .party-box {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-left: 0.25em;;
+    margin-right: 0.25em;
+
+    &.dfl {
+      background-color: #0793AB;
+    }
+    &.gop {
+      background-color: #A1000F;
+    }
+  }
+
+
   .chart-network-gop,
   .chart-big-dfl,
   .chart-money-to-races {
@@ -49,12 +66,20 @@ body .mp.inner-tooltip {
       fill: $raised;
       stroke: #FFFFFF;
       stroke-width: 0;
+
+      &.active {
+        fill: darken($raised, 20);
+      }
     }
 
     .spent {
       fill: $spent;
       stroke: #FFFFFF;
       stroke-width: 0;
+
+      &.active {
+        fill: darken($spent, 20);
+      }
     }
 
     .group-link {
@@ -62,6 +87,10 @@ body .mp.inner-tooltip {
       stroke: $flow;
       stroke-width: 2;
       stroke-linecap: butt;
+
+      &.active {
+        stroke: darken($flow, 20);
+      }
     }
 
     .group-link-legend {
@@ -77,16 +106,36 @@ body .mp.inner-tooltip {
     }
 
     .dfl.name body {
-      border-top: 3px solid #0793AB;
+      border-top: 2px solid #0793AB;
     }
 
     .gop.name body {
-      border-top: 3px solid #A1000F;
+      border-top: 2px solid #A1000F;
     }
 
     .name div {
+      padding: 0.25em;
       font-size: 0.85em;
-      background-color: rgba(230, 230, 230, 0.4);
+      background-color: rgba(250, 250, 250, 0.7);
+    }
+    .name.active div {
+      font-weight: bold;
+    }
+  }
+
+  .chart-money-to-races {
+
+    .race {
+      fill: #DFDFDF;
+      stroke-width: 0;
+    }
+
+    .race-title body {
+      color: #404040;
+      background-color: transparent;
+      text-align: center;
+      font-size: 1em;
+      padding: 0.5em 0.25em;
     }
   }
 

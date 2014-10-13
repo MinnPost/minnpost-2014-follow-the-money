@@ -21,7 +21,12 @@
     <div class="custom-chart chart-top-20">
       {{#top20:di}}
         <div class="cf">
-          <div class="chart-label">{{ name }}</div>
+          <div class="chart-label">
+            {{ name }}
+            {{#party}}
+              <span class="party-box {{ party }}"></span>
+            {{/party}}
+          </div>
           <div class="chart-value" title="{{ tooltip }}">
             <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">
             </span>

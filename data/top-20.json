@@ -3,6 +3,7 @@
     "raised": 2610187,
     "spent": 2666119,
     "cash": 98831,
+    "party": "dfl",
     "name": "Education Minnesota",
     "id": "edu-mn"
   },
@@ -10,6 +11,7 @@
     "raised": 2303030,
     "spent": 2166770,
     "cash": 102588,
+    "party": "dfl",
     "name": "Alliance for a Better Minnesota",
     "id": "abm"
   },
@@ -17,6 +19,7 @@
     "raised": 1346438,
     "spent": 1335000,
     "cash": 11438,
+    "party": "dfl",
     "name": "2014 Fund",
     "id": "2014-fund"
   },
@@ -24,6 +27,7 @@
     "raised": 1144740,
     "spent": 1033052,
     "cash": 113142,
+    "party": "gop",
     "name": "Freedom Club",
     "id": "freedom"
   },
@@ -31,6 +35,7 @@
     "raised": 1114740,
     "spent": 733100,
     "cash": 339278,
+    "party": "dfl",
     "name": "Win Minnesota",
     "id": "win-mn"
   },
@@ -38,6 +43,7 @@
     "raised": 929234,
     "spent": 929234,
     "cash": 0,
+    "party": "dfl",
     "name": "AFSCME",
     "id": "afscme"
   },
@@ -45,6 +51,7 @@
     "raised": 799794,
     "spent": 112337,
     "cash": 672445,
+    "party": "gop",
     "name": "Pro Jobs Majority",
     "id": "pro-jobs"
   },
@@ -52,13 +59,15 @@
     "raised": 795026,
     "spent": 147431,
     "cash": 46473,
-    "name": "SEIU Minn State Political Council",
+    "party": "dfl",
+    "name": "SEIU MN State Political Council",
     "id": "seiu"
   },
   {
     "raised": 651213,
     "spent": 566000,
     "cash": 150424,
+    "party": "dfl",
     "name": "Laborers District",
     "id": "laborers"
   },
@@ -66,6 +75,7 @@
     "raised": 651213,
     "spent": 187543,
     "cash": 466779,
+    "party": "gop",
     "name": "Housing First",
     "id": "housing"
   },
@@ -73,6 +83,7 @@
     "raised": 508411,
     "spent": 96631,
     "cash": 0,
+    "party": "dfl",
     "name": "MAPE",
     "id": "mape"
   },
@@ -80,6 +91,7 @@
     "raised": 404808,
     "spent": 349600,
     "cash": 72851,
+    "party": "dfl",
     "name": "Shakopee Mdewakanton Sioux",
     "id": "shakopee"
   },
@@ -87,34 +99,39 @@
     "raised": 349701,
     "spent": 203974,
     "cash": 177654,
-    "name": "Minn Business Partnership",
+    "party": "gop",
+    "name": "MN Business Partnership",
     "id": "mn-business"
   },
   {
     "raised": 315102,
     "spent": 281329,
     "cash": 82976,
-    "name": "Minn AFL-CIO",
+    "party": "dfl",
+    "name": "MN AFL-CIO",
     "id": "mn-afl-cio"
   },
   {
     "raised": 291425,
     "spent": 154454,
     "cash": 149957,
-    "name": "Minn Chamber of Commerce Leadership Fund",
+    "party": "gop",
+    "name": "MN Chamber of Commerce Leadership Fund",
     "id": "mn-chamber"
   },
   {
     "raised": 258814,
     "spent": 162857,
     "cash": 17617,
-    "name": "Minn Jobs Coalition Legislative Fund",
+    "party": "gop",
+    "name": "MN Jobs Coalition Legislative Fund",
     "id": "mn-jobs"
   },
   {
     "raised": 227300,
     "spent": 20160,
     "cash": 140321,
+    "party": "gop",
     "name": "Coalition of MN Businesses",
     "id": "coalition-business"
   },
@@ -122,6 +139,7 @@
     "raised": 166000,
     "spent": 177883,
     "cash": 1152,
+    "party": "dfl",
     "name": "Minnesota’s Future",
     "id": "mn-future"
   },
@@ -129,6 +147,7 @@
     "raised": 161000,
     "spent": 161025,
     "cash": 675,
+    "party": "dfl",
     "name": "DLCC for Minnesota",
     "id": "dlcc"
   }
