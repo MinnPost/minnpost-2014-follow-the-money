@@ -20,8 +20,25 @@ body .node-unpublished {
 // Tooltip
 body .mp.inner-tooltip {
   text-align: left;
-  font-size: 1em;
+  font-size: 1.25em;
   padding: 0.25em 0.5em;
+}
+
+// Party box
+.mp .party-box {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: 0.25em;;
+  margin-right: 0.25em;
+
+  &.dfl {
+    background-color: #0793AB;
+  }
+  &.gop {
+    background-color: #A1000F;
+  }
 }
 
 // Wrap everything for specificity
@@ -40,23 +57,9 @@ body .mp.inner-tooltip {
     margin-bottom: 3em;
   }
 
-
-  .party-box {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    margin-left: 0.25em;;
-    margin-right: 0.25em;
-
-    &.dfl {
-      background-color: #0793AB;
-    }
-    &.gop {
-      background-color: #A1000F;
-    }
+  .hoverable {
+    cursor: pointer;
   }
-
 
   .chart-network-gop,
   .chart-big-dfl,
@@ -89,7 +92,7 @@ body .mp.inner-tooltip {
       stroke-linecap: butt;
 
       &.active {
-        stroke: darken($flow, 20);
+        stroke: darken($flow, 30);
       }
     }
 
@@ -128,6 +131,10 @@ body .mp.inner-tooltip {
     .race {
       fill: #DFDFDF;
       stroke-width: 0;
+
+      &.active {
+        fill: darken(#DFDFDF, 20);
+      }
     }
 
     .race-title body {
@@ -136,6 +143,10 @@ body .mp.inner-tooltip {
       text-align: center;
       font-size: 1em;
       padding: 0.5em 0.25em;
+    }
+
+    .legend-container {
+      margin-top: 0.5em;
     }
   }
 

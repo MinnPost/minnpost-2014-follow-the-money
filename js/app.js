@@ -86,10 +86,6 @@ require([
         .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
 
-      // Tooltip
-      this.$tooltip = $('<div class="tooltip mp">');
-      this.$tooltip.appendTo('body');
-
       // Create charts
       this.chartDFL3();
       this.chartGOPTop();
@@ -221,6 +217,7 @@ require([
 
       // Mouseover for highlighting
       groups
+        .classed('hoverable', true)
         .on('mouseover', function(d, di) {
           canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', true);
@@ -376,9 +373,10 @@ require([
       var margin = 10;
       var cW = w / 8 - margin;
       var cH = cW;
-      var rW = (w - margin * 10) / 3 - margin;
+      var rM = margin * 7;
+      var rW = (w - margin * 10) / 3 - rM;
       var h = cH * 5 + 100;
-      var canvas, scale, areaScale, raceData, line, lines;
+      var canvas, scale, areaScale, raceData, line, lines, races;
 
       // Combine with top 10 data
       var networkData = _.map(dSpending.pacs, function(d, di) {
@@ -417,7 +415,7 @@ require([
 
       // Create race draw data
       raceData = _.map(dSpending.races, function(d, di) {
-        d.x = (di % 3) * (rW + margin) + (margin * 6);
+        d.x = (di % 3) * (rW + rM) + (margin * 8);
         d.y = cH * 2 + margin * 5;
         d.w = rW;
         d.h = cH - margin;
@@ -477,15 +475,20 @@ require([
         .data(raceData).enter()
         .append('rect')
         .attr('class', 'race')
+        .attr('data-id', function(d) { return d.id; })
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('width', function(d) { return d.w; })
         .attr('height', function(d) { return d.h; });
 
-      canvas.selectAll('.race-title')
+      races = canvas.selectAll('.race-title')
         .data(raceData).enter()
         .append('foreignObject')
         .attr('class', 'race-title')
+        .attr('data-id', function(d) { return d.id; })
+        .attr('title', function(d) {
+          return tTooltip({ d: d, f: mpFormatters, type: 'race' });
+        })
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('width', function(d) { return d.w; })
@@ -496,6 +499,22 @@ require([
             .style({})
             .html(function(d) { return tRaceGroup({ d: d, f: mpFormatters}); });
 
+      // Add tooltips
+      //this.addTooltips($container.find('.race-title'));
+
+      // Mouse over for the race groups
+      races
+        .classed('hoverable', true)
+        .on('mouseover', function(d, di) {
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+            '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', true);
+        })
+        .on('mouseout', function(d, di) {
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+          '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', false);
+        });
     }
   });
 

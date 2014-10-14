@@ -1,14 +1,18 @@
 
 <div class="inner-tooltip mp">
-  <% if (typeof type != 'undefined' && type === 'pac') { %>
+  <% if (typeof type != 'undefined' && type === 'race') { %>
 
   <% } else { %>
-    <div class="strong"><%= d.name %></div>
+    <div class="strong">
+      <%= d.name %>
+      <% if (d.party) { %><span class="party-box <%= d.party %>"></span><% } %>
+    </div>
+
     <div>
       Raised: <%= f.currency(d.raised) %><br>
       Spent: <%= f.currency(d.spent) %><br>
-      Cash: <%= f.currency(d.cash) %><br>
-      
+      Cash on hand: <%= f.currency(d.cash) %><br>
+
       <% if (d['spent-to']) { %>
         <br>
         Gave <%= f.currency(d['spent-to'].amount) %> to <%= d['spent-to'].toObject.name %>.<br>
