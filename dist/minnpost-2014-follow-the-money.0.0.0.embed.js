@@ -42581,7 +42581,7 @@ define('base',['jquery', 'underscore', 'backbone', 'lazyload', 'mpFormatters', '
 define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="text-block">\n      <p>The television ad criticizing Democrats for increasing taxes and funding a new Senate office building was brought to you by the Freedom Club of Minnesota. Alliance for a Better Minnesota paid for those ads accusing the GOP nominee for governor of cutting education spending as a legislator, and the Minnesota Jobs Coalition bought the half-page newspaper ads across the state tying a handful of lawmakers to President Barack Obama and the Affordable Care Act.</p>\n\n      <p>Ever heard of these groups? If you\'re an average voter in Minnesota, the answer is probably no. The landmark 2010 U.S. Supreme Court ruling in Citizens United v. Federal Election Commission opened the door for non profits, labor unions, corporations and even individuals to spend unlimited cash to influence campaigns, mostly through political action committees (known simply as PACs). It has led to major dollars flowing into national and state races, and Minnesota hasn\'t been immune to the changes.</p>\n\n      <p>An analysis of the top 20 PACs in Minnesota show they have raised a collective $12.5 million since 2013 to spend on the governor\'s race and competitive state House contests this fall, among other things. Of that $12.5 million raised, more than $9 million has already been spent.</p>\n\n      <p>The money raised and spent by outside groups has dwarfed even major candidates in recent years. For instance, DFL Gov. Mark Dayton raised about $2.7 million during the same time period, while Republican-endorsed candidate Jeff Johnson raised just $1.4 million. State law prevents candidates from coordinating with these groups, meaning much of message in a given cycle is now set by organizations that will never be on the ballot.</p>\n\n      <p>And this is just a fraction of total outside spending Minnesota races will see this cycle, as even more groups step up fundraising and advertising in the final weeks of the campaign.</p>\n\n      <p>For the uninitiated, here\'s a breakdown of the major outside groups trying to influence this year\'s election in Minnesota, how much they\'re spending and how they &mdash; at times &mdash; can work together:</p>\n    </div>\n\n\n    <div class="custom-chart chart-top-20">\n      {{#top20:di}}\n        <div class="cf">\n          <div class="chart-label">\n            {{ name }}\n            {{#party}}\n              <span class="party-box {{ party }}"></span>\n            {{/party}}\n          </div>\n          <div class="chart-value" title="{{ tooltip }}">\n            <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">\n            </span>\n            <span class="bar spent" style="width: {{ spent / top20Max * 100 }}%;">\n              {{#(di === 0)}}<span>spent {{ f.currency(spent) }}</span>{{/()}}\n            </span>\n          </div>\n        </div>\n      {{/top20}}\n\n      <div class="legend-container cf centered">\n        <div class="legend-item cf">\n          <div class="raised"></div>\n          <div class="legend-text">Amount raised</div>\n        </div>\n        <div class="legend-item cf">\n          <div class="spent"></div>\n          <div class="legend-text">Amount spent</div>\n        </div>\n      </div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">DFL Big Three</div>\n      <p>Democrats are the most likely to decry the adverse effects of big money in politics in the post-Citizens United world, but they\'ve also become the most savvy political party in raising and organizing major cash to funnel into local races. In Minnesota, the network is deep-pocketed and vast, including local labor unions like Education Minnesota and AFSCME, as well as national groups like the Democratic Legislative Campaign Committee. But at the heart of progressive outside spending is a three-headed hydra of sorts, consisting of two fundraising powerhouse PACs &mdash; Win Minnesota and the 2014 Fund &mdash; that funnel all their money to Alliance for a Better Minnesota (ABM), a fund that focuses on spending money on web and television advertising. The coordinating scheme &mdash; which keeps messaging consistent and prevents spending overlap &mdash; has served progressives well over the last few election cycles. In 2010, ABM spent millions hammering GOP governor candidate Tom Emmer in television ads, an effective approach that many say helped push the first Democratic governor into the office in 20 years. Two years later, Democrats took back control of the state House and defied the odds to defeat two controversial GOP-led amendments on the ballot. Spending and organizing from outside groups were key in those victories. This cycle, ABM has already spent more than $1 million on ads attacking GOP-endorsed governor candidate Jeff Johnson over past votes on education funding.</p>\n    </div>\n\n\n    <div class="custom-chart chart-big-dfl">\n      <div class="loading-block"></div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">GOP Network</div>\n      <p>Powerful Republicans donors like broadcasting magnate Stanley Hubbard have called on GOP outside spending groups to coordinate in order to combat the well-oiled machine that has developed on the left, but so far this cycle, there\'s little evidence that\'s happening. The best-funded of these outside groups, the Freedom Club of Minnesota, has shown little interest in playing pals with groups like the Minnesota Chamber of Commerce and its outside spending arm, Pro Jobs Majority. The Freedom Club, founded by media-shy businessman Robert Cummins, has veered to the right of other GOP groups in the candidates and causes it chooses to support. But GOP and business-aligned spending groups have done at least a little coordination this year, pooling some resources in groups like the Coalition for Minnesota Businesses and the Minnesota Jobs Coalition to spend on pro-business candidates.</p>\n    </div>\n\n\n    <div class="custom-chart chart-network-gop">\n      <div class="loading-block"></div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">GOP v. DFL PAC spending </div>\n      <p>The top liberal-aligned PACs in Minnesota have easily out-raised and spent their GOP counterparts by the pre-general election campaign finance reporting period, but they had less money on hand to spend than Republicans for the final stretch of the campaign.</p>\n    </div>\n\n\n    <div class="custom-chart chart-gop-v-dfl">\n      {{#combined}}\n        <div class="cf">\n          <div class="chart-label">{{ name }}</div>\n          <div class="chart-value" title="{{ tooltip }}">\n            <span class="raised bar" style="width: {{ raised / combinedMax * 100 }}%;">\n              <span>raised {{ f.currency(raised) }}</span>\n            </span>\n            <span class="spent bar" style="width: {{ spent / combinedMax * 100 }}%;"></span>\n          </div>\n        </div>\n      {{/combined}}\n\n      <div class="legend-container cf centered">\n        <div class="legend-item cf">\n          <div class="raised"></div>\n          <div class="legend-text">Amount raised</div>\n        </div>\n        <div class="legend-item cf">\n          <div class="spent"></div>\n          <div class="legend-text">Amount spent</div>\n        </div>\n      </div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">Spending on Races</div>\n      <p>So where is all this outside money going? Mostly to the competitive race for the state House &mdash; Republicans need just a net gain of seven seats to reclaim the majority there, and outside groups on both sides have been spending in a handful of competitive suburban and rural districts this cycle.  But the biggest outside spending groups on the left and right, ABM and the Freedom Club of Minnesota, have focused much of their resources on the governor\'s race this fall.</p>\n    </div>\n\n    <div class="custom-chart chart-money-to-races">\n      <div class="loading-block"></div>\n    </div>\n\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-2014-follow-the-money" target="_blank">Github</a>.</p>\n\n    </div>\n  </div>\n</div>\n';});
 
 
-define('text!templates/tooltip.underscore',[],function () { return '\n<div class="inner-tooltip mp">\n  <% if (typeof type != \'undefined\' && type === \'pac\') { %>\n\n  <% } else { %>\n    <div class="strong"><%= d.name %></div>\n    <div>\n      Raised: <%= f.currency(d.raised) %><br>\n      Spent: <%= f.currency(d.spent) %><br>\n      Cash: <%= f.currency(d.cash) %><br>\n      \n      <% if (d[\'spent-to\']) { %>\n        <br>\n        Gave <%= f.currency(d[\'spent-to\'].amount) %> to <%= d[\'spent-to\'].toObject.name %>.<br>\n      <% } %>\n\n      <% if (d.races) { %>\n        <br>\n        <% _.each(d.races, function(r, ri) { %>\n          Gave <%= f.currency(r.amount) %> to <%= r.toObject.name %>.<br>\n        <% }) %>\n      <% } %>\n    </div>\n  <% } %>\n</div>\n';});
+define('text!templates/tooltip.underscore',[],function () { return '\n<div class="inner-tooltip mp">\n  <% if (typeof type != \'undefined\' && type === \'race\') { %>\n\n  <% } else { %>\n    <div class="strong">\n      <%= d.name %>\n      <% if (d.party) { %><span class="party-box <%= d.party %>"></span><% } %>\n    </div>\n\n    <div>\n      Raised: <%= f.currency(d.raised) %><br>\n      Spent: <%= f.currency(d.spent) %><br>\n      Cash on hand: <%= f.currency(d.cash) %><br>\n\n      <% if (d[\'spent-to\']) { %>\n        <br>\n        Gave <%= f.currency(d[\'spent-to\'].amount) %> to <%= d[\'spent-to\'].toObject.name %>.<br>\n      <% } %>\n\n      <% if (d.races) { %>\n        <br>\n        <% _.each(d.races, function(r, ri) { %>\n          Gave <%= f.currency(r.amount) %> to <%= r.toObject.name %>.<br>\n        <% }) %>\n      <% } %>\n    </div>\n  <% } %>\n</div>\n';});
 
 
 define('text!templates/race-group.underscore',[],function () { return '<div class="race-group">\n  <div class="strong"><%= d.name %></div>\n\n  <div>\n    <span class="party-box dfl"></span> <%= d[\'dfl-candidate\'] %>\n  </div>\n  <div>\n    <span class="party-box gop"></span> <%= d[\'gop-candidate\'] %>\n  </div>\n</div>\n';});
@@ -42688,10 +42688,6 @@ require([
       this.areaScale = d3.scale.linear()
         .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
-
-      // Tooltip
-      this.$tooltip = $('<div class="tooltip mp">');
-      this.$tooltip.appendTo('body');
 
       // Create charts
       this.chartDFL3();
@@ -42824,6 +42820,7 @@ require([
 
       // Mouseover for highlighting
       groups
+        .classed('hoverable', true)
         .on('mouseover', function(d, di) {
           canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', true);
@@ -42979,9 +42976,10 @@ require([
       var margin = 10;
       var cW = w / 8 - margin;
       var cH = cW;
-      var rW = (w - margin * 10) / 3 - margin;
+      var rM = margin * 7;
+      var rW = (w - margin * 10) / 3 - rM;
       var h = cH * 5 + 100;
-      var canvas, scale, areaScale, raceData, line, lines;
+      var canvas, scale, areaScale, raceData, line, lines, races;
 
       // Combine with top 10 data
       var networkData = _.map(dSpending.pacs, function(d, di) {
@@ -43020,7 +43018,7 @@ require([
 
       // Create race draw data
       raceData = _.map(dSpending.races, function(d, di) {
-        d.x = (di % 3) * (rW + margin) + (margin * 6);
+        d.x = (di % 3) * (rW + rM) + (margin * 8);
         d.y = cH * 2 + margin * 5;
         d.w = rW;
         d.h = cH - margin;
@@ -43080,15 +43078,20 @@ require([
         .data(raceData).enter()
         .append('rect')
         .attr('class', 'race')
+        .attr('data-id', function(d) { return d.id; })
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('width', function(d) { return d.w; })
         .attr('height', function(d) { return d.h; });
 
-      canvas.selectAll('.race-title')
+      races = canvas.selectAll('.race-title')
         .data(raceData).enter()
         .append('foreignObject')
         .attr('class', 'race-title')
+        .attr('data-id', function(d) { return d.id; })
+        .attr('title', function(d) {
+          return tTooltip({ d: d, f: mpFormatters, type: 'race' });
+        })
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('width', function(d) { return d.w; })
@@ -43099,6 +43102,22 @@ require([
             .style({})
             .html(function(d) { return tRaceGroup({ d: d, f: mpFormatters}); });
 
+      // Add tooltips
+      //this.addTooltips($container.find('.race-title'));
+
+      // Mouse over for the race groups
+      races
+        .classed('hoverable', true)
+        .on('mouseover', function(d, di) {
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+            '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', true);
+        })
+        .on('mouseout', function(d, di) {
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+          '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', false);
+        });
     }
   });
 

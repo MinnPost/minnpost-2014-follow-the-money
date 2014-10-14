@@ -13,8 +13,23 @@ body .node-unpublished {
 
 body .mp.inner-tooltip {
   text-align: left;
-  font-size: 1em;
+  font-size: 1.25em;
   padding: 0.25em 0.5em;
+}
+
+.mp .party-box {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+.mp .party-box.dfl {
+  background-color: #0793AB;
+}
+.mp .party-box.gop {
+  background-color: #A1000F;
 }
 
 .mp .minnpost-2014-follow-the-money-container .application-container {
@@ -27,19 +42,8 @@ body .mp.inner-tooltip {
   padding-top: 3em;
   margin-bottom: 3em;
 }
-.mp .minnpost-2014-follow-the-money-container .party-box {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  margin-left: 0.25em;
-  margin-right: 0.25em;
-}
-.mp .minnpost-2014-follow-the-money-container .party-box.dfl {
-  background-color: #0793AB;
-}
-.mp .minnpost-2014-follow-the-money-container .party-box.gop {
-  background-color: #A1000F;
+.mp .minnpost-2014-follow-the-money-container .hoverable {
+  cursor: pointer;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .raised,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .raised,
@@ -76,7 +80,7 @@ body .mp.inner-tooltip {
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .group-link.active,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .group-link.active,
 .mp .minnpost-2014-follow-the-money-container .chart-money-to-races .group-link.active {
-  stroke: #474747;
+  stroke: #2e2e2e;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .group-link-legend,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .group-link-legend,
@@ -122,12 +126,18 @@ body .mp.inner-tooltip {
   fill: #DFDFDF;
   stroke-width: 0;
 }
+.mp .minnpost-2014-follow-the-money-container .chart-money-to-races .race.active {
+  fill: #acacac;
+}
 .mp .minnpost-2014-follow-the-money-container .chart-money-to-races .race-title body {
   color: #404040;
   background-color: transparent;
   text-align: center;
   font-size: 1em;
   padding: 0.5em 0.25em;
+}
+.mp .minnpost-2014-follow-the-money-container .chart-money-to-races .legend-container {
+  margin-top: 0.5em;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-top-20 .chart-label {
   width: 40%;
