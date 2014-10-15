@@ -48,13 +48,13 @@ body .mp.inner-tooltip {
     padding-top: 3em;
   }
 
-  .caption {
-    margin-bottom: 2em;
+  .with-caption {
+    padding-top: 2em;
   }
 
   .custom-chart {
-    padding-top: 3em;
-    margin-bottom: 3em;
+    padding-top: 2em;
+    margin-bottom: 1em;
   }
 
   .hoverable {
@@ -239,11 +239,11 @@ body .mp.inner-tooltip {
   }
 
   .legend-container {
-    margin-top: 3em;
+    padding-top: 1em;
+    margin-bottom: 4em;
 
-    &.centered {
-      width: 66.6666%;
-      margin: 2em auto;
+    &.network-legend {
+      max-width: 50em;
     }
 
     .legend-name body div {
@@ -262,6 +262,13 @@ body .mp.inner-tooltip {
       height: 2em;
     }
 
+    div.flow {
+      background-color: $flow;
+      width: 2em;
+      height: 2.5em;
+      margin-top: 0.25em;
+    }
+
     .legend-item {
       float: left;
       width: 50%;
@@ -276,6 +283,19 @@ body .mp.inner-tooltip {
         font-size: 0.85em;
       }
     }
+
+    &.network-legend .legend-item {
+      width: 33.333332%;
+
+      .legend-text {
+        margin-top: 1em;
+      }
+    }
+  }
+
+
+  .chart-gop-v-dfl-legend-container {
+    padding-top: 0em;
   }
 
   // Custom breakpoints

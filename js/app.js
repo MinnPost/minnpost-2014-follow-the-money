@@ -3,6 +3,9 @@
  *
  * This pulls in all the parts
  * and creates the main object for the application.
+ *
+ * In retrospect, this should have been done just with Ractive and D3 is not
+ * really necessary.
  */
 
 // Create main application
@@ -45,28 +48,6 @@ require([
 
     // Start app
     initialize: function() {
-      // Create main application view
-      this.mainView = new Ractive({
-        el: this.$el,
-        template: tApplication,
-        data: {
-          top20: _.map(_.sortBy(dTop20, 'raised').reverse(), function(d, di) {
-            d.tooltip = tTooltip({ d: d, f: mpFormatters });
-            return d;
-          }),
-          top20Max: d3.max(dTop20, function(d) { return d.raised; }),
-          combined: _.map(_.sortBy(dParties, 'raised').reverse(), function(d, di) {
-            d.tooltip = tTooltip({ d: d, f: mpFormatters });
-            return d;
-          }),
-          combinedMax: d3.max(dParties, function(d) { return d.raised; }),
-          f: mpFormatters
-        }
-      });
-
-      // Tooltips
-      this.addTooltips('.chart-top-20 .chart-value');
-      this.addTooltips('.chart-gop-v-dfl .chart-value');
 
       // Determine a max to use with ranges across visualizations
       this.max = Math.max(
@@ -85,6 +66,31 @@ require([
       this.areaScale = d3.scale.linear()
         .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
+
+      // Create main application view
+      this.mainView = new Ractive({
+        el: this.$el,
+        template: tApplication,
+        data: {
+          top20: _.map(_.sortBy(dTop20, 'raised').reverse(), function(d, di) {
+            d.tooltip = tTooltip({ d: d, f: mpFormatters });
+            return d;
+          }),
+          top20Max: d3.max(dTop20, function(d) { return d.raised; }),
+          combined: _.map(_.sortBy(dParties, 'raised').reverse(), function(d, di) {
+            d.tooltip = tTooltip({ d: d, f: mpFormatters });
+            return d;
+          }),
+          combinedMax: d3.max(dParties, function(d) { return d.raised; }),
+          f: mpFormatters,
+          scale: this.scale,
+          areaScale: this.areaScale
+        }
+      });
+
+      // Tooltips
+      this.addTooltips('.chart-top-20 .chart-value');
+      this.addTooltips('.chart-gop-v-dfl .chart-value');
 
       // Create charts
       this.chartDFL3();
@@ -226,70 +232,6 @@ require([
           canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', false);
         });
-
-      // Make legend
-      legendEdge = Math.sqrt(areaScale(100000));
-      legend = d3.select($container[0]).append('svg')
-        .attr('class', 'legend-container')
-        .attr('width', w)
-        .attr('height', 80);
-
-      legend.append('rect')
-        .attr('class', 'raised')
-        .attr('x', legendMargin)
-        .attr('y', legendMargin * 2)
-        .attr('width', legendEdge)
-        .attr('height', legendEdge);
-
-      legend.append('foreignObject')
-        .attr('class', 'legend-name')
-        .attr('x', legendEdge + legendMargin * 2)
-        .attr('y', legendMargin * 2 + (legendEdge / 10))
-        .attr('width', w / 5)
-        .attr('height', 100)
-        .append('xhtml:body')
-          .attr('class', 'mp')
-        .append('xhtml:div')
-        .style({})
-        .html('$100,000 raised');
-
-      legend.append('rect')
-        .attr('class', 'spent')
-        .attr('x', (w / 3) + legendMargin)
-        .attr('y', legendMargin * 2)
-        .attr('width', legendEdge)
-        .attr('height', legendEdge);
-
-      legend.append('foreignObject')
-        .attr('class', 'legend-name')
-        .attr('x', ((w / 3) + legendMargin) + (legendEdge + legendMargin))
-        .attr('y', legendMargin * 2 + (legendEdge / 10))
-        .attr('width', w / 5)
-        .attr('height', 100)
-        .append('xhtml:body')
-          .attr('class', 'mp')
-        .append('xhtml:div')
-        .style({})
-        .html('$100,000 spent');
-
-      legend.append('rect')
-        .attr('class', 'group-link-legend')
-        .attr('x', (w * (2 / 3)) + legendMargin)
-        .attr('y', legendMargin * 2 + 5)
-        .attr('width', scale(100000) / flowScale)
-        .attr('height', 25);
-
-      legend.append('foreignObject')
-        .attr('class', 'legend-name')
-        .attr('x', ((w * (2 / 3)) + legendMargin) + (scale(100000) / flowScale + legendMargin * 2))
-        .attr('y', legendMargin * 2 + (legendEdge / 10))
-        .attr('width', w / 4)
-        .attr('height', 100)
-        .append('xhtml:body')
-          .attr('class', 'mp')
-        .append('xhtml:div')
-        .style({})
-        .html('$100,000 given to another group');
 
       return canvas;
     },
