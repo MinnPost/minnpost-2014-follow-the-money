@@ -32,9 +32,11 @@
           <div class="chart-label">{{ name }}</div>
           <div class="chart-value" title="{{ tooltip }}">
             <span class="raised bar" style="width: {{ raised / combinedMax * 100 }}%;">
-              <span>raised {{ f.currencyShort(raised) }}</span>
+              <span class="internal-label">raised {{ f.currencyShort(raised) }}</span>
             </span>
-            <span class="spent bar" style="width: {{ spent / combinedMax * 100 }}%;"></span>
+            <span class="spent bar" style="width: {{ spent / combinedMax * 100 }}%;">
+              <span class="internal-label">spent {{ f.currencyShort(raised) }}</span>
+            </span>
           </div>
         </div>
       {{/combined}}
@@ -67,8 +69,11 @@
             <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">
             </span>
             <span class="bar spent" style="width: {{ spent / top20Max * 100 }}%;">
-              {{#(di === 0)}}<span>spent {{ f.currencyShort(spent) }}</span>{{/()}}
+              {{#(di === 0)}}<span class="internal-label">raised {{ f.currencyShort(raised) }}</span>{{/()}}
             </span>
+            {{#(di > 0)}}
+              <span class="external-label" style="left: {{ raised / top20Max * 100 }}%;">{{ f.currencyShort(raised) }}</span>
+            {{/()}}
           </div>
         </div>
       {{/top20}}

@@ -165,6 +165,7 @@ body .mp.inner-tooltip {
   }
 
 
+  .chart-gop-v-dfl,
   .chart-top-20 {
 
     .chart-label {
@@ -180,6 +181,8 @@ body .mp.inner-tooltip {
       float: left;
       position: relative;
       padding-top: 10px;
+      height: 1.5em;
+      color: #404040;
 
       .bar {
         height: 1.5em;
@@ -187,6 +190,8 @@ body .mp.inner-tooltip {
         position: absolute;
         top: 0;
         left: 0;
+        text-align: right;
+        line-height: 1.5em;
 
         &.raised {
           background-color: $raised;
@@ -196,15 +201,20 @@ body .mp.inner-tooltip {
           background-color: $spent;
           height: 1.25em;
           top: .25em;
-          text-align: right;
-          line-height: 1em;
-
-          span {
-            padding: 0 0.5em;
-            color: #404040;
-            font-size: 0.75em;
-          }
+          line-height: 1.25em;
         }
+
+        .internal-label {
+          font-size: 0.75em;
+          padding-right: 0.5em;
+        }
+      }
+
+      .external-label {
+        position: absolute;
+        top: 0;
+        font-size: 0.75em;
+        padding-left: 0.5em;
       }
     }
   }
@@ -213,6 +223,7 @@ body .mp.inner-tooltip {
 
     .chart-label {
       width: 100%;
+      float: none;
       text-align: left;
       margin-bottom: .5em;
       font-size: 1.5em;
@@ -220,33 +231,23 @@ body .mp.inner-tooltip {
 
     .chart-value {
       width: 100%;
-      position: relative;
+      float: none;
       margin-bottom: 3em;
       height: 2.5em;
 
       .bar {
         height: 3em;
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
 
         &.raised {
           background-color: $raised;
-          text-align: right;
           line-height: 3em;
-
-          span {
-            padding: 0 1em;
-            color: #404040;
-            font-size: 0.85em;
-          }
         }
 
         &.spent {
           background-color: $spent;
           height: 2.5em;
           top: .5em;
+          line-height: 2.25em;
         }
       }
     }
@@ -294,7 +295,7 @@ body .mp.inner-tooltip {
         float: left;
         max-width: 75%;
         padding-left: 0.5em;
-        font-size: 0.85em;
+        font-size: 0.75em;
         line-height: 1.25em;
       }
     }
