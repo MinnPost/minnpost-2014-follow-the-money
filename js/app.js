@@ -230,11 +230,16 @@ require([
       groups
         .classed('hoverable', true)
         .on('mouseover', function(d, di) {
-          canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
-            .classed('active', true);
+          canvas.selectAll('.group-link').classed('inactive', true);
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+            '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', true)
+            .classed('inactive', false);
         })
         .on('mouseout', function(d, di) {
-          canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+          canvas.selectAll('.group-link').classed('inactive', false);
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+          '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', false);
         });
 
@@ -336,7 +341,7 @@ require([
       var cH = cW;
       var rM = margin * 7;
       var rW = (w - margin * 10) / 3 - rM;
-      var h = cH * 5 + 100;
+      var h = cH * 5 + 150;
       var canvas, scale, areaScale, raceData, line, lines, races;
 
       // Combine with top 10 data
@@ -359,12 +364,21 @@ require([
       // Calculate some draw data
       networkData = _.map(networkData, function(d, di) {
         var part = (d.party === 'dfl') ? (di % 7) : ((di - 7) % 8);
-        d.x = part * (cW + margin) + (cW / 2) + margin;
-        d.y = (d.party === 'dfl') ? cH + margin : (cH + margin) * 4 + 50;
+        var top = (d.party === 'dfl');
+        var nameOffset = d.name.length > 30 ? 80 :
+          d.name.length > 16 ? 57 : 32;
+
         d.cellEdge = Math.sqrt(areaScale(d.raised));
+
+        d.x = part * (cW + margin) + (cW / 2) + margin + (top ? cW / 2 : 0);
+        d.y = top ? cH + margin - (cH - d.cellEdge) + 100 :
+          (cH + margin) * 4 + 100;
+
         d.nameX = d.x - (cW / 2);
-        d.nameY = d.y + 5;
+        d.nameY = top ? d.y - d.cellEdge - 5 - nameOffset :
+          d.y + 5;
         d.nameW = cW;
+        d.nameClass = top ? 'on-top' : '';
         return d;
       });
       networkData = _.map(networkData, function(d) {
@@ -377,7 +391,7 @@ require([
       // Create race draw data
       raceData = _.map(dSpending.races, function(d, di) {
         d.x = (di % 3) * (rW + rM) + (margin * 8);
-        d.y = cH * 2 + margin * 5;
+        d.y = cH * 2 + margin * 5 + 50;
         d.w = rW;
         d.h = cH - margin;
         d.cX = d.x + (d.w / 2);
@@ -460,6 +474,9 @@ require([
             .style({})
             .html(function(d) { return tRaceGroup({ d: d, f: mpFormatters}); });
 
+      // Create legend with different scale
+      this.mainView.set('spendScales', { scale: scale, areaScale: areaScale, legendClass: 'spending' });
+
       // Add tooltips
       //this.addTooltips($container.find('.race-title'));
 
@@ -467,11 +484,14 @@ require([
       races
         .classed('hoverable', true)
         .on('mouseover', function(d, di) {
+          canvas.selectAll('.group-link').classed('inactive', true);
           canvas.selectAll('[data-id="' + d.id + '"], ' +
             '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
-            .classed('active', true);
+            .classed('active', true)
+            .classed('inactive', false);
         })
         .on('mouseout', function(d, di) {
+          canvas.selectAll('.group-link').classed('inactive', false);
           canvas.selectAll('[data-id="' + d.id + '"], ' +
           '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', false);

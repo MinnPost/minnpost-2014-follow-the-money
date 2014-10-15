@@ -91,8 +91,14 @@ body .mp.inner-tooltip {
       stroke-width: 2;
       stroke-linecap: butt;
 
+      &.inactive {
+        stroke: lighten($flow, 10);
+        opacity: 0.5;
+      }
+
       &.active {
-        stroke: darken($flow, 30);
+        stroke: darken($flow, 25);
+        opacity: 1;
       }
     }
 
@@ -297,6 +303,17 @@ body .mp.inner-tooltip {
 
       .legend-text {
         margin-top: 1em;
+      }
+    }
+
+    &.spending {
+
+      div.flow {
+        height: 1.5em;
+      }
+
+      .legend-item .legend-text {
+        margin-top: 0.25em;
       }
     }
   }

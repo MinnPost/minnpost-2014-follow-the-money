@@ -111,11 +111,17 @@
       <p>So where is all this outside money going? Mostly to the competitive race for the state House &mdash; Republicans need just a net gain of seven seats to reclaim the majority there, and outside groups on both sides have been spending in a handful of competitive suburban and rural districts this cycle.  But the biggest outside spending groups on the left and right, ABM and the Freedom Club of Minnesota, have focused much of their resources on the governor's race this fall.</p>
     </div>
 
+    <div class="text-block with-caption">
+      <p class="caption">How the top PACs spent their money towards parties and races for the 2014 election cycle (2013-2014).</p>
+    </div>
+
     <div class="custom-chart chart-money-to-races">
       <div class="loading-block"></div>
     </div>
 
-    {{>networklegend}}
+    {{#spendScales}}
+      {{>networklegend}}
+    {{/spendScales}}
 
   </div>
 
@@ -142,7 +148,7 @@
 <!-- {{/barlegend}} -->
 
 <!-- {{>networklegend}} -->
-<div class="legend-container cf text-block network-legend">
+<div class="legend-container cf text-block network-legend {{ legendClass }}">
   <div class="legend-item cf">
     <div class="raised" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>
     <div class="legend-text">= $100K raised</div>
@@ -153,7 +159,7 @@
   </div>
   <div class="legend-item cf">
     <div class="flow" style="width: {{ scale(100000) }}px;"></div>
-    <div class="legend-text">= $100K transferred to another PAC</div>
+    <div class="legend-text">= $100K transferred{{#(legendClass != 'spending')}} to another PAC{{/()}}</div>
   </div>
 </div>
 <!-- {{/networklegend}} -->
