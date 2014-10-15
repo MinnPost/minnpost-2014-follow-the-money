@@ -9,19 +9,19 @@
     </div>
 
     <div>
-      Raised: <%= f.currency(d.raised) %><br>
-      Spent: <%= f.currency(d.spent) %><br>
-      Cash on hand: <%= f.currency(d.cash) %><br>
+      Raised: <%= f.currencyShort(d.raised) %><br>
+      Spent: <%= f.currencyShort(d.spent) %><br>
+      Cash on hand: <%= f.currencyShort(d.cash) %><br>
 
       <% if (d['spent-to']) { %>
         <br>
-        Gave <%= f.currency(d['spent-to'].amount) %> to <%= d['spent-to'].toObject.name %>.<br>
+        Gave <%= f.currencyShort(d['spent-to'].amount) %> to <%= d['spent-to'].toObject.name %>.<br>
       <% } %>
 
       <% if (d.races) { %>
         <br>
         <% _.each(d.races, function(r, ri) { %>
-          Gave <%= f.currency(r.amount) %> to <%= r.toObject.name %>.<br>
+          Gave <%= f.currencyShort(r.amount) %> to <%= r.toObject.name %>.<br>
         <% }) %>
       <% } %>
     </div>

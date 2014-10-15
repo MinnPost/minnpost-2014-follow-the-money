@@ -49,6 +49,9 @@ require([
     // Start app
     initialize: function() {
 
+      // Attach extra formaters
+      mpFormatters.currencyShort = this.currencyShort;
+
       // Determine a max to use with ranges across visualizations
       this.max = Math.max(
         d3.max(dTopDFL, function(d) {
@@ -473,6 +476,27 @@ require([
           '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', false);
         });
+    },
+
+    // Rudimentary formatter for currency
+    currencyShort: function(input) {
+      input = parseFloat(input);
+
+      if (input < 1000) {
+        input = Math.round(input);
+      }
+      else if (input < 1000000) {
+        input = input / 1000;
+        input = Math.round(input * 10) / 10;
+        input = input.toFixed(1) + 'K';
+      }
+      else {
+        input = input / 1000000;
+        input = Math.round(input * 10) / 10;
+        input = input.toFixed(1) + 'M';
+      }
+
+      return '$' + input;
     }
   });
 
