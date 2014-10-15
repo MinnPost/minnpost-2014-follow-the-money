@@ -203,7 +203,9 @@ require([
       names = canvas.selectAll('.name')
         .data(data).enter()
         .append('foreignObject')
-          .attr('class', function(d) { return ((d.party) ? d.party : '') + ' name'; })
+          .attr('class', function(d) {
+            return ((d.party) ? d.party : '') + ' name ' + (d.nameClass ? d.nameClass : '');
+          })
           .attr('data-id', function(d) { return d.id; })
           .attr('x', function(d) { return d.nameX || d.x || 0; })
           .attr('y', function(d) { return d.nameY || d.y || 0; })
@@ -281,19 +283,33 @@ require([
       var thisApp = this;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
-      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 80;
+      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 40;
       var margin = this.paxBoxMargin;
       var cW = this.pacBoxH;
       var cH = this.pacBoxH;
 
       // Calculate some draw data
       var networkData = _.map(dTopGOP, function(d, di) {
-        d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
-        d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
+        var top = (di < 4);
+        var longName = d.name.length > 25;
+
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
-        d.nameX = d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2);
-        d.nameY = d.y + 5;
+
+        d.x = top ? (((cW + margin) * (di % 4)) + (cW / 2) + margin) :
+          (((w / 5 - margin / 2) * ((di - 4) % 5)) + (cW / 2) + margin);
+        d.y = top ? (cH + margin) - (cH - d.cellEdge) + 50 :
+          ((cH + margin) * 2) - 40;
+
+        d.nameW = top ? (thisApp.pacBoxH - thisApp.paxBoxMargin) :
+          (w / 5 - margin);
+        d.nameX = top ? d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2) :
+          d.x - d.nameW / 2;
+        d.nameY = top ? d.y - d.cellEdge - 5 - (longName ? 58 : 32) :
+          d.y + 5;
+        d.nameClass = top ? 'on-top' : '';
+
         d.party = 'gop';
+
         return d;
       });
       networkData = _.map(networkData, function(d) {

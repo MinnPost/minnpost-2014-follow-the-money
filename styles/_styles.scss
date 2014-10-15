@@ -111,9 +111,17 @@ body .mp.inner-tooltip {
     .dfl.name body {
       border-top: 2px solid #0793AB;
     }
+    .dfl.name.on-top body {
+      border-top: none;
+      border-bottom: 2px solid #0793AB;
+    }
 
     .gop.name body {
       border-top: 2px solid #A1000F;
+    }
+    .gop.name.on-top body {
+      border-top: none;
+      border-bottom: 2px solid #A1000F;
     }
 
     .name div {
