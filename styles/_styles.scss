@@ -256,29 +256,31 @@ body .mp.inner-tooltip {
     padding-top: 1em;
     margin-bottom: 4em;
 
-    &.network-legend {
-      max-width: 50em;
-    }
-
     .legend-name body div {
       font-size: 0.85em;
     }
 
-    div.raised {
+    .raised,
+    .spent,
+    .flow {
+      display: block;
+      float: left;
       background-color: $raised;
+      vertical-align: middle;
       width: 2em;
       height: 2em;
+    }
+
+    div.raised {
+      background-color: $raised;
     }
 
     div.spent {
       background-color: $spent;
-      width: 2em;
-      height: 2em;
     }
 
     div.flow {
       background-color: $flow;
-      width: 2em;
       height: 2.5em;
       margin-top: 0.25em;
     }
@@ -287,14 +289,13 @@ body .mp.inner-tooltip {
       float: left;
       width: 50%;
 
-      div {
-        float: left;
-      }
-
       .legend-text {
-        margin-top: 0.25em;
-        margin-left: 0.85em;
+        display: block;
+        float: left;
+        max-width: 75%;
+        padding-left: 0.5em;
         font-size: 0.85em;
+        line-height: 1.25em;
       }
     }
 
