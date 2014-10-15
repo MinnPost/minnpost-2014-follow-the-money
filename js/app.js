@@ -108,7 +108,10 @@ require([
         position: {
           my: 'bottom center',
           at: 'top center',
-          target: 'mouse'
+          target: 'mouse',
+          adjust: {
+            y: -10
+          }
         },
         style: {
           classes: 'qtip-light'
@@ -396,6 +399,22 @@ require([
         d.h = cH - margin;
         d.cX = d.x + (d.w / 2);
         d.cY = d.y + (d.h / 2);
+
+        d.gopTotal = _.reduce(networkData, function(memo, n) {
+          var t = _.findWhere(n.races, { name: d.id });
+          if (n.party === 'gop' && t) {
+            return memo + t.amount;
+          }
+          return memo;
+        }, 0);
+        d.dflTotal = _.reduce(networkData, function(memo, n) {
+          var t = _.findWhere(n.races, { name: d.id });
+          if (n.party === 'dfl' && t) {
+            return memo + t.amount;
+          }
+          return memo;
+        }, 0);
+
         return d;
       });
 

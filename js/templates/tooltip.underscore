@@ -1,7 +1,14 @@
 
 <div class="inner-tooltip mp">
   <% if (typeof type != 'undefined' && type === 'race') { %>
+    <div class="strong"><%= d.name %></div>
 
+    <div>
+      <span class="party-box dfl"></span> DFL PACs: <%= f.currencyShort(d.dflTotal) %>.
+    </div>
+    <div>
+      <span class="party-box gop"></span> GOP PACs: <%= f.currencyShort(d.gopTotal) %>.
+    </div>
   <% } else { %>
     <div class="strong">
       <%= d.name %>
