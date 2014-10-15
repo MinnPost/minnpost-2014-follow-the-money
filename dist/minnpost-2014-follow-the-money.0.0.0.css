@@ -35,12 +35,12 @@ body .mp.inner-tooltip {
 .mp .minnpost-2014-follow-the-money-container .application-container {
   padding-top: 3em;
 }
-.mp .minnpost-2014-follow-the-money-container .caption {
-  margin-bottom: 2em;
+.mp .minnpost-2014-follow-the-money-container .with-caption {
+  padding-top: 2em;
 }
 .mp .minnpost-2014-follow-the-money-container .custom-chart {
-  padding-top: 3em;
-  margin-bottom: 3em;
+  padding-top: 2em;
+  margin-bottom: 1em;
 }
 .mp .minnpost-2014-follow-the-money-container .hoverable {
   cursor: pointer;
@@ -77,10 +77,17 @@ body .mp.inner-tooltip {
   stroke-width: 2;
   stroke-linecap: butt;
 }
+.mp .minnpost-2014-follow-the-money-container .chart-network-gop .group-link.inactive,
+.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .group-link.inactive,
+.mp .minnpost-2014-follow-the-money-container .chart-money-to-races .group-link.inactive {
+  stroke: #949494;
+  opacity: 0.5;
+}
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .group-link.active,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .group-link.active,
 .mp .minnpost-2014-follow-the-money-container .chart-money-to-races .group-link.active {
-  stroke: #2e2e2e;
+  stroke: #3a3a3a;
+  opacity: 1;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .group-link-legend,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .group-link-legend,
@@ -103,12 +110,24 @@ body .mp.inner-tooltip {
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .dfl.name body,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .dfl.name body,
 .mp .minnpost-2014-follow-the-money-container .chart-money-to-races .dfl.name body {
-  border-top: 2px solid #0793AB;
+  border-top: 3px solid #0793AB;
+}
+.mp .minnpost-2014-follow-the-money-container .chart-network-gop .dfl.name.on-top body,
+.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .dfl.name.on-top body,
+.mp .minnpost-2014-follow-the-money-container .chart-money-to-races .dfl.name.on-top body {
+  border-top: none;
+  border-bottom: 3px solid #0793AB;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .gop.name body,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .gop.name body,
 .mp .minnpost-2014-follow-the-money-container .chart-money-to-races .gop.name body {
-  border-top: 2px solid #A1000F;
+  border-top: 3px solid #A1000F;
+}
+.mp .minnpost-2014-follow-the-money-container .chart-network-gop .gop.name.on-top body,
+.mp .minnpost-2014-follow-the-money-container .chart-big-dfl .gop.name.on-top body,
+.mp .minnpost-2014-follow-the-money-container .chart-money-to-races .gop.name.on-top body {
+  border-top: none;
+  border-bottom: 3px solid #A1000F;
 }
 .mp .minnpost-2014-follow-the-money-container .chart-network-gop .name div,
 .mp .minnpost-2014-follow-the-money-container .chart-big-dfl .name div,
@@ -209,11 +228,11 @@ body .mp.inner-tooltip {
   top: .5em;
 }
 .mp .minnpost-2014-follow-the-money-container .legend-container {
-  margin-top: 3em;
+  padding-top: 1em;
+  margin-bottom: 4em;
 }
-.mp .minnpost-2014-follow-the-money-container .legend-container.centered {
-  width: 66.6666%;
-  margin: 2em auto;
+.mp .minnpost-2014-follow-the-money-container .legend-container.network-legend {
+  max-width: 50em;
 }
 .mp .minnpost-2014-follow-the-money-container .legend-container .legend-name body div {
   font-size: 0.85em;
@@ -228,6 +247,12 @@ body .mp.inner-tooltip {
   width: 2em;
   height: 2em;
 }
+.mp .minnpost-2014-follow-the-money-container .legend-container div.flow {
+  background-color: #7a7a7a;
+  width: 2em;
+  height: 2.5em;
+  margin-top: 0.25em;
+}
 .mp .minnpost-2014-follow-the-money-container .legend-container .legend-item {
   float: left;
   width: 50%;
@@ -239,4 +264,19 @@ body .mp.inner-tooltip {
   margin-top: 0.25em;
   margin-left: 0.85em;
   font-size: 0.85em;
+}
+.mp .minnpost-2014-follow-the-money-container .legend-container.network-legend .legend-item {
+  width: 33.333332%;
+}
+.mp .minnpost-2014-follow-the-money-container .legend-container.network-legend .legend-item .legend-text {
+  margin-top: 1em;
+}
+.mp .minnpost-2014-follow-the-money-container .legend-container.spending div.flow {
+  height: 1.5em;
+}
+.mp .minnpost-2014-follow-the-money-container .legend-container.spending .legend-item .legend-text {
+  margin-top: 0.25em;
+}
+.mp .minnpost-2014-follow-the-money-container .chart-gop-v-dfl-legend-container {
+  padding-top: 0em;
 }

@@ -42578,34 +42578,37 @@ define('base',['jquery', 'underscore', 'backbone', 'lazyload', 'mpFormatters', '
 });
 
 
-define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="text-block">\n      <p>The television ad criticizing Democrats for increasing taxes and funding a new Senate office building was brought to you by the Freedom Club of Minnesota. Alliance for a Better Minnesota paid for those ads accusing the GOP nominee for governor of cutting education spending as a legislator, and the Minnesota Jobs Coalition bought the half-page newspaper ads across the state tying a handful of lawmakers to President Barack Obama and the Affordable Care Act.</p>\n\n      <p>Ever heard of these groups? If you\'re an average voter in Minnesota, the answer is probably no. The landmark 2010 U.S. Supreme Court ruling in Citizens United v. Federal Election Commission opened the door for non profits, labor unions, corporations and even individuals to spend unlimited cash to influence campaigns, mostly through political action committees (known simply as PACs). It has led to major dollars flowing into national and state races, and Minnesota hasn\'t been immune to the changes.</p>\n\n      <p>An analysis of the top 20 PACs in Minnesota show they have raised a collective $12.5 million since 2013 to spend on the governor\'s race and competitive state House contests this fall, among other things. Of that $12.5 million raised, more than $9 million has already been spent.</p>\n\n      <p>The money raised and spent by outside groups has dwarfed even major candidates in recent years. For instance, DFL Gov. Mark Dayton raised about $2.7 million during the same time period, while Republican-endorsed candidate Jeff Johnson raised just $1.4 million. State law prevents candidates from coordinating with these groups, meaning much of message in a given cycle is now set by organizations that will never be on the ballot.</p>\n\n      <p>And this is just a fraction of total outside spending Minnesota races will see this cycle, as even more groups step up fundraising and advertising in the final weeks of the campaign.</p>\n\n      <p>For the uninitiated, here\'s a breakdown of the major outside groups trying to influence this year\'s election in Minnesota, how much they\'re spending and how they &mdash; at times &mdash; can work together:</p>\n    </div>\n\n\n    <div class="custom-chart chart-top-20">\n      {{#top20:di}}\n        <div class="cf">\n          <div class="chart-label">\n            {{ name }}\n            {{#party}}\n              <span class="party-box {{ party }}"></span>\n            {{/party}}\n          </div>\n          <div class="chart-value" title="{{ tooltip }}">\n            <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">\n            </span>\n            <span class="bar spent" style="width: {{ spent / top20Max * 100 }}%;">\n              {{#(di === 0)}}<span>spent {{ f.currency(spent) }}</span>{{/()}}\n            </span>\n          </div>\n        </div>\n      {{/top20}}\n\n      <div class="legend-container cf centered">\n        <div class="legend-item cf">\n          <div class="raised"></div>\n          <div class="legend-text">Amount raised</div>\n        </div>\n        <div class="legend-item cf">\n          <div class="spent"></div>\n          <div class="legend-text">Amount spent</div>\n        </div>\n      </div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">DFL Big Three</div>\n      <p>Democrats are the most likely to decry the adverse effects of big money in politics in the post-Citizens United world, but they\'ve also become the most savvy political party in raising and organizing major cash to funnel into local races. In Minnesota, the network is deep-pocketed and vast, including local labor unions like Education Minnesota and AFSCME, as well as national groups like the Democratic Legislative Campaign Committee. But at the heart of progressive outside spending is a three-headed hydra of sorts, consisting of two fundraising powerhouse PACs &mdash; Win Minnesota and the 2014 Fund &mdash; that funnel all their money to Alliance for a Better Minnesota (ABM), a fund that focuses on spending money on web and television advertising. The coordinating scheme &mdash; which keeps messaging consistent and prevents spending overlap &mdash; has served progressives well over the last few election cycles. In 2010, ABM spent millions hammering GOP governor candidate Tom Emmer in television ads, an effective approach that many say helped push the first Democratic governor into the office in 20 years. Two years later, Democrats took back control of the state House and defied the odds to defeat two controversial GOP-led amendments on the ballot. Spending and organizing from outside groups were key in those victories. This cycle, ABM has already spent more than $1 million on ads attacking GOP-endorsed governor candidate Jeff Johnson over past votes on education funding.</p>\n    </div>\n\n\n    <div class="custom-chart chart-big-dfl">\n      <div class="loading-block"></div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">GOP Network</div>\n      <p>Powerful Republicans donors like broadcasting magnate Stanley Hubbard have called on GOP outside spending groups to coordinate in order to combat the well-oiled machine that has developed on the left, but so far this cycle, there\'s little evidence that\'s happening. The best-funded of these outside groups, the Freedom Club of Minnesota, has shown little interest in playing pals with groups like the Minnesota Chamber of Commerce and its outside spending arm, Pro Jobs Majority. The Freedom Club, founded by media-shy businessman Robert Cummins, has veered to the right of other GOP groups in the candidates and causes it chooses to support. But GOP and business-aligned spending groups have done at least a little coordination this year, pooling some resources in groups like the Coalition for Minnesota Businesses and the Minnesota Jobs Coalition to spend on pro-business candidates.</p>\n    </div>\n\n\n    <div class="custom-chart chart-network-gop">\n      <div class="loading-block"></div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">GOP v. DFL PAC spending </div>\n      <p>The top liberal-aligned PACs in Minnesota have easily out-raised and spent their GOP counterparts by the pre-general election campaign finance reporting period, but they had less money on hand to spend than Republicans for the final stretch of the campaign.</p>\n    </div>\n\n\n    <div class="custom-chart chart-gop-v-dfl">\n      {{#combined}}\n        <div class="cf">\n          <div class="chart-label">{{ name }}</div>\n          <div class="chart-value" title="{{ tooltip }}">\n            <span class="raised bar" style="width: {{ raised / combinedMax * 100 }}%;">\n              <span>raised {{ f.currency(raised) }}</span>\n            </span>\n            <span class="spent bar" style="width: {{ spent / combinedMax * 100 }}%;"></span>\n          </div>\n        </div>\n      {{/combined}}\n\n      <div class="legend-container cf centered">\n        <div class="legend-item cf">\n          <div class="raised"></div>\n          <div class="legend-text">Amount raised</div>\n        </div>\n        <div class="legend-item cf">\n          <div class="spent"></div>\n          <div class="legend-text">Amount spent</div>\n        </div>\n      </div>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">Spending on Races</div>\n      <p>So where is all this outside money going? Mostly to the competitive race for the state House &mdash; Republicans need just a net gain of seven seats to reclaim the majority there, and outside groups on both sides have been spending in a handful of competitive suburban and rural districts this cycle.  But the biggest outside spending groups on the left and right, ABM and the Freedom Club of Minnesota, have focused much of their resources on the governor\'s race this fall.</p>\n    </div>\n\n    <div class="custom-chart chart-money-to-races">\n      <div class="loading-block"></div>\n    </div>\n\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-2014-follow-the-money" target="_blank">Github</a>.</p>\n\n    </div>\n  </div>\n</div>\n';});
+define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="text-block">\n      <p>The television ad criticizing Democrats for increasing taxes and funding a new Senate office building was brought to you by the Freedom Club of Minnesota. Alliance for a Better Minnesota paid for those ads accusing the GOP nominee for governor of cutting education spending as a legislator, and the Minnesota Jobs Coalition bought the half-page newspaper ads across the state tying a handful of lawmakers to President Barack Obama and the Affordable Care Act.</p>\n\n      <p>Ever heard of these groups? If you\'re an average voter in Minnesota, the answer is probably no. The landmark 2010 U.S. Supreme Court ruling in Citizens United v. Federal Election Commission opened the door for non profits, labor unions, corporations and even individuals to spend unlimited cash to influence campaigns, mostly through political action committees (known simply as PACs). It has led to major dollars flowing into national and state races, and Minnesota hasn\'t been immune to the changes.</p>\n\n      <p>An analysis of the top 20 PACs in Minnesota show they have raised a collective $12.5 million since 2013 to spend on the governor\'s race and competitive state House contests this fall, among other things. Of that $12.5 million raised, more than $9 million has already been spent.</p>\n\n      <p>The money raised and spent by outside groups has dwarfed even major candidates in recent years. For instance, DFL Gov. Mark Dayton raised about $2.7 million during the same time period, while Republican-endorsed candidate Jeff Johnson raised just $1.4 million. State law prevents candidates from coordinating with these groups, meaning much of message in a given cycle is now set by organizations that will never be on the ballot.</p>\n\n      <p>And this is just a fraction of total outside spending Minnesota races will see this cycle, as even more groups step up fundraising and advertising in the final weeks of the campaign.</p>\n    </div>\n\n\n    <div class="text-block">\n      <div class="component-label">GOP v. DFL PAC spending</div>\n\n      <p>The top liberal-aligned PACs in Minnesota have easily out-raised and spent their GOP counterparts by the pre-general election campaign finance reporting period, but they had less money on hand to spend than Republicans for the final stretch of the campaign.</p>\n    </div>\n\n    <div class="text-block with-caption">\n      <p class="caption">Aggregate financials for the top Minnesota PACs for the 2014 election cycle (2013-2014).</p>\n    </div>\n\n    <div class="custom-chart chart-gop-v-dfl">\n      {{#combined}}\n        <div class="cf">\n          <div class="chart-label">{{ name }}</div>\n          <div class="chart-value" title="{{ tooltip }}">\n            <span class="raised bar" style="width: {{ raised / combinedMax * 100 }}%;">\n              <span>raised {{ f.currencyShort(raised) }}</span>\n            </span>\n            <span class="spent bar" style="width: {{ spent / combinedMax * 100 }}%;"></span>\n          </div>\n        </div>\n      {{/combined}}\n    </div>\n\n    <div class="chart-gop-v-dfl-legend-container">\n      {{>barlegend}}\n    </div>\n\n    <div class="text-block">\n      <div class="component-label">Top 20</div>\n\n      <p>For the uninitiated, here\'s a breakdown of the major outside groups trying to influence this year\'s election in Minnesota, how much they\'re spending and how they &mdash; at times &mdash; can work together:</p>\n    </div>\n\n    <div class="text-block with-caption">\n      <p class="caption">Financials for the top 20 Minnesota PACs for the 2014 election cycle (2013-2014).</p>\n    </div>\n\n    <div class="custom-chart chart-top-20">\n      {{#top20:di}}\n        <div class="cf">\n          <div class="chart-label">\n            {{ name }}\n            {{#party}}\n              <span class="party-box {{ party }}"></span>\n            {{/party}}\n          </div>\n          <div class="chart-value" title="{{ tooltip }}">\n            <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">\n            </span>\n            <span class="bar spent" style="width: {{ spent / top20Max * 100 }}%;">\n              {{#(di === 0)}}<span>spent {{ f.currencyShort(spent) }}</span>{{/()}}\n            </span>\n          </div>\n        </div>\n      {{/top20}}\n    </div>\n\n    {{>barlegend}}\n\n    <div class="text-block">\n      <div class="component-label">DFL Big Three</div>\n      <p>Democrats are the most likely to decry the adverse effects of big money in politics in the post-Citizens United world, but they\'ve also become the most savvy political party in raising and organizing major cash to funnel into local races. In Minnesota, the network is deep-pocketed and vast, including local labor unions like Education Minnesota and AFSCME, as well as national groups like the Democratic Legislative Campaign Committee. But at the heart of progressive outside spending is a three-headed hydra of sorts, consisting of two fundraising powerhouse PACs &mdash; Win Minnesota and the 2014 Fund &mdash; that funnel all their money to Alliance for a Better Minnesota (ABM), a fund that focuses on spending money on web and television advertising. The coordinating scheme &mdash; which keeps messaging consistent and prevents spending overlap &mdash; has served progressives well over the last few election cycles. In 2010, ABM spent millions hammering GOP governor candidate Tom Emmer in television ads, an effective approach that many say helped push the first Democratic governor into the office in 20 years. Two years later, Democrats took back control of the state House and defied the odds to defeat two controversial GOP-led amendments on the ballot. Spending and organizing from outside groups were key in those victories. This cycle, ABM has already spent more than $1 million on ads attacking GOP-endorsed governor candidate Jeff Johnson over past votes on education funding.</p>\n    </div>\n\n    <div class="text-block with-caption">\n      <p class="caption">Sharing of money between the top 3 DFL PACs for the 2014 election cycle (2013-2014).</p>\n    </div>\n\n    <div class="custom-chart chart-big-dfl">\n      <div class="loading-block"></div>\n    </div>\n\n    {{>networklegend}}\n\n    <div class="text-block">\n      <div class="component-label">GOP Network</div>\n      <p>Powerful Republicans donors like broadcasting magnate Stanley Hubbard have called on GOP outside spending groups to coordinate in order to combat the well-oiled machine that has developed on the left, but so far this cycle, there\'s little evidence that\'s happening. The best-funded of these outside groups, the Freedom Club of Minnesota, has shown little interest in playing pals with groups like the Minnesota Chamber of Commerce and its outside spending arm, Pro Jobs Majority. The Freedom Club, founded by media-shy businessman Robert Cummins, has veered to the right of other GOP groups in the candidates and causes it chooses to support. But GOP and business-aligned spending groups have done at least a little coordination this year, pooling some resources in groups like the Coalition for Minnesota Businesses and the Minnesota Jobs Coalition to spend on pro-business candidates.</p>\n    </div>\n\n    <div class="text-block with-caption">\n      <p class="caption">Sharing of money between the top GOP PACs for the 2014 election cycle (2013-2014).</p>\n    </div>\n\n    <div class="custom-chart chart-network-gop">\n      <div class="loading-block"></div>\n    </div>\n\n    {{>networklegend}}\n\n    <div class="text-block">\n      <div class="component-label">Spending on Races</div>\n      <p>So where is all this outside money going? Mostly to the competitive race for the state House &mdash; Republicans need just a net gain of seven seats to reclaim the majority there, and outside groups on both sides have been spending in a handful of competitive suburban and rural districts this cycle.  But the biggest outside spending groups on the left and right, ABM and the Freedom Club of Minnesota, have focused much of their resources on the governor\'s race this fall.</p>\n    </div>\n\n    <div class="text-block with-caption">\n      <p class="caption">How the top PACs spent their money towards parties and races for the 2014 election cycle (2013-2014).</p>\n    </div>\n\n    <div class="custom-chart chart-money-to-races">\n      <div class="loading-block"></div>\n    </div>\n\n    {{#spendScales}}\n      {{>networklegend}}\n    {{/spendScales}}\n\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-2014-follow-the-money" target="_blank">Github</a>.</p>\n\n    </div>\n  </div>\n</div>\n\n\n<!-- {{>barlegend}} -->\n<div class="legend-container cf text-block">\n  <div class="legend-item cf">\n    <div class="raised"></div>\n    <div class="legend-text">Amount raised</div>\n  </div>\n  <div class="legend-item cf">\n    <div class="spent"></div>\n    <div class="legend-text">Amount spent</div>\n  </div>\n</div>\n<!-- {{/barlegend}} -->\n\n<!-- {{>networklegend}} -->\n<div class="legend-container cf text-block network-legend {{ legendClass }}">\n  <div class="legend-item cf">\n    <div class="raised" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>\n    <div class="legend-text">= $100K raised</div>\n  </div>\n  <div class="legend-item cf">\n    <div class="spent" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>\n    <div class="legend-text">= $100K spent</div>\n  </div>\n  <div class="legend-item cf">\n    <div class="flow" style="width: {{ scale(100000) }}px;"></div>\n    <div class="legend-text">= $100K transferred{{#(legendClass != \'spending\')}} to another PAC{{/()}}</div>\n  </div>\n</div>\n<!-- {{/networklegend}} -->\n';});
 
 
-define('text!templates/tooltip.underscore',[],function () { return '\n<div class="inner-tooltip mp">\n  <% if (typeof type != \'undefined\' && type === \'race\') { %>\n\n  <% } else { %>\n    <div class="strong">\n      <%= d.name %>\n      <% if (d.party) { %><span class="party-box <%= d.party %>"></span><% } %>\n    </div>\n\n    <div>\n      Raised: <%= f.currency(d.raised) %><br>\n      Spent: <%= f.currency(d.spent) %><br>\n      Cash on hand: <%= f.currency(d.cash) %><br>\n\n      <% if (d[\'spent-to\']) { %>\n        <br>\n        Gave <%= f.currency(d[\'spent-to\'].amount) %> to <%= d[\'spent-to\'].toObject.name %>.<br>\n      <% } %>\n\n      <% if (d.races) { %>\n        <br>\n        <% _.each(d.races, function(r, ri) { %>\n          Gave <%= f.currency(r.amount) %> to <%= r.toObject.name %>.<br>\n        <% }) %>\n      <% } %>\n    </div>\n  <% } %>\n</div>\n';});
+define('text!templates/tooltip.underscore',[],function () { return '\n<div class="inner-tooltip mp">\n  <% if (typeof type != \'undefined\' && type === \'race\') { %>\n    <div class="strong"><%= d.name %></div>\n\n    <div>\n      <span class="party-box dfl"></span> DFL PACs: <%= f.currencyShort(d.dflTotal) %>.\n    </div>\n    <div>\n      <span class="party-box gop"></span> GOP PACs: <%= f.currencyShort(d.gopTotal) %>.\n    </div>\n  <% } else { %>\n    <div class="strong">\n      <%= d.name %>\n      <% if (d.party) { %><span class="party-box <%= d.party %>"></span><% } %>\n    </div>\n\n    <div>\n      Raised: <%= f.currencyShort(d.raised) %><br>\n      Spent: <%= f.currencyShort(d.spent) %><br>\n      Cash on hand: <%= f.currencyShort(d.cash) %><br>\n\n      <% if (d[\'spent-to\']) { %>\n        <br>\n        Gave <%= f.currencyShort(d[\'spent-to\'].amount) %> to <%= d[\'spent-to\'].toObject.name %>.<br>\n      <% } %>\n\n      <% if (d.races) { %>\n        <br>\n        <% _.each(d.races, function(r, ri) { %>\n          Gave <%= f.currencyShort(r.amount) %> to <%= r.toObject.name %>.<br>\n        <% }) %>\n      <% } %>\n    </div>\n  <% } %>\n</div>\n';});
 
 
-define('text!templates/race-group.underscore',[],function () { return '<div class="race-group">\n  <div class="strong"><%= d.name %></div>\n\n  <div>\n    <span class="party-box dfl"></span> <%= d[\'dfl-candidate\'] %>\n  </div>\n  <div>\n    <span class="party-box gop"></span> <%= d[\'gop-candidate\'] %>\n  </div>\n</div>\n';});
+define('text!templates/race-group.underscore',[],function () { return '<div class="race-group">\n  <div class="strong"><%= d.name %></div>\n\n  <div>\n    <span class="party-box dfl"></span> DFL PACs: <%= f.currencyShort(d.dflTotal) %>\n  </div>\n  <div>\n    <span class="party-box gop"></span> GOP PACs: <%= f.currencyShort(d.gopTotal) %>\n  </div>\n</div>\n';});
 
 
-define('text!../data/top-dfl.json',[],function () { return '[\n  {\n    "id": "2014-fund",\n    "name": "2014 Fund",\n    "spent": 22370,\n    "raised": 1286433,\n    "cash": 0,\n    "spent-to": {\n      "to": "abm",\n      "amount": 1335000\n    }\n  },\n  {\n    "id": "win-mn",\n    "name": "Win Minnesota",\n    "spent": 0,\n    "raised": 1072300,\n    "cash": 0,\n    "spent-to": {\n      "to": "abm",\n      "amount": 733100\n    }\n  },\n  {\n    "id": "abm",\n    "name": "Alliance for a Better Minnesota",\n    "spent": 2181695,\n    "raised": 2078100,\n    "cash": 0\n  }\n]\n';});
+define('text!../data/top-dfl.json',[],function () { return '[\n  {\n    "id": "2014-fund",\n    "name": "2014 Fund",\n    "raised": 1346438,\n    "spent": 1335000,\n    "cash": 11438,\n    "spent-to": {\n      "to": "abm",\n      "amount": 1335000\n    }\n  },\n  {\n    "id": "win-mn",\n    "name": "Win Minnesota",\n    "raised": 1114740,\n    "spent": 733100,\n    "cash": 339278,\n    "spent-to": {\n      "to": "abm",\n      "amount": 733100\n    }\n  },\n  {\n    "id": "abm",\n    "name": "Alliance for a Better Minnesota",\n    "raised": 2303030,\n    "spent": 2166770,\n    "cash": 102588\n  }\n]\n';});
 
 
-define('text!../data/top-gop.json',[],function () { return '[\n  {\n    "spent": 112337,\n    "raised": 799794,\n    "cash": 672445,\n    "spent-to": {\n      "to": "mn-jobs",\n      "amount": 15000\n    },\n    "name": "Pro Jobs Majority",\n    "id": "pro-jobs"\n  },\n  {\n    "spent": 203974,\n    "raised": 349701,\n    "cash": 177654,\n    "spent-to": {\n      "to": "coalition-business",\n      "amount": 100000\n    },\n    "name": "MN Business Partnership",\n    "id": "mn-business"\n  },\n  {\n    "spent": 154454,\n    "raised": 291425,\n    "cash": 149957,\n    "spent-to": {\n      "to": "coalition-business",\n      "amount": 15000\n    },\n    "name": "MN Chamber of Commerce Leadership Fund",\n    "id": "mn-chamber"\n  },\n  {\n    "spent": 1033052,\n    "raised": 1144740,\n    "cash": 113142,\n    "name": "Freedom Club",\n    "id": "freedom"\n  },\n  {\n    "spent": 162857,\n    "raised": 258814,\n    "cash": 17617,\n    "name": "MN Jobs Coalition Legislative Fund",\n    "id": "mn-jobs"\n  },\n  {\n    "spent": 20160,\n    "raised": 227300,\n    "cash": 140321,\n    "name": "Coalition of MN Businesses",\n    "id": "coalition-business"\n  },\n  {\n    "spent": 177883,\n    "raised": 166000,\n    "cash": 1152,\n    "name": "Minnesota\'s Future",\n    "id": "mn-future"\n  },\n  {\n    "spent": 187543,\n    "raised": 651213,\n    "cash": 466779,\n    "name": "Housing First",\n    "id": "housing"\n  }\n]\n';});
+define('text!../data/top-gop.json',[],function () { return '[\n  {\n    "spent": 112337,\n    "raised": 799794,\n    "cash": 672445,\n    "spent-to": {\n      "to": "mn-jobs",\n      "amount": 15000\n    },\n    "name": "Pro Jobs Majority",\n    "id": "pro-jobs"\n  },\n  {\n    "spent": 203974,\n    "raised": 349701,\n    "cash": 177654,\n    "spent-to": {\n      "to": "coalition-business",\n      "amount": 100000\n    },\n    "name": "MN Business Partnership",\n    "id": "mn-business"\n  },\n  {\n    "spent": 154454,\n    "raised": 291425,\n    "cash": 149957,\n    "spent-to": {\n      "to": "coalition-business",\n      "amount": 15000\n    },\n    "name": "MN Chamber of Commerce Leadership Fund",\n    "id": "mn-chamber"\n  },\n  {\n    "spent": 1033052,\n    "raised": 1144740,\n    "cash": 113142,\n    "name": "Freedom Club",\n    "id": "freedom"\n  },\n  {\n    "spent": 162857,\n    "raised": 258814,\n    "cash": 17617,\n    "name": "MN Jobs Coalition Legislative Fund",\n    "id": "mn-jobs"\n  },\n  {\n    "spent": 20160,\n    "raised": 227300,\n    "cash": 140321,\n    "name": "Coalition of MN Businesses",\n    "id": "coalition-business"\n  },\n  {\n    "spent": 177883,\n    "raised": 166000,\n    "cash": 1152,\n    "name": "Minnesota\'s Future",\n    "id": "mn-future"\n  },\n  {\n    "raised": 352000,\n    "spent": 36417,\n    "cash": 315782 ,\n    "party": "gop",\n    "name": "Minnesota Action Network",\n    "id": "man"\n  },\n  {\n    "spent": 187543,\n    "raised": 651213,\n    "cash": 466779,\n    "name": "Housing First",\n    "id": "housing"\n  }\n]\n';});
 
 
-define('text!../data/top-20.json',[],function () { return '[\n  {\n    "raised": 2610187,\n    "spent": 2666119,\n    "cash": 98831,\n    "party": "dfl",\n    "name": "Education Minnesota",\n    "id": "edu-mn"\n  },\n  {\n    "raised": 2303030,\n    "spent": 2166770,\n    "cash": 102588,\n    "party": "dfl",\n    "name": "Alliance for a Better Minnesota",\n    "id": "abm"\n  },\n  {\n    "raised": 1346438,\n    "spent": 1335000,\n    "cash": 11438,\n    "party": "dfl",\n    "name": "2014 Fund",\n    "id": "2014-fund"\n  },\n  {\n    "raised": 1144740,\n    "spent": 1033052,\n    "cash": 113142,\n    "party": "gop",\n    "name": "Freedom Club",\n    "id": "freedom"\n  },\n  {\n    "raised": 1114740,\n    "spent": 733100,\n    "cash": 339278,\n    "party": "dfl",\n    "name": "Win Minnesota",\n    "id": "win-mn"\n  },\n  {\n    "raised": 929234,\n    "spent": 929234,\n    "cash": 0,\n    "party": "dfl",\n    "name": "AFSCME",\n    "id": "afscme"\n  },\n  {\n    "raised": 799794,\n    "spent": 112337,\n    "cash": 672445,\n    "party": "gop",\n    "name": "Pro Jobs Majority",\n    "id": "pro-jobs"\n  },\n  {\n    "raised": 795026,\n    "spent": 147431,\n    "cash": 46473,\n    "party": "dfl",\n    "name": "SEIU MN State Political Council",\n    "id": "seiu"\n  },\n  {\n    "raised": 651213,\n    "spent": 566000,\n    "cash": 150424,\n    "party": "dfl",\n    "name": "Laborers District",\n    "id": "laborers"\n  },\n  {\n    "raised": 651213,\n    "spent": 187543,\n    "cash": 466779,\n    "party": "gop",\n    "name": "Housing First",\n    "id": "housing"\n  },\n  {\n    "raised": 508411,\n    "spent": 96631,\n    "cash": 0,\n    "party": "dfl",\n    "name": "MAPE",\n    "id": "mape"\n  },\n  {\n    "raised": 404808,\n    "spent": 349600,\n    "cash": 72851,\n    "party": "dfl",\n    "name": "Shakopee Mdewakanton Sioux",\n    "id": "shakopee"\n  },\n  {\n    "raised": 349701,\n    "spent": 203974,\n    "cash": 177654,\n    "party": "gop",\n    "name": "MN Business Partnership",\n    "id": "mn-business"\n  },\n  {\n    "raised": 315102,\n    "spent": 281329,\n    "cash": 82976,\n    "party": "dfl",\n    "name": "MN AFL-CIO",\n    "id": "mn-afl-cio"\n  },\n  {\n    "raised": 291425,\n    "spent": 154454,\n    "cash": 149957,\n    "party": "gop",\n    "name": "MN Chamber of Commerce Leadership Fund",\n    "id": "mn-chamber"\n  },\n  {\n    "raised": 258814,\n    "spent": 162857,\n    "cash": 17617,\n    "party": "gop",\n    "name": "MN Jobs Coalition Legislative Fund",\n    "id": "mn-jobs"\n  },\n  {\n    "raised": 227300,\n    "spent": 20160,\n    "cash": 140321,\n    "party": "gop",\n    "name": "Coalition of MN Businesses",\n    "id": "coalition-business"\n  },\n  {\n    "raised": 166000,\n    "spent": 177883,\n    "cash": 1152,\n    "party": "dfl",\n    "name": "Minnesota’s Future",\n    "id": "mn-future"\n  },\n  {\n    "raised": 161000,\n    "spent": 161025,\n    "cash": 675,\n    "party": "dfl",\n    "name": "DLCC for Minnesota",\n    "id": "dlcc"\n  }\n]\n';});
+define('text!../data/top-20.json',[],function () { return '[\n  {\n    "raised": 2610187,\n    "spent": 2666119,\n    "cash": 98831,\n    "party": "dfl",\n    "name": "Education Minnesota",\n    "id": "edu-mn"\n  },\n  {\n    "raised": 2303030,\n    "spent": 2166770,\n    "cash": 102588,\n    "party": "dfl",\n    "name": "Alliance for a Better Minnesota",\n    "id": "abm"\n  },\n  {\n    "raised": 1346438,\n    "spent": 1335000,\n    "cash": 11438,\n    "party": "dfl",\n    "name": "2014 Fund",\n    "id": "2014-fund"\n  },\n  {\n    "raised": 1144740,\n    "spent": 1033052,\n    "cash": 113142,\n    "party": "gop",\n    "name": "Freedom Club",\n    "id": "freedom"\n  },\n  {\n    "raised": 1114740,\n    "spent": 733100,\n    "cash": 339278,\n    "party": "dfl",\n    "name": "Win Minnesota",\n    "id": "win-mn"\n  },\n  {\n    "raised": 929234,\n    "spent": 929234,\n    "cash": 0,\n    "party": "dfl",\n    "name": "AFSCME",\n    "id": "afscme"\n  },\n  {\n    "raised": 799794,\n    "spent": 112337,\n    "cash": 672445,\n    "party": "gop",\n    "name": "Pro Jobs Majority",\n    "id": "pro-jobs"\n  },\n  {\n    "raised": 795026,\n    "spent": 147431,\n    "cash": 46473,\n    "party": "dfl",\n    "name": "SEIU MN State Political Council",\n    "id": "seiu"\n  },\n  {\n    "raised": 651213,\n    "spent": 566000,\n    "cash": 150424,\n    "party": "dfl",\n    "name": "Laborers District",\n    "id": "laborers"\n  },\n  {\n    "raised": 651213,\n    "spent": 187543,\n    "cash": 466779,\n    "party": "gop",\n    "name": "Housing First",\n    "id": "housing"\n  },\n  {\n    "raised": 508411,\n    "spent": 96631,\n    "cash": 0,\n    "party": "dfl",\n    "name": "MAPE",\n    "id": "mape"\n  },\n  {\n    "raised": 404808,\n    "spent": 349600,\n    "cash": 72851,\n    "party": "dfl",\n    "name": "Shakopee Mdewakanton Sioux",\n    "id": "shakopee"\n  },\n  {\n    "raised": 349701,\n    "spent": 203974,\n    "cash": 177654,\n    "party": "gop",\n    "name": "MN Business Partnership",\n    "id": "mn-business"\n  },\n  {\n    "raised": 315102,\n    "spent": 281329,\n    "cash": 82976,\n    "party": "dfl",\n    "name": "MN AFL-CIO",\n    "id": "mn-afl-cio"\n  },\n  {\n    "raised": 291425,\n    "spent": 154454,\n    "cash": 149957,\n    "party": "gop",\n    "name": "MN Chamber of Commerce Leadership Fund",\n    "id": "mn-chamber"\n  },\n  {\n    "raised": 258814,\n    "spent": 162857,\n    "cash": 17617,\n    "party": "gop",\n    "name": "MN Jobs Coalition Legislative Fund",\n    "id": "mn-jobs"\n  },\n  {\n    "raised": 227300,\n    "spent": 20160,\n    "cash": 140321,\n    "party": "gop",\n    "name": "Coalition of MN Businesses",\n    "id": "coalition-business"\n  },\n  {\n    "raised": 166000,\n    "spent": 177883,\n    "cash": 1152,\n    "party": "dfl",\n    "name": "Minnesota’s Future",\n    "id": "mn-future"\n  },\n  {\n    "raised": 352000,\n    "spent": 36417,\n    "cash": 315782 ,\n    "party": "gop",\n    "name": "Minnesota Action Network",\n    "id": "man"\n  }\n]\n';});
 
 
 define('text!../data/race-spending.json',[],function () { return '{\n  "pacs": [\n    {\n      "party": "dfl",\n      "id": "abm",\n      "name": "Alliance for a Better Minnesota",\n      "races": [\n        { "name": "governor", "amount": 1818313 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "mape",\n      "name": "MAPE",\n      "races": [\n        { "name": "house", "amount": 28900 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "edu-mn",\n      "name": "Education Minnesota",\n      "races": [\n        { "name": "governor", "amount": 14263 },\n        { "name": "house", "amount": 361700 },\n        { "name": "party", "amount": 455425 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "seiu",\n      "name": "SEIU Minn State Council Political Fund",\n      "races": [\n        { "name": "governor", "amount": 13738 },\n        { "name": "house", "amount": 252226 },\n        { "name": "party", "amount": 498305 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "laborers",\n      "name": "Laborers District",\n      "races": [\n        { "name": "governor", "amount": 3500 },\n        { "name": "house", "amount": 108746 },\n        { "name": "party", "amount": 181000 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "afscme",\n      "name": "AFSCME",\n      "races": [\n        { "name": "house", "amount": 200000 },\n        { "name": "party", "amount": 300000 }\n      ]\n    },\n    {\n      "party": "dfl",\n      "id": "mn-afl-cio",\n      "name": "Minn AFL-CIO",\n      "races": [\n        { "name": "house", "amount": 60000 },\n        { "name": "party", "amount": 28150 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-future",\n      "name": "Minnesota\'s Future",\n      "races": [\n        { "name": "governor", "amount": 51000 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "coalition-business",\n      "name": "Coalition of MN Businesses",\n      "races": [\n        { "name": "governor", "amount": 2850 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "pro-jobs",\n      "name": "Pro Jobs Majority",\n      "races": [\n        { "name": "house", "amount": 47329 },\n        { "name": "governor", "amount": 22758 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-jobs",\n      "name": "Minnesota Jobs Coalition",\n      "races": [\n        { "name": "house", "amount": 41040 },\n        { "name": "governor", "amount": 39001 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "housing",\n      "name": "Housing First",\n      "races": [\n        { "name": "house", "amount": 82500 },\n        { "name": "governor", "amount": 62030 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-business",\n      "name": "Minn Business Partnership",\n      "races": [\n        { "name": "house", "amount": 48250 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "mn-chamber",\n      "name": "Minn Chamber of Commerce Leadership Fund",\n      "races": [\n        { "name": "house", "amount": 21450 }\n      ]\n    },\n    {\n      "party": "gop",\n      "id": "freedom",\n      "name": "Freedom Club of Minnesota",\n      "races": [\n        { "name": "house", "amount": 882777 },\n        { "name": "party", "amount": 100000 }\n      ]\n    }\n  ],\n  "races": [\n    {\n      "id": "governor",\n      "name": "Governor race",\n      "dfl-candidate": "Mark Dayton",\n      "gop-candidate": "Jeff Johnson"\n    },\n    {\n      "id": "house",\n      "name": "House races",\n      "dfl-candidate": "DFL candidates",\n      "gop-candidate": "GOP candidates"\n    },\n    {\n      "id": "party",\n      "name": "Political parties",\n      "dfl-candidate": "DFL party",\n      "gop-candidate": "GOP party"\n    }\n  ]\n}\n';});
 
 
-define('text!../data/combined-parties.json',[],function () { return '[\n  {\n    "id": "dfl",\n    "name": "DFL outside groups",\n    "raised": 8628201,\n    "spent": 7014539,\n    "cash": 832683\n  },\n  {\n    "id": "gop",\n    "name": "GOP outside groups",\n    "raised": 3888987,\n    "spent": 2052260,\n    "cash": 1739067\n  }\n]\n';});
+define('text!../data/combined-parties.json',[],function () { return '[\n  {\n    "id": "dfl",\n    "name": "DFL outside groups",\n    "raised": 8467201,\n    "spent": 6853514,\n    "cash": 832008\n  },\n  {\n    "id": "gop",\n    "name": "GOP outside groups",\n    "raised": 4240987,\n    "spent": 2088677,\n    "cash": 2054849\n  }\n]\n';});
 
 /**
  * Main application file for: minnpost-2014-follow-the-money
  *
  * This pulls in all the parts
  * and creates the main object for the application.
+ *
+ * In retrospect, this should have been done just with Ractive and D3 is not
+ * really necessary.
  */
 
 // Create main application
@@ -42648,28 +42651,9 @@ require([
 
     // Start app
     initialize: function() {
-      // Create main application view
-      this.mainView = new Ractive({
-        el: this.$el,
-        template: tApplication,
-        data: {
-          top20: _.map(_.sortBy(dTop20, 'raised').reverse(), function(d, di) {
-            d.tooltip = tTooltip({ d: d, f: mpFormatters });
-            return d;
-          }),
-          top20Max: d3.max(dTop20, function(d) { return d.raised; }),
-          combined: _.map(_.sortBy(dParties, 'raised').reverse(), function(d, di) {
-            d.tooltip = tTooltip({ d: d, f: mpFormatters });
-            return d;
-          }),
-          combinedMax: d3.max(dParties, function(d) { return d.raised; }),
-          f: mpFormatters
-        }
-      });
 
-      // Tooltips
-      this.addTooltips('.chart-top-20 .chart-value');
-      this.addTooltips('.chart-gop-v-dfl .chart-value');
+      // Attach extra formaters
+      mpFormatters.currencyShort = this.currencyShort;
 
       // Determine a max to use with ranges across visualizations
       this.max = Math.max(
@@ -42689,6 +42673,31 @@ require([
         .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
 
+      // Create main application view
+      this.mainView = new Ractive({
+        el: this.$el,
+        template: tApplication,
+        data: {
+          top20: _.map(_.sortBy(dTop20, 'raised').reverse(), function(d, di) {
+            d.tooltip = tTooltip({ d: d, f: mpFormatters });
+            return d;
+          }),
+          top20Max: d3.max(dTop20, function(d) { return d.raised; }),
+          combined: _.map(_.sortBy(dParties, 'raised').reverse(), function(d, di) {
+            d.tooltip = tTooltip({ d: d, f: mpFormatters });
+            return d;
+          }),
+          combinedMax: d3.max(dParties, function(d) { return d.raised; }),
+          f: mpFormatters,
+          scale: this.scale,
+          areaScale: this.areaScale
+        }
+      });
+
+      // Tooltips
+      this.addTooltips('.chart-top-20 .chart-value');
+      this.addTooltips('.chart-gop-v-dfl .chart-value');
+
       // Create charts
       this.chartDFL3();
       this.chartGOPTop();
@@ -42702,7 +42711,10 @@ require([
         position: {
           my: 'bottom center',
           at: 'top center',
-          target: 'mouse'
+          target: 'mouse',
+          adjust: {
+            y: -10
+          }
         },
         style: {
           classes: 'qtip-light'
@@ -42800,7 +42812,9 @@ require([
       names = canvas.selectAll('.name')
         .data(data).enter()
         .append('foreignObject')
-          .attr('class', function(d) { return ((d.party) ? d.party : '') + ' name'; })
+          .attr('class', function(d) {
+            return ((d.party) ? d.party : '') + ' name ' + (d.nameClass ? d.nameClass : '');
+          })
           .attr('data-id', function(d) { return d.id; })
           .attr('x', function(d) { return d.nameX || d.x || 0; })
           .attr('y', function(d) { return d.nameY || d.y || 0; })
@@ -42822,77 +42836,18 @@ require([
       groups
         .classed('hoverable', true)
         .on('mouseover', function(d, di) {
-          canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
-            .classed('active', true);
+          canvas.selectAll('.group-link').classed('inactive', true);
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+            '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+            .classed('active', true)
+            .classed('inactive', false);
         })
         .on('mouseout', function(d, di) {
-          canvas.selectAll('[data-id="' + d.id + '"], [data-from="' + d.id + '"], [data-to="' + d.id + '"]')
+          canvas.selectAll('.group-link').classed('inactive', false);
+          canvas.selectAll('[data-id="' + d.id + '"], ' +
+          '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', false);
         });
-
-      // Make legend
-      legendEdge = Math.sqrt(areaScale(100000));
-      legend = d3.select($container[0]).append('svg')
-        .attr('class', 'legend-container')
-        .attr('width', w)
-        .attr('height', 80);
-
-      legend.append('rect')
-        .attr('class', 'raised')
-        .attr('x', legendMargin)
-        .attr('y', legendMargin * 2)
-        .attr('width', legendEdge)
-        .attr('height', legendEdge);
-
-      legend.append('foreignObject')
-        .attr('class', 'legend-name')
-        .attr('x', legendEdge + legendMargin * 2)
-        .attr('y', legendMargin * 2 + (legendEdge / 10))
-        .attr('width', w / 5)
-        .attr('height', 100)
-        .append('xhtml:body')
-          .attr('class', 'mp')
-        .append('xhtml:div')
-        .style({})
-        .html('$100,000 raised');
-
-      legend.append('rect')
-        .attr('class', 'spent')
-        .attr('x', (w / 3) + legendMargin)
-        .attr('y', legendMargin * 2)
-        .attr('width', legendEdge)
-        .attr('height', legendEdge);
-
-      legend.append('foreignObject')
-        .attr('class', 'legend-name')
-        .attr('x', ((w / 3) + legendMargin) + (legendEdge + legendMargin))
-        .attr('y', legendMargin * 2 + (legendEdge / 10))
-        .attr('width', w / 5)
-        .attr('height', 100)
-        .append('xhtml:body')
-          .attr('class', 'mp')
-        .append('xhtml:div')
-        .style({})
-        .html('$100,000 spent');
-
-      legend.append('rect')
-        .attr('class', 'group-link-legend')
-        .attr('x', (w * (2 / 3)) + legendMargin)
-        .attr('y', legendMargin * 2 + 5)
-        .attr('width', scale(100000) / flowScale)
-        .attr('height', 25);
-
-      legend.append('foreignObject')
-        .attr('class', 'legend-name')
-        .attr('x', ((w * (2 / 3)) + legendMargin) + (scale(100000) / flowScale + legendMargin * 2))
-        .attr('y', legendMargin * 2 + (legendEdge / 10))
-        .attr('width', w / 4)
-        .attr('height', 100)
-        .append('xhtml:body')
-          .attr('class', 'mp')
-        .append('xhtml:div')
-        .style({})
-        .html('$100,000 given to another group');
 
       return canvas;
     },
@@ -42942,19 +42897,33 @@ require([
       var thisApp = this;
       var $container = this.$('.chart-network-gop');
       var w = $container.width();
-      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 80;
+      var h = (this.pacBoxH + this.paxBoxMargin) * 2 + 40;
       var margin = this.paxBoxMargin;
       var cW = this.pacBoxH;
       var cH = this.pacBoxH;
 
       // Calculate some draw data
       var networkData = _.map(dTopGOP, function(d, di) {
-        d.x = (((cW + margin) * (di % 4)) + (cW / 2) + margin);
-        d.y = (((cH + margin) * (Math.floor(di / 4) + 1)));
+        var top = (di < 4);
+        var longName = d.name.length > 25;
+
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
-        d.nameX = d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2);
-        d.nameY = d.y + 5;
+
+        d.x = top ? (((cW + margin) * (di % 4)) + (cW / 2) + margin) :
+          (((w / 5 - margin / 2) * ((di - 4) % 5)) + (cW / 2) + margin);
+        d.y = top ? (cH + margin) - (cH - d.cellEdge) + 50 :
+          ((cH + margin) * 2) - 40;
+
+        d.nameW = top ? (thisApp.pacBoxH - thisApp.paxBoxMargin) :
+          (w / 5 - margin);
+        d.nameX = top ? d.x - (thisApp.pacBoxH / 2) + (thisApp.paxBoxMargin / 2) :
+          d.x - d.nameW / 2;
+        d.nameY = top ? d.y - d.cellEdge - 5 - (longName ? 58 : 32) :
+          d.y + 5;
+        d.nameClass = top ? 'on-top' : '';
+
         d.party = 'gop';
+
         return d;
       });
       networkData = _.map(networkData, function(d) {
@@ -42978,7 +42947,7 @@ require([
       var cH = cW;
       var rM = margin * 7;
       var rW = (w - margin * 10) / 3 - rM;
-      var h = cH * 5 + 100;
+      var h = cH * 5 + 150;
       var canvas, scale, areaScale, raceData, line, lines, races;
 
       // Combine with top 10 data
@@ -43001,12 +42970,21 @@ require([
       // Calculate some draw data
       networkData = _.map(networkData, function(d, di) {
         var part = (d.party === 'dfl') ? (di % 7) : ((di - 7) % 8);
-        d.x = part * (cW + margin) + (cW / 2) + margin;
-        d.y = (d.party === 'dfl') ? cH + margin : (cH + margin) * 4 + 50;
+        var top = (d.party === 'dfl');
+        var nameOffset = d.name.length > 30 ? 80 :
+          d.name.length > 16 ? 57 : 32;
+
         d.cellEdge = Math.sqrt(areaScale(d.raised));
+
+        d.x = part * (cW + margin) + (cW / 2) + margin + (top ? cW / 2 : 0);
+        d.y = top ? cH + margin - (cH - d.cellEdge) + 100 :
+          (cH + margin) * 4 + 100;
+
         d.nameX = d.x - (cW / 2);
-        d.nameY = d.y + 5;
+        d.nameY = top ? d.y - d.cellEdge - 5 - nameOffset :
+          d.y + 5;
         d.nameW = cW;
+        d.nameClass = top ? 'on-top' : '';
         return d;
       });
       networkData = _.map(networkData, function(d) {
@@ -43019,11 +42997,27 @@ require([
       // Create race draw data
       raceData = _.map(dSpending.races, function(d, di) {
         d.x = (di % 3) * (rW + rM) + (margin * 8);
-        d.y = cH * 2 + margin * 5;
+        d.y = cH * 2 + margin * 5 + 50;
         d.w = rW;
         d.h = cH - margin;
         d.cX = d.x + (d.w / 2);
         d.cY = d.y + (d.h / 2);
+
+        d.gopTotal = _.reduce(networkData, function(memo, n) {
+          var t = _.findWhere(n.races, { name: d.id });
+          if (n.party === 'gop' && t) {
+            return memo + t.amount;
+          }
+          return memo;
+        }, 0);
+        d.dflTotal = _.reduce(networkData, function(memo, n) {
+          var t = _.findWhere(n.races, { name: d.id });
+          if (n.party === 'dfl' && t) {
+            return memo + t.amount;
+          }
+          return memo;
+        }, 0);
+
         return d;
       });
 
@@ -43102,6 +43096,9 @@ require([
             .style({})
             .html(function(d) { return tRaceGroup({ d: d, f: mpFormatters}); });
 
+      // Create legend with different scale
+      this.mainView.set('spendScales', { scale: scale, areaScale: areaScale, legendClass: 'spending' });
+
       // Add tooltips
       //this.addTooltips($container.find('.race-title'));
 
@@ -43109,15 +43106,39 @@ require([
       races
         .classed('hoverable', true)
         .on('mouseover', function(d, di) {
+          canvas.selectAll('.group-link').classed('inactive', true);
           canvas.selectAll('[data-id="' + d.id + '"], ' +
             '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
-            .classed('active', true);
+            .classed('active', true)
+            .classed('inactive', false);
         })
         .on('mouseout', function(d, di) {
+          canvas.selectAll('.group-link').classed('inactive', false);
           canvas.selectAll('[data-id="' + d.id + '"], ' +
           '[data-from="' + d.id + '"], [data-to="' + d.id + '"]')
             .classed('active', false);
         });
+    },
+
+    // Rudimentary formatter for currency
+    currencyShort: function(input) {
+      input = parseFloat(input);
+
+      if (input < 1000) {
+        input = Math.round(input);
+      }
+      else if (input < 1000000) {
+        input = input / 1000;
+        input = Math.round(input * 10) / 10;
+        input = input.toFixed(1) + 'K';
+      }
+      else {
+        input = input / 1000000;
+        input = Math.round(input * 10) / 10;
+        input = input.toFixed(1) + 'M';
+      }
+
+      return '$' + input;
     }
   });
 

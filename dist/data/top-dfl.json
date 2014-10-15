@@ -2,9 +2,9 @@
   {
     "id": "2014-fund",
     "name": "2014 Fund",
-    "spent": 22370,
-    "raised": 1286433,
-    "cash": 0,
+    "raised": 1346438,
+    "spent": 1335000,
+    "cash": 11438,
     "spent-to": {
       "to": "abm",
       "amount": 1335000
@@ -13,9 +13,9 @@
   {
     "id": "win-mn",
     "name": "Win Minnesota",
-    "spent": 0,
-    "raised": 1072300,
-    "cash": 0,
+    "raised": 1114740,
+    "spent": 733100,
+    "cash": 339278,
     "spent-to": {
       "to": "abm",
       "amount": 733100
@@ -24,8 +24,8 @@
   {
     "id": "abm",
     "name": "Alliance for a Better Minnesota",
-    "spent": 2181695,
-    "raised": 2078100,
-    "cash": 0
+    "raised": 2303030,
+    "spent": 2166770,
+    "cash": 102588
   }
 ]
