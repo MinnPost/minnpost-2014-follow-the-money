@@ -66,6 +66,14 @@
     },
     {
       "party": "gop",
+      "id": "freedom",
+      "name": "Freedom Club of Minnesota",
+      "races": [
+        { "name": "governor", "amount": 882777 }
+      ]
+    },
+    {
+      "party": "gop",
       "id": "mn-future",
       "name": "Minnesota's Future",
       "races": [
@@ -121,15 +129,6 @@
       "name": "Minn Chamber of Commerce Leadership Fund",
       "races": [
         { "name": "house", "amount": 21450 }
-      ]
-    },
-    {
-      "party": "gop",
-      "id": "freedom",
-      "name": "Freedom Club of Minnesota",
-      "races": [
-        { "name": "house", "amount": 882777 },
-        { "name": "party", "amount": 100000 }
       ]
     }
   ],
