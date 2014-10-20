@@ -38,17 +38,26 @@ require([
   tTooltip = _.template(tTooltip);
   tRaceGroup = _.template(tRaceGroup);
 
+  // To string abstraction
+  var toStringFnc = ({}).toString;
+
   // Create new class for app
   var App = Base.BaseApp.extend({
 
     defaults: {
       name: 'minnpost-2014-follow-the-money',
-      el: '.minnpost-2014-follow-the-money-container'
+      el: '.minnpost-2014-follow-the-money-container',
+      support: {
+        svg: !!document.createElement('svg').getAttributeNS,
+        svgFO: !!document.createElementNS &&
+          /SVGForeignObject/.test(
+            toStringFnc.call(document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject'))
+          )
+      }
     },
 
     // Start app
     initialize: function() {
-
       // Attach extra formaters
       mpFormatters.currencyShort = this.currencyShort;
 
@@ -70,11 +79,17 @@ require([
         .range([0, this.pacBoxH * this.pacBoxH])
         .domain([0, this.max]);
 
+      // Support for D3 charts depends on a few things
+      this.options.support.d3Charts = (this.options.support.svg &&
+        this.options.support.svgFO &&
+        this.$el.width() >= 840);
+
       // Create main application view
       this.mainView = new Ractive({
         el: this.$el,
         template: tApplication,
         data: {
+          options: this.options,
           top20: _.map(_.sortBy(dTop20, 'raised').reverse(), function(d, di) {
             d.tooltip = tTooltip({ d: d, f: mpFormatters });
             return d;
@@ -95,10 +110,12 @@ require([
       this.addTooltips('.chart-top-20 .chart-value');
       this.addTooltips('.chart-gop-v-dfl .chart-value');
 
-      // Create charts
-      this.chartDFL3();
-      this.chartGOPTop();
-      this.chartSpending();
+      // Create charts if SVG support
+      if (this.options.support.d3Charts) {
+        this.chartDFL3();
+        this.chartGOPTop();
+        this.chartSpending();
+      }
     },
 
     // Add tooltips
@@ -480,9 +497,9 @@ require([
         .append('foreignObject')
         .attr('class', 'race-title')
         .attr('data-id', function(d) { return d.id; })
-        .attr('title', function(d) {
-          return tTooltip({ d: d, f: mpFormatters, type: 'race' });
-        })
+        //.attr('title', function(d) {
+        //  return tTooltip({ d: d, f: mpFormatters, type: 'race' });
+        //})
         .attr('x', function(d) { return d.x; })
         .attr('y', function(d) { return d.y; })
         .attr('width', function(d) { return d.w; })
