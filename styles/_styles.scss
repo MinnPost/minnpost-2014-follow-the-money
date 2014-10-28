@@ -50,11 +50,12 @@ body .mp.inner-tooltip {
 
   .with-caption {
     padding-top: 2em;
+    text-align: center;
   }
 
   .custom-chart {
     padding-top: 2em;
-    margin-bottom: 1em;
+    margin-bottom: 4em;
   }
 
   .hoverable {
@@ -255,17 +256,21 @@ body .mp.inner-tooltip {
 
   .legend-container {
     padding-top: 1em;
-    margin-bottom: 4em;
+    margin-bottom: 2em;
+    text-align: center;
 
-    .legend-name body div {
+    & > div {
       font-size: 0.85em;
+      @include inline-block();
+    }
+
+    .legend-text {
+      margin-right: 2em;
     }
 
     .raised,
     .spent,
     .flow {
-      display: block;
-      float: left;
       background-color: $raised;
       vertical-align: middle;
       width: 2em;
@@ -286,37 +291,18 @@ body .mp.inner-tooltip {
       margin-top: 0.25em;
     }
 
-    .legend-item {
-      float: left;
-      width: 50%;
-
-      .legend-text {
-        display: block;
-        float: left;
-        max-width: 75%;
-        padding-left: 0.5em;
-        font-size: 0.75em;
-        line-height: 1.25em;
-      }
+    .dfl,
+    .gop {
+      display: none;
     }
+  }
 
-    &.network-legend .legend-item {
-      width: 33.333332%;
+  .chart-top-20-legend-container .legend-container {
 
-      .legend-text {
-        margin-top: 1em;
-      }
-    }
-
-    &.spending {
-
-      div.flow {
-        height: 1.5em;
-      }
-
-      .legend-item .legend-text {
-        margin-top: 0.25em;
-      }
+    .dfl,
+    .gop {
+      display: inline-block;
+      @include inline-block();
     }
   }
 

@@ -26,6 +26,10 @@
       <p class="caption">Aggregate financials for the top Minnesota PACs for the 2014 election cycle (2013-2014).</p>
     </div>
 
+    <div class="chart-gop-v-dfl-legend-container">
+      {{>barlegend}}
+    </div>
+
     <div class="custom-chart chart-gop-v-dfl">
       {{#combined}}
         <div class="cf">
@@ -42,10 +46,6 @@
       {{/combined}}
     </div>
 
-    <div class="chart-gop-v-dfl-legend-container">
-      {{>barlegend}}
-    </div>
-
     <div class="text-block">
       <div class="component-label">Top 20</div>
 
@@ -54,6 +54,10 @@
 
     <div class="text-block with-caption">
       <p class="caption">Financials for the top 20 Minnesota PACs for the 2014 election cycle (2013-2014).</p>
+    </div>
+
+    <div class="chart-top-20-legend-container">
+      {{>barlegend}}
     </div>
 
     <div class="custom-chart chart-top-20">
@@ -79,8 +83,6 @@
       {{/top20}}
     </div>
 
-    {{>barlegend}}
-
     <div class="text-block">
       <div class="component-label">DFL Big Three</div>
       <p>Democrats are the most likely to decry the adverse effects of big money in politics in the post-Citizens United world, but they've also become the most savvy political party in raising and organizing major cash to funnel into local races. In Minnesota, the network is deep-pocketed and vast, including local labor unions like Education Minnesota and AFSCME, as well as national groups like the Democratic Legislative Campaign Committee. But at the heart of progressive outside spending is a three-headed hydra of sorts, consisting of two fundraising powerhouse PACs &mdash; Win Minnesota and the 2014 Fund &mdash; that funnel all their money to Alliance for a Better Minnesota (ABM), a fund that focuses on spending money on web and television advertising. The coordinating scheme &mdash; which keeps messaging consistent and prevents spending overlap &mdash; has served progressives well over the last few election cycles. In 2010, ABM spent millions hammering GOP governor candidate Tom Emmer in television ads, an effective approach that many say helped push the first Democratic governor into the office in 20 years. Two years later, Democrats took back control of the state House and defied the odds to defeat two controversial GOP-led amendments on the ballot. Spending and organizing from outside groups were key in those victories. This cycle, ABM has already spent more than $1 million on ads attacking GOP-endorsed governor candidate Jeff Johnson over past votes on education funding.</p>
@@ -91,11 +93,11 @@
         <p class="caption">Sharing of money between the top 3 DFL PACs for the 2014 election cycle (2013-2014).</p>
       </div>
 
+      {{>networklegend}}
+
       <div class="custom-chart chart-big-dfl">
         <div class="loading-block"></div>
       </div>
-
-      {{>networklegend}}
     {{/()}}
     {{^(this.options.support.d3Charts)}}
       <img class="img-fallback img-big-dfl" src="{{ options.paths.images }}top-dfl-fallback.png" />
@@ -111,11 +113,11 @@
         <p class="caption">Sharing of money between the top GOP PACs for the 2014 election cycle (2013-2014).</p>
       </div>
 
+      {{>networklegend}}
+
       <div class="custom-chart chart-network-gop">
         <div class="loading-block"></div>
       </div>
-
-      {{>networklegend}}
     {{/()}}
     {{^(this.options.support.d3Charts)}}
       <img class="img-fallback img-big-dfl" src="{{ options.paths.images }}top-gop-fallback.png" />
@@ -131,13 +133,13 @@
         <p class="caption">How the top PACs spent their money towards parties and races for the 2014 election cycle (2013-2014).</p>
       </div>
 
-      <div class="custom-chart chart-money-to-races">
-        <div class="loading-block"></div>
-      </div>
-
       {{#spendScales}}
         {{>networklegend}}
       {{/spendScales}}
+
+      <div class="custom-chart chart-money-to-races">
+        <div class="loading-block"></div>
+      </div>
     {{/()}}
     {{^(this.options.support.d3Charts)}}
       <img class="img-fallback img-big-dfl" src="{{ options.paths.images }}spending-fallback.png" />
@@ -156,30 +158,29 @@
 
 <!-- {{>barlegend}} -->
 <div class="legend-container cf text-block">
-  <div class="legend-item cf">
-    <div class="raised"></div>
-    <div class="legend-text">Amount raised</div>
-  </div>
-  <div class="legend-item cf">
-    <div class="spent"></div>
-    <div class="legend-text">Amount spent</div>
-  </div>
+  <div class="raised"></div>
+  <div class="legend-text">Amount raised</div>
+
+  <div class="spent"></div>
+  <div class="legend-text">Amount spent</div>
+
+  <div class="party-box dfl"></div>
+  <div class="legend-text dfl">DFL</div>
+
+  <div class="party-box gop"></div>
+  <div class="legend-text gop">GOP</div>
 </div>
 <!-- {{/barlegend}} -->
 
 <!-- {{>networklegend}} -->
 <div class="legend-container cf text-block network-legend {{ legendClass }}">
-  <div class="legend-item cf">
-    <div class="raised" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>
-    <div class="legend-text">= $100K raised</div>
-  </div>
-  <div class="legend-item cf">
-    <div class="spent" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>
-    <div class="legend-text">= $100K spent</div>
-  </div>
-  <div class="legend-item cf">
-    <div class="flow" style="width: {{ scale(100000) }}px;"></div>
-    <div class="legend-text">= $100K transferred{{#(legendClass != 'spending')}} to another PAC{{/()}}</div>
-  </div>
+  <div class="raised" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>
+  <div class="legend-text">= $100K raised</div>
+
+  <div class="spent" style="width: {{ Math.sqrt(areaScale(100000)) }}px; height: {{ Math.sqrt(areaScale(100000)) }}px;"></div>
+  <div class="legend-text">= $100K spent</div>
+
+  <div class="flow" style="width: {{ scale(100000) }}px;"></div>
+  <div class="legend-text">= $100K transferred{{#(legendClass != 'spending')}} to another PAC{{/()}}</div>
 </div>
 <!-- {{/networklegend}} -->
