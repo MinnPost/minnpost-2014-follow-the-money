@@ -34,6 +34,24 @@ require([
   dSpending = JSON.parse(dSpending);
   dParties = JSON.parse(dParties);
 
+  // Combine data so it doesn't have to be repeated
+  dTopDFL = _.map(dTopDFL, function(d, di) {
+    _.each(dTop20, function(t, ti) {
+      if (d.id === t.id) {
+        d = $.extend(true, {}, t, d);
+      }
+    });
+    return d;
+  });
+  dTopGOP = _.map(dTopGOP, function(d, di) {
+    _.each(dTop20, function(t, ti) {
+      if (d.id === t.id) {
+        d = $.extend(true, {}, t, d);
+      }
+    });
+    return d;
+  });
+
   // Create template functions
   tTooltip = _.template(tTooltip);
   tRaceGroup = _.template(tRaceGroup);
@@ -155,25 +173,31 @@ require([
 
       // Lines
       lines = _.filter(data, function(d, di) {
-        return _.isObject(d['spent-to']);
+        return _.isArray(d['spent-to']);
       });
-      lines = canvas.selectAll('.group-link')
+      lines = canvas.selectAll('.g-group-link')
         .data(lines).enter()
-        .append('path')
-        .attr('class', 'group-link')
-        .attr('data-from', function(d) { return d.id; })
-        .attr('data-to', function(d) { return d['spent-to'].toObject.id; })
-        .attr('d', function(d) {
-          return line([
-            [d.x, d.y - (d.cellEdge / 2)],
-            [
-              d['spent-to'].toObject.x,
-              d['spent-to'].toObject.y - (d['spent-to'].toObject.cellEdge / 2)
-            ]
-          ]);
-        })
-        .style('stroke-width', function(d) {
-          return Math.max(2, scale(d['spent-to'].amount) / flowScale);
+        .append('g')
+        .each(function(g, gi) {
+          // Add each race
+          d3.select(this).selectAll('.group-link')
+            .data(g['spent-to']).enter()
+            .append('path')
+            .attr('class', 'group-link')
+            .attr('data-from', function(d) { return g.id; })
+            .attr('data-to', function(d) { return d.toObject.id; })
+            .attr('d', function(d) {
+              return line([
+                [g.x, g.y - (g.cellEdge / 2)],
+                [
+                  d.toObject.x,
+                  d.toObject.y - (d.toObject.cellEdge / 2)
+                ]
+              ]);
+            })
+            .style('stroke-width', function(d) {
+              return Math.max(2, scale(d.amount) / flowScale);
+            });
         });
 
       // Draw each group for each square for each pac
@@ -296,8 +320,11 @@ require([
         return d;
       });
       networkData = _.map(networkData, function(d) {
-        if (d['spent-to']) {
-          d['spent-to'].toObject = _.findWhere(networkData, { id: d['spent-to'].to });
+        if (_.isArray(d['spent-to'])) {
+          d['spent-to'] = _.map(d['spent-to'], function(s, si) {
+            s.toObject = _.findWhere(networkData, { id: s.to });
+            return s;
+          });
         }
         return d;
       });
@@ -341,8 +368,11 @@ require([
         return d;
       });
       networkData = _.map(networkData, function(d) {
-        if (d['spent-to']) {
-          d['spent-to'].toObject = _.findWhere(networkData, { id: d['spent-to'].to });
+        if (_.isArray(d['spent-to'])) {
+          d['spent-to'] = _.map(d['spent-to'], function(s, si) {
+            s.toObject = _.findWhere(networkData, { id: s.to });
+            return s;
+          });
         }
         return d;
       });

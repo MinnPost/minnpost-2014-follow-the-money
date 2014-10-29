@@ -1,134 +1,111 @@
 {
   "pacs": [
     {
-      "party": "dfl",
       "id": "abm",
-      "name": "Alliance for a Better Minnesota",
       "races": [
-        { "name": "governor", "amount": 1818313 }
+        { "name": "governor", "amount": 2761563 },
+        { "name": "house", "amount": 1122115 }
       ]
     },
     {
-      "party": "dfl",
-      "id": "mape",
-      "name": "MAPE",
-      "races": [
-        { "name": "house", "amount": 28900 }
-      ]
-    },
-    {
-      "party": "dfl",
       "id": "edu-mn",
-      "name": "Education Minnesota",
       "races": [
-        { "name": "governor", "amount": 14263 },
-        { "name": "house", "amount": 361700 },
-        { "name": "party", "amount": 455425 }
+        { "name": "governor", "amount": 193432 },
+        { "name": "house", "amount": 661048 },
+        { "name": "party", "amount": 497776 }
       ]
     },
     {
-      "party": "dfl",
       "id": "seiu",
-      "name": "SEIU Minn State Council Political Fund",
       "races": [
         { "name": "governor", "amount": 13738 },
-        { "name": "house", "amount": 252226 },
-        { "name": "party", "amount": 498305 }
+        { "name": "house", "amount": 190000 },
+        { "name": "party", "amount": 319017 }
       ]
     },
     {
-      "party": "dfl",
       "id": "laborers",
-      "name": "Laborers District",
       "races": [
         { "name": "governor", "amount": 3500 },
-        { "name": "house", "amount": 108746 },
-        { "name": "party", "amount": 181000 }
+        { "name": "house", "amount": 35000 },
+        { "name": "party", "amount": 196000 }
       ]
     },
     {
-      "party": "dfl",
-      "id": "afscme",
-      "name": "AFSCME",
+      "id": "mape",
       "races": [
-        { "name": "house", "amount": 200000 },
+        { "name": "house", "amount": 120400 },
+        { "name": "party", "amount": 55000 }
+      ]
+    },
+    {
+      "id": "afscme",
+      "races": [
+        { "name": "house", "amount": 200000  },
         { "name": "party", "amount": 300000 }
       ]
     },
     {
       "party": "dfl",
       "id": "mn-afl-cio",
-      "name": "Minn AFL-CIO",
       "races": [
-        { "name": "house", "amount": 60000 },
-        { "name": "party", "amount": 28150 }
-      ]
-    },
-    {
-      "party": "gop",
-      "id": "freedom",
-      "name": "Freedom Club of Minnesota",
-      "races": [
-        { "name": "governor", "amount": 882777 }
+        { "name": "house", "amount": 120400 },
+        { "name": "party", "amount": 55000 }
       ]
     },
     {
       "party": "gop",
       "id": "mn-future",
-      "name": "Minnesota's Future",
       "races": [
-        { "name": "governor", "amount": 51000 }
+        { "name": "governor", "amount": 99000 }
       ]
     },
     {
-      "party": "gop",
       "id": "coalition-business",
-      "name": "Coalition of MN Businesses",
       "races": [
-        { "name": "governor", "amount": 2850 }
+        { "name": "governor", "amount": 2850 },
+        { "name": "house", "amount": 180075 }
       ]
     },
     {
-      "party": "gop",
       "id": "pro-jobs",
-      "name": "Pro Jobs Majority",
       "races": [
-        { "name": "house", "amount": 47329 },
-        { "name": "governor", "amount": 22758 }
+        { "name": "house", "amount": 956103 },
+        { "name": "governor", "amount": 64780 }
       ]
     },
     {
-      "party": "gop",
       "id": "mn-jobs",
-      "name": "Minnesota Jobs Coalition",
       "races": [
-        { "name": "house", "amount": 41040 },
-        { "name": "governor", "amount": 39001 }
+        { "name": "house", "amount": 220162 },
+        { "name": "governor", "amount": 29903 }
       ]
     },
     {
-      "party": "gop",
+      "id": "freedom",
+      "races": [
+        { "name": "governor", "amount": 969247 },
+        { "name": "house", "amount": 47428 },
+        { "name": "party", "amount": 100000 }
+      ]
+    },
+    {
       "id": "housing",
-      "name": "Housing First",
       "races": [
-        { "name": "house", "amount": 82500 },
-        { "name": "governor", "amount": 62030 }
+        { "name": "house", "amount": 436166 },
+        { "name": "governor", "amount": 100564 }
       ]
     },
     {
-      "party": "gop",
       "id": "mn-business",
-      "name": "Minn Business Partnership",
       "races": [
-        { "name": "house", "amount": 48250 }
+        { "name": "house", "amount": 57750 }
       ]
     },
     {
-      "party": "gop",
       "id": "mn-chamber",
-      "name": "Minn Chamber of Commerce Leadership Fund",
       "races": [
-        { "name": "house", "amount": 21450 }
+        { "name": "house", "amount": 32200 }
       ]
     }
   ],

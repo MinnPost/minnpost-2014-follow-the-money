@@ -18,9 +18,9 @@
     <div>
       Total raised: <%= f.currencyShort(d.raised) %><br>
 
-      <% if (d['spent-to']) { %>
-        Gave to <%= d['spent-to'].toObject.name %>: <%= f.currencyShort(d['spent-to'].amount) %><br>
-      <% } %>
+      <% if (d['spent-to']) { _.each(d['spent-to'], function(s, si) { %>
+        Gave to <%= s.toObject.name %>: <%= f.currencyShort(s.amount) %><br>
+      <% }) } %>
 
       <% if (d.races) { %>
         <% _.each(d.races, function(r, ri) { %>
