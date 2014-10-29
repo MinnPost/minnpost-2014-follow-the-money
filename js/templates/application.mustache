@@ -64,16 +64,16 @@
       {{#top20:di}}
         <div class="cf">
           <div class="chart-label">
-            {{ name }}
+            <span class="chart-label-text">{{ name }}</span>
             {{#party}}
               <span class="party-box {{ party }}"></span>
             {{/party}}
           </div>
           <div class="chart-value" title="{{ tooltip }}">
             <span class="bar raised" style="width: {{ raised / top20Max * 100 }}%;">
+              {{#(di === 0)}}<span class="internal-label">{{ f.currencyShort(raised) }}</span>{{/()}}
             </span>
             <span class="bar spent" style="width: {{ spent / top20Max * 100 }}%;">
-              {{#(di === 0)}}<span class="internal-label">raised {{ f.currencyShort(raised) }}</span>{{/()}}
             </span>
             {{#(di > 0)}}
               <span class="external-label" style="left: {{ raised / top20Max * 100 }}%;">{{ f.currencyShort(raised) }}</span>

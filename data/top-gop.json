@@ -8,6 +8,13 @@
   },
   {
     "spent-to": [
+      { "to": "pro-jobs", "amount": 100000 },
+      { "to": "coalition-business", "amount": 15000 }
+    ],
+    "id": "mn-chamber"
+  },
+  {
+    "spent-to": [
       { "to": "coalition-business", "amount": 255000 }
     ],
     "id": "mn-business"
@@ -16,17 +23,10 @@
     "id": "freedom"
   },
   {
-    "id": "housing"
+    "id": "man"
   },
   {
     "id": "mn-jobs"
-  },
-  {
-    "spent-to": [
-      { "to": "pro-jobs", "amount": 100000 },
-      { "to": "coalition-business", "amount": 15000 }
-    ],
-    "id": "mn-chamber"
   },
   {
     "id": "coalition-business"
@@ -35,6 +35,6 @@
     "id": "mn-future"
   },
   {
-    "id": "man"
+    "id": "housing"
   }
 ]

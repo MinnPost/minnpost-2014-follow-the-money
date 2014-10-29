@@ -264,7 +264,7 @@ require([
             .attr('class', 'mp')
           .append('xhtml:div')
           .style({})
-          .html(function(d) { return d.name; });
+          .html(function(d) { return d.short; });
 
 
       // Add tooltips
@@ -346,7 +346,7 @@ require([
       // Calculate some draw data
       var networkData = _.map(dTopGOP, function(d, di) {
         var top = (di < 4);
-        var longName = d.name.length > 25;
+        var longName = d.short.length > 25;
 
         d.cellEdge = Math.sqrt(thisApp.areaScale(d.raised));
 
@@ -415,8 +415,8 @@ require([
       networkData = _.map(networkData, function(d, di) {
         var part = (d.party === 'dfl') ? (di % 7) : ((di - 7) % 8);
         var top = (d.party === 'dfl');
-        var nameOffset = d.name.length > 30 ? 80 :
-          d.name.length > 16 ? 57 : 32;
+        var nameOffset = d.short.length > 30 ? 80 :
+          d.short.length > 16 ? 57 : 32;
 
         d.cellEdge = Math.sqrt(areaScale(d.raised));
 

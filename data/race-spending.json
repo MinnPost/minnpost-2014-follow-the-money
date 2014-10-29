@@ -18,7 +18,7 @@
     {
       "id": "seiu",
       "races": [
-        { "name": "governor", "amount": 13738 },
+        { "name": "governor", "amount": 44642 },
         { "name": "house", "amount": 190000 },
         { "name": "party", "amount": 319017 }
       ]
@@ -61,17 +61,16 @@
       ]
     },
     {
-      "id": "coalition-business",
-      "races": [
-        { "name": "governor", "amount": 2850 },
-        { "name": "house", "amount": 180075 }
-      ]
-    },
-    {
       "id": "pro-jobs",
       "races": [
         { "name": "house", "amount": 956103 },
         { "name": "governor", "amount": 64780 }
+      ]
+    },
+    {
+      "id": "coalition-business",
+      "races": [
+        { "name": "house", "amount": 180075 }
       ]
     },
     {

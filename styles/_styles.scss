@@ -174,7 +174,22 @@ body .mp.inner-tooltip {
       float: left;
       text-align: right;
       padding-right: 1em;
-      margin-bottom: .5em;
+      margin-bottom: .85em;
+
+      span {
+        @include inline_block();
+
+        &.chart-label-text {
+          max-width: 90%;
+          line-height: 1.15em;
+        }
+
+        &.party-box {
+          vertical-align: top;
+          margin-top: 0.35em;
+          max-width: 10%;
+        }
+      }
     }
 
     .chart-value {
