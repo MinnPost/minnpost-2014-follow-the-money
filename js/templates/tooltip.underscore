@@ -19,14 +19,12 @@
       Total raised: <%= f.currencyShort(d.raised) %><br>
 
       <% if (d['spent-to']) { _.each(d['spent-to'], function(s, si) { %>
-        Gave to <%= s.toObject.name %>: <%= f.currencyShort(s.amount) %><br>
+        Amount given to <%= s.toObject.name %>: <%= f.currencyShort(s.amount) %><br>
       <% }) } %>
 
-      <% if (d.races) { %>
-        <% _.each(d.races, function(r, ri) { %>
-          Spent on <%= r.toObject.name %>: <%= f.currencyShort(r.amount) %><br>
-        <% }) %>
-      <% } %>
+      <% if (d.races) { _.each(d.races, function(r, ri) { %>
+        Amount spent on <%= r.toObject.name %>: <%= f.currencyShort(r.amount) %><br>
+      <% }) } %>
 
       Total spent: <%= f.currencyShort(d.spent) %><br>
       Cash on hand: <%= f.currencyShort(d.cash) %>

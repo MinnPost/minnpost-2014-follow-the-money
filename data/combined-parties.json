@@ -1,14 +1,14 @@
 [
   {
     "id": "dfl",
-    "name": "DFL outside groups",
+    "name": "DFL-affiliated outside groups",
     "raised": 12654833,
     "spent": 11203343,
     "cash": 906049
   },
   {
     "id": "gop",
-    "name": "GOP outside groups",
+    "name": "GOP-affiliated outside groups",
     "raised": 5848612,
     "spent": 3659363,
     "cash": 1332422
