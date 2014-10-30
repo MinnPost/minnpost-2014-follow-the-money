@@ -413,14 +413,14 @@ require([
 
       // Calculate some draw data
       networkData = _.map(networkData, function(d, di) {
-        var part = (d.party === 'dfl') ? (di % 7) : ((di - 7) % 8);
+        var part = (di % 8); //(d.party === 'dfl') ? (di % 7) : ((di - 7) % 8);
         var top = (d.party === 'dfl');
         var nameOffset = d.short.length > 30 ? 80 :
           d.short.length > 16 ? 57 : 32;
 
         d.cellEdge = Math.sqrt(areaScale(d.raised));
 
-        d.x = part * (cW + margin) + (cW / 2) + margin + (top ? cW / 2 : 0);
+        d.x = part * (cW + margin) + (cW / 2) + margin;
         d.y = top ? cH + margin - (cH - d.cellEdge) + 100 :
           (cH + margin) * 4 + 100;
 

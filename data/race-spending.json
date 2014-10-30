@@ -32,6 +32,12 @@
       ]
     },
     {
+      "id": "dlcc",
+      "races": [
+        { "name": "house", "amount": 300000 }
+      ]
+    },
+    {
       "id": "mape",
       "races": [
         { "name": "house", "amount": 120400 },
