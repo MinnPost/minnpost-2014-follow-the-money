@@ -169,5 +169,14 @@
     "spent": 334793,
     "party": "gop",
     "id": "man"
+  },
+  {
+    "raised": 454355,
+    "name": "DLCC Victory Fund",
+    "short": "DLCC Victory Fund",
+    "cash": 94097,
+    "spent": 360097,
+    "party": "dfl",
+    "id": "dlcc"
   }
 ]
