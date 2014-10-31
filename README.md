@@ -2,7 +2,7 @@
 
 Visualization of the campaign finance in the state-level, MN elections.
 
-You can see this project in action at *[published story link goes here]()*.
+You can see this project in action at [The outsiders: how big money flows through Minnesota elections](http://www.minnpost.com/data/2014/10/outsiders-how-big-money-flows-through-minnesota-elections).
 
 *Unless otherwise noted, MinnPost projects on [Github](https://github.com/minnpost) are story-driven and meant for transparency sake and not focused on re-use.  For a list of our more reusable projects, go to [code.minnpost.com](http://code.minnpost.com).*
 
@@ -10,7 +10,7 @@ You can see this project in action at *[published story link goes here]()*.
 
 ## Data
 
-*Describe the data sources here.  Use links and URLs to show where the data came from.  Put small sized originals or modified data sources in the ```data/original``` folder and ensure to update the `.gitignore` file*
+Briana manually put together the numbers from [Minnesota Campaign Finance and Public Disclosure Board](http://www.cfboard.state.mn.us/) reports.
 
 ## Development and running locally
 
@@ -37,12 +37,6 @@ Get the code for this project and install the necessary dependency libraries and
 1. Go into the template directory: `cd minnpost-2014-follow-the-money`
 1. Install NodeJS packages: `npm install`
 1. Install Bower components: `bower install`
-
-### Data processing
-
-The `Makefile` runs tasks such as downloading sources and converting data.
-
-1. Run: `make`
 
 ### Running locally
 
