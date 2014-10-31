@@ -2,7 +2,7 @@
 
 Visualization of the campaign finance in the state-level, MN elections.
 
-You can see this project in action at *[published story link goes here]()*.
+You can see this project in action at [The outsiders: how big money flows through Minnesota elections](http://www.minnpost.com/data/2014/10/outsiders-how-big-money-flows-through-minnesota-elections).
 
 *Unless otherwise noted, MinnPost projects on [Github](https://github.com/minnpost) are story-driven and meant for transparency sake and not focused on re-use.  For a list of our more reusable projects, go to [code.minnpost.com](http://code.minnpost.com).*
 
