@@ -10,7 +10,7 @@ You can see this project in action at [The outsiders: how big money flows throug
 
 ## Data
 
-*Describe the data sources here.  Use links and URLs to show where the data came from.  Put small sized originals or modified data sources in the ```data/original``` folder and ensure to update the `.gitignore` file*
+Briana manually put together the numbers from [Minnesota Campaign Finance and Public Disclosure Board](http://www.cfboard.state.mn.us/) reports.
 
 ## Development and running locally
 
@@ -37,12 +37,6 @@ Get the code for this project and install the necessary dependency libraries and
 1. Go into the template directory: `cd minnpost-2014-follow-the-money`
 1. Install NodeJS packages: `npm install`
 1. Install Bower components: `bower install`
-
-### Data processing
-
-The `Makefile` runs tasks such as downloading sources and converting data.
-
-1. Run: `make`
 
 ### Running locally
 
